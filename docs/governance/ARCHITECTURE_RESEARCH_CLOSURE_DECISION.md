@@ -3,7 +3,7 @@
 | Field | Value |
 | --- | --- |
 | Document type | Architecture Governance Methodology |
-| Version | 0.2.0 |
+| Version | 0.2.1 |
 | Lifecycle state | Draft |
 | Current normative effect | None |
 | Current governance authority | None |
@@ -30,7 +30,7 @@ This Draft does not:
 - amend the Foundation Architecture or an existing contract; or
 - make its own methodology normative merely by existing, being committed, or being published.
 
-If this methodology later becomes independently Approved and Effective through separately valid governance, its effect is limited to the transition from research into architectural decision making. A research-closure outcome authorizes only the preparation of an ADP. It does not approve the resulting ADP or any architecture described by it.
+If this methodology later becomes independently Approved and Effective through separately valid governance, its effect is limited to the transition from research into architectural decision making. A research-closure outcome records only readiness and eligibility to prepare an ADP. It does not approve the resulting ADP or any architecture described by it.
 
 The [Governance Document Model](../GOVERNANCE_DOCUMENT_MODEL.md) remains controlling for document-class and authority separation. The [Foundation Architecture](../FOUNDATION_ARCHITECTURE.md) remains controlling for architectural precedence, human approval boundaries, immutable history, lifecycle separation, and fail-closed behavior.
 
@@ -142,7 +142,7 @@ Research Closure:
 - does not select or approve architecture;
 - does not convert research into normative material;
 - does not erase open or deferred questions; and
-- may be reconsidered only under an explicit reopening condition.
+- may be reassessed when an explicit reopening condition occurs, but may be reopened only when the strict evidence and materiality threshold in Sections 10.6 and 11 is satisfied.
 
 ### 4.8 Architecture Readiness
 
@@ -259,7 +259,7 @@ An independent reviewer evaluates:
 - risks of premature closure; and
 - risks of indefinite expansion.
 
-The reviewer may agree with, reject, or reclassify the proposed findings. A review verdict is evidence only and does not itself close research.
+The reviewer may agree with, challenge, analyze, or recommend a different classification for the proposed findings. A reviewer cannot approve, authorize, determine the final classification, or make the Research Closure decision. A review verdict is evidence only and does not itself close research.
 
 ### Stage 6 — Research Closure Decision
 
@@ -293,7 +293,7 @@ If additional research is required, the decision identifies the unresolved Categ
 
 ### Stage 8 — Reopening
 
-Closed research is reopened only when a recorded trigger occurs or new evidence shows that a closure criterion was not satisfied.
+An occurrence of a recorded trigger initiates reassessment only; it does not reopen research. Closed research is reopened only when new attributable evidence indicates probable material architectural impact and satisfies the Category A Materiality Test and burden of proof under Sections 10.6 and 11.
 
 Reopening does not erase the earlier closure decision. It creates a new research state and preserves the earlier decision, evidence, scope, and rationale as immutable history.
 
@@ -373,7 +373,7 @@ Each Category B item retained at closure must record:
 4. the future owner or decision forum responsible for resolution; and
 5. the objective trigger for reopening or mandatory resolution.
 
-Affected architecture and the latest safe resolution point must also be traceable where applicable. Category B is not risk dismissal and cannot conceal work that satisfies the Category A Materiality Test.
+Affected architecture and the latest safe resolution point must also be traceable where applicable. A Category B trigger initiates reassessment or mandatory resolution only; it does not itself reopen research. Category B is not risk dismissal and cannot conceal work that satisfies the Category A Materiality Test.
 
 ### 6.3 Category C — Future Research
 
@@ -519,7 +519,7 @@ The research author recommends one permitted outcome and explains:
 
 The recommendation has no closure authority.
 
-### Step 8 — Apply Research-Closure Approval Criteria
+### Step 8 — Apply Research-Closure Decision Conditions
 
 Before an eligible human may declare research closed, the evidence must demonstrate:
 
@@ -537,7 +537,9 @@ Before an eligible human may declare research closed, the evidence must demonstr
 12. future work and reopening triggers are explicit; and
 13. the closure decision-maker’s eligibility is independently established.
 
-These criteria approve only the research-to-ADP transition. They do not approve the research recommendation, architectural alternative, future ADP, contract, governance content, or implementation.
+Satisfaction of these conditions establishes only eligibility for the research-to-ADP transition. It does not approve the research recommendation, architectural alternative, future ADP, contract, governance content, or implementation.
+
+Research insufficiency and closure-process invalidity are separate. Research insufficiency exists only when the architectural research conditions in Section 9.3 are met. Missing authorized decision-maker evidence, unverifiable closure evidence, or any unsatisfied governance precondition prevents a valid closure decision from being performed or recorded. The process fails closed, no permitted research outcome is selected, and no transition occurs until the process defect is corrected. Correcting a governance process defect is not additional architectural research unless the correction reveals a research issue that independently meets Section 9.3.
 
 ### Step 9 — Record the Outcome
 
@@ -643,6 +645,8 @@ The existence of future work does not block closure when its boundary and latest
 
 The methodology does not prefer closure or continued research. The outcome follows from the evidence and criteria for the exact Decision Boundary.
 
+These outcomes classify research sufficiency only. They are available only after the closure decision process is valid. A governance process failure produces no Research Closure outcome.
+
 ### 9.1 RESEARCH CLOSED
 
 Use `RESEARCH CLOSED` when:
@@ -686,13 +690,13 @@ Use `ADDITIONAL RESEARCH REQUIRED` when any of the following is true:
 - remaining uncertainty is unbounded;
 - a Category B classification cannot be justified;
 - an authority, confidentiality, safety, external-obligation, temporal, audit, or historical issue has a demonstrated architecture-changing effect that cannot be contained;
-- an independent review finding is normalized into a research question and demonstrates a Category A material effect;
-- the closure evidence cannot be reproduced; or
-- decision-maker eligibility cannot be established.
+- an independent review finding is normalized into a research question and demonstrates a Category A material effect.
+
+Missing an authorized decision maker, having unverifiable closure evidence, or failing another governance precondition does not establish `ADDITIONAL RESEARCH REQUIRED`. Those conditions invalidate the closure decision process under Step 8 and must fail closed without classifying the research.
 
 Effect:
 
-- ADP development is not authorized by this closure process.
+- ADP development is not eligible to begin under this closure process.
 
 The outcome identifies the bounded research required. It does not require investigation of unrelated Category C topics.
 
@@ -750,7 +754,7 @@ The possibility of discovering more information does not defeat saturation.
 
 ### 10.6 Reopening Threshold
 
-Closure is evaluated against an exact research revision and inventory snapshot. A closed research effort is reopened only when new attributable evidence:
+Closure is evaluated against an exact research revision and inventory snapshot. A closed research effort is reopened only when new attributable evidence indicates probable material architectural impact, satisfies the Category A Materiality Test and burden of proof, and:
 
 - invalidates a critical assumption used by the ADP direction;
 - identifies an omitted, materially distinct, and plausible architecture family;
@@ -764,7 +768,7 @@ A material topic outside the closed boundary may receive its own research identi
 
 ## 11. Reopening Conditions
 
-Research previously closed under this methodology may be reopened only when the Section 10.6 threshold is met. Qualifying evidence may show that:
+Research previously closed under this methodology may be reopened only when new attributable evidence indicates probable material architectural impact, satisfies the Category A Materiality Test and burden of proof, and meets the Section 10.6 threshold. Qualifying evidence may show that:
 
 - new evidence invalidates a critical assumption;
 - an omitted, materially distinct, and plausible architecture family is shown to be capable of replacing or invalidating the architecture;
@@ -796,8 +800,8 @@ This methodology describes functions, not company roles or authority assignments
 | Function | Responsibility | Authority boundary |
 | --- | --- | --- |
 | Research author | Defines questions, investigates alternatives, records evidence, classifies provisionally, and recommends an outcome. | Cannot close their own research merely by recommendation or authorship. |
-| Independent research reviewer | Tests completeness, neutrality, assumptions, classifications, risks, and readiness. | Review evidence does not close research or approve architecture. |
-| Human closure decision authority | Makes the attributable research-closure decision when independently eligible. | May authorize only the transition to ADP development within the reviewed boundary. |
+| Independent research reviewer | Tests completeness, neutrality, assumptions, classifications, risks, and readiness. | May identify, recommend, challenge, analyze, and evaluate. Cannot approve, authorize, determine final classifications, or make a closure decision. |
+| Human closure decision authority | Makes the attributable research-closure decision when independently eligible. | May determine only research readiness and transition eligibility within the reviewed boundary. |
 | ADP author | Uses closed research, deferred questions, and evidence to prepare a decision proposal. | Cannot treat research closure as architecture approval. |
 | AI system | May draft, analyze, compare, trace, and identify gaps. | Cannot create closure authority, approve research, approve architecture, or infer human consent. |
 
@@ -873,7 +877,7 @@ A reusable Research Closure evidence set includes:
 - integrity evidence; and
 - lineage to later ADPs.
 
-Missing required evidence prevents a valid closure determination. It does not default to `RESEARCH CLOSED` or `RESEARCH CLOSED WITH DEFERRED QUESTIONS`.
+Missing required evidence prevents a valid closure determination. It does not default to `RESEARCH CLOSED`, `RESEARCH CLOSED WITH DEFERRED QUESTIONS`, or `ADDITIONAL RESEARCH REQUIRED`. The process fails closed without classifying the research until the evidence or other governance process defect is corrected.
 
 This list defines methodology evidence categories only. It does not create a schema, registry, workflow, approval record, or implementation format.
 
@@ -899,14 +903,15 @@ This list defines methodology evidence categories only. It does not create a sch
 18. Closure and reopening preserve immutable history.
 19. Methodology revisions do not silently rewrite earlier closure records.
 20. Future ADP, contract, implementation, adoption, effectiveness, and freeze decisions remain independently governed.
+21. A recorded trigger alone cannot reopen research.
 
 ## 16. Methodology Outcome
 
 This document establishes no current Research Closure outcome for any CADP research effort.
 
-In particular, this revision does not close, approve, reject, or reclassify the Governance Rule Discovery research. The existing [Governance Rule Discovery Research Closure](GOVERNANCE_RULE_DISCOVERY_RESEARCH_CLOSURE.md) remains an immutable historical decision made under the earlier methodology. It is neither converted into a decision under Version 0.2.0 nor invalidated by this correction.
+In particular, this revision does not close, approve, reject, or reclassify the Governance Rule Discovery research. The existing [Governance Rule Discovery Research Closure](GOVERNANCE_RULE_DISCOVERY_RESEARCH_CLOSURE.md) remains an immutable historical decision made under the earlier methodology. It is neither converted into a decision under Version 0.2.1 nor invalidated by this correction.
 
-Any reassessment of that research under Version 0.2.0 requires a new, attributable closure process and a new decision record that references rather than rewrites the earlier record.
+Any reassessment of that research under Version 0.2.1 requires a new, attributable closure process and a new decision record that references rather than rewrites the earlier record.
 
 The creation and commit of this Draft methodology are document-existence events only. They do not make the methodology Approved, Effective, Adopted, or Design Frozen.
 
@@ -916,3 +921,4 @@ The creation and commit of this Draft methodology are document-existence events 
 | --- | --- | --- |
 | 0.1.0 | Established the initial research-closure categories, process, outcomes, and evidence expectations. | Draft methodology only; no approval or closure outcome created by the methodology document. |
 | 0.2.0 | Corrected overly broad Category A behavior observed during the first application by introducing a falsifiable materiality threshold, burden of proof, controlled Category B deferral, representative-alternative distinctions, evidence saturation, and anti-expansion controls. | Prospective methodology correction only; no existing research is reclassified and no earlier closure record is changed. |
+| 0.2.1 | Maintained the independent Governance Methodology Review outcome `ACCEPT WITH MINOR REVISIONS` and resolved its three accepted minor findings by separating research insufficiency from invalid closure proceedings, removing terminology that could imply reviewer or transition approval authority, and synchronizing lifecycle reopening language with the strict evidence and materiality threshold. | Maintenance correction only; no methodology redesign, semantic expansion, ownership change, research reclassification, or change to an earlier closure record. |

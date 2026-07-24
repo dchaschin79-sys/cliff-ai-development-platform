@@ -3,382 +3,936 @@
 | Field | Value |
 | --- | --- |
 | Proposal ID | CADP-ADP-GOVERNANCE-AUTHORITY-MODEL |
-| Version | 0.1.0 |
+| Version | 0.2.0 |
+| Revision | 2 |
 | Status | Draft |
 | Classification | Non-normative |
 | Document type | Architecture Proposal |
 | Governance authority | None |
-| Scope | Exploratory governance authority and applicability model |
-| Repository baseline considered | `6134438e2d059ae5d8a14bb831cd67bc7f523c99` |
+| Implementation authority | None |
+| Scope | Exploratory governance authority and decision-scoped applicability model |
+| Repository baseline considered | `e6aed6ae78bba4227190995f2863ca7e9c65f71e` |
 
-This proposal has no governance authority. It does not amend, interpret authoritatively, approve, supersede, or make Effective any existing artifact. All roles, modes, applicability categories, relationships, and mechanisms described below are candidates for future evaluation only.
+This proposal has no governance authority. It does not amend, interpret authoritatively, approve, adopt, supersede, or make Effective any existing artifact. It creates no authority assignment, approval, lifecycle event, Design Freeze, Product Binding, policy decision, implementation authorization, or operational permission.
+
+The terms `must`, `required`, and `prohibited` in this document describe constraints of the proposed architecture only. They do not impose current governance obligations. Any normative effect would require separately governed source artifacts, exact revision binding, independent review, eligible human approval, effectiveness, and applicability under the accepted CADP governance model.
 
 ## 1. Executive Summary
 
-CADP currently defines strong general boundaries for human authority, approval evidence, delegation, lifecycle transitions, canonical identity, and Design Freeze. The Architecture Baseline Audit and subsequent Step 4 approval remediation exposed a remaining architectural question: how should the evidence needed to establish authority vary as a repository grows from one accountable maintainer to multiple maintainers and then to formal enterprise governance?
+CADP requires a deterministic way to establish which authority evidence and governance controls apply to a specific governance act. Revision 1 proposed three repository operating modes—Single Maintainer, Multi Maintainer, and Enterprise Governance—as the primary way to vary those requirements. Independent architecture review found that this approach combined unrelated facts, made authority evaluation circular, conflated applicability evaluation with control activation, assigned some controls to an unsound `Enterprise-only` category, mixed several authority-classification axes, left normative ownership unclear, and did not sufficiently protect legacy evidence.
 
-This Architecture Design Proposal introduces a candidate Governance Authority Model with three operating modes:
+Revision 2 replaces repository-mode selection with the proposed **Decision-Scoped Governance Applicability Model**.
 
-- Single Maintainer;
-- Multi Maintainer;
-- Enterprise Governance.
+Its principal architectural rule is:
 
-The modes are proposed operating profiles, not lifecycle states or authority tiers. They would provide context for interpreting which evidence categories are always relevant, which depend on decision risk or organizational structure, and which arise only under formal collective governance.
+> Governance requirements are derived from the context of a specific Governed Operation, not from a coarse classification of the repository or organization.
 
-The proposal also separates candidate authority roles from repository permissions and job titles. It describes how one human could hold several roles in a small repository while preserving the same abstract evidence model needed for later separation, delegation, committee review, and quorum.
+The proposed model has seven cooperating concepts:
 
-No governance mode, role, assignment, transition, requirement, or authority is created by this document.
+1. **Governed Operation** defines the exact act being evaluated.
+2. **Universal Authority Core** establishes a non-circular minimum authority and evidence boundary before contextual evaluation.
+3. **Decision Context** records independent facts relevant to applicability.
+4. **Applicability Evaluation** evaluates shared rules for every Governed Operation.
+5. **Governance Controls** are activated conditionally from the resolved context.
+6. **Authority Assignments** connect attributable actors to bounded functions without conflating role, source, permission, or technical custody.
+7. **Resolution Result** preserves the inputs, rules, evidence, unresolved conditions, and outcome needed for audit and later policy evaluation.
+
+Applicability evaluation is universal; individual controls are conditional. Multiple controls can apply simultaneously and form a conjunctive requirement set unless a future Approved and Effective normative rule supplies an explicit precedence resolution. Missing required context or evidence cannot silently produce a less restrictive result.
+
+Labels such as Single Maintainer, Multi Maintainer, Enterprise Governance, open source, regulated, or federated may remain illustrative profiles. They have no authority and cannot determine requirements, replace Decision Context, bypass applicability evaluation, or operate as mutually exclusive normative modes.
+
+Revision 2 recommends one future normative owner, tentatively named the **Governance Applicability Contract**, for shared applicability semantics. Existing contracts would retain their own domain meanings. This proposal does not create that contract or authorize any contract or Foundation revision.
 
 ## 2. Problem Statement
 
-The Architecture Baseline Audit found that a recorded approval assertion could not be relied upon deterministically because the repository did not contain sufficient attributable human identity, authority-source, eligibility, scope, separation-of-duty, confidentiality, delegation, and integrity evidence. The append-only remediation package records that gap without invalidating the historical assertion.
+Current CADP sources separate canonical identity, human authority, approval evidence, governance lifecycle, Policy Decisions, delegation, and Design Freeze. They also preserve provider neutrality, immutable history, exact revision binding, explicit scope, and fail-closed behavior.
 
-The existing contracts correctly establish that:
+The Phase 1 Step 4 Approval Remediation Package records a concrete unresolved case: the existing approval assertion cannot currently be relied upon deterministically because required identity, authority-source, eligibility, separation, conflict, confidentiality, delegation, and integrity evidence is incomplete. The package preserves the historical assertion and identifies current reliance as `Indeterminate`; it does not invalidate history or create corrected approval.
 
-- repository ownership and job title alone do not create authority;
-- a human decision requires attributable identity and applicable authority evidence;
-- approval, effectiveness, adoption, protection, implementation, and release authority are distinct;
-- separation of duty and conflict evaluation apply where a controlling rule requires them;
-- delegation must be explicit, bounded, and reconstructable; and
-- unresolved evidence produces an `Indeterminate` result.
+That case exposes a broader architectural question. Governance controls do not vary reliably with repository size or organizational label:
 
-What remains architecturally unresolved is the applicability model around those evidence categories. A single-maintainer repository and a regulated enterprise repository should not be assumed to use identical organizational mechanisms. At the same time, repository size must not become a reason to omit universal identity, scope, timestamp, revision, or integrity evidence.
+- a one-maintainer repository may have a security-sensitive or externally regulated decision requiring independent evidence;
+- a collective open-source project may require quorum and dissent evidence without being an enterprise;
+- an enterprise repository may have a low-impact documentation operation that does not require committee action;
+- a cross-repository operation may require several authority sources even when each repository is small;
+- a repository may contain concurrent decisions with different impact, confidentiality, reversibility, and external obligations.
 
-Without an explicit model:
+Repository-level modes are therefore too coarse to determine governance requirements. They combine maintainer count, organizational formality, collective authority, external obligations, risk, actor independence, cross-repository scope, and decision impact into a single label even though those facts can change independently.
 
-- small repositories may be burdened with committee structures that do not exist;
-- large repositories may treat informal owner assertions as sufficient authority;
-- the same role title may acquire inconsistent meaning between repositories;
-- separation-of-duty and conflict controls may be applied inconsistently;
-- a change in repository maturity may require ad hoc reinterpretation of existing records; and
-- governance mode may be confused with lifecycle state, authority class, or permission.
+The architecture needs to answer, for each Governed Operation:
 
-This proposal explores a scalable authority model without rewriting or weakening existing governance.
+1. Which minimum authority and evidence facts are necessary before contextual rules can be evaluated?
+2. Which independent contextual facts are relevant?
+3. Which governance controls apply?
+4. Which actor functions and relationships are required?
+5. What evidence demonstrates satisfaction?
+6. Which facts remain unresolved?
+7. Which canonical rule revisions and evidence produced the result?
+8. How is the result preserved when governance evolves?
+
+The answer cannot rely on repository ownership, job title, technical access, AI inference, a repository profile, or a prior successful operation. It must remain compatible with the existing CADP authority hierarchy and provider-neutral Policy Decision outcomes.
 
 ## 3. Goals
 
-The candidate model is intended to:
+Revision 2 proposes an architecture intended to:
 
-1. describe governance operating modes appropriate to different repository and organizational conditions;
-2. distinguish authority roles from technical permissions, document ownership, and artifact authority;
-3. separate universal evidence categories from conditional and enterprise-only mechanisms;
-4. support deterministic evolution from one maintainer to many without replacing the underlying authority abstractions;
-5. preserve exact identity, revision, scope, time, confidentiality, integrity, and audit boundaries;
-6. preserve the orthogonality of approval, effectiveness, adoption, Design Freeze, Product Binding, implementation, release, and runtime state;
-7. remain product-independent and provider-neutral; and
-8. provide an architectural basis for later governed design and contract review.
+1. make the specific Governed Operation the primary evaluation scope;
+2. separate minimum authority validation from conditional governance control selection;
+3. represent applicability through orthogonal and composable Decision Context facts;
+4. make applicability evaluation universal without making every control universally active;
+5. prevent organization labels from granting authority or weakening controls;
+6. separate actor form, responsibility function, authority source, scope, operation permission, validity, delegation, and technical custody;
+7. produce deterministic, attributable, revision-bound evaluation evidence;
+8. support one-maintainer, multi-maintainer, collective, enterprise, regulated, and federated contexts without different authority architectures;
+9. preserve historical decisions and legacy evidence without retroactive reclassification;
+10. provide one future normative ownership boundary for shared applicability semantics;
+11. preserve Foundation supremacy and existing contract separation of concerns;
+12. remain product-independent, provider-neutral, auditable, and fail closed when protected decisions are unresolved; and
+13. permit prospective governance evolution without rewriting historical meaning.
 
-These are proposal goals, not adopted requirements.
+These are design goals for later consideration. They are not adopted requirements.
 
 ## 4. Non-Goals
 
 This proposal does not:
 
-- select or activate a governance mode;
-- create a governance-mode registry value;
-- define a new lifecycle state;
-- create an authority class, role assignment, committee, board, or quorum;
-- identify any person as an authority holder;
-- grant approval, release, Design Freeze, implementation, or runtime authority;
-- define company-specific job titles;
-- establish mandatory separation of duty for a decision class;
-- create delegation or emergency authority;
-- change an existing approval assertion or remediation status;
-- amend the Foundation Architecture;
-- revise a contract;
-- authorize a future contract revision;
-- create a schema, API, database, workflow, policy engine, Product Binding, or implementation; or
-- declare Phase 1 complete or authorize Phase 2.
+- implement or revise a normative contract;
+- modify or reinterpret the Foundation Architecture;
+- create a Governance Applicability Contract;
+- define registered artifact types, authority classes, roles, context values, controls, result codes, or other registry values;
+- define a schema, API, database, policy engine, workflow engine, implementation class, automation, adapter, or user interface;
+- select an identity provider, signature system, Git host, model provider, or other vendor;
+- assign authority to an individual, collective body, repository owner, maintainer, reviewer, approver, or release authority;
+- create approval, effectiveness, adoption, withdrawal, supersession, retirement, archival, or another lifecycle event;
+- create or lift Design Freeze protection;
+- create delegation, emergency authority, variance, exception, Product Binding, release authorization, or implementation authorization;
+- determine controls for a product-specific decision;
+- amend or validate the existing Step 4 approval assertion;
+- rewrite historical approval or lifecycle evidence;
+- authorize a Foundation or contract revision;
+- declare this architecture accepted, Approved, Effective, Adopted, or Design Frozen; or
+- authorize implementation or operational use.
 
-## 5. Governance Modes
+## 5. Architectural Position and Boundaries
 
-Governance modes are candidate operating profiles. They would describe the organizational context in which existing authority and evidence concepts are applied. They would not replace artifact lifecycle, authority evaluation, or operation-specific policy decisions.
+### 5.1 Current repository facts
 
-### 5.1 Single Maintainer
+At the repository baseline considered by this proposal:
 
-Single Maintainer describes a repository in which one accountable human performs most proposal, review, architecture, approval, and release functions.
+- the Foundation Architecture is Version 0.2.0 and Draft;
+- the relevant governance contracts are Draft contract candidates;
+- the Governance Document Model is descriptive and non-normative;
+- the current deterministic reliance status of the Step 4 approval assertion is `Indeterminate`;
+- no repository permission, commit, approval package, review verdict, or proposal creates governance authority; and
+- the existing Policy Decision Contract defines `Allow`, `Deny`, `Indeterminate`, and `Not Applicable` as provider-neutral outcomes.
 
-Candidate characteristics include:
+This proposal does not alter those facts.
 
-- one stable human identity may hold multiple explicitly identified roles;
-- role combination is recorded rather than hidden;
-- repository ownership remains distinct from governance eligibility;
-- decisions remain bound to exact artifacts, revisions, scope, and timestamps;
-- a decision records whether independent review was unavailable, unnecessary under a future applicable profile, or supplied externally;
-- conflict and self-review conditions are disclosed rather than assumed absent;
-- delegation is normally absent but remains explicitly stated; and
-- higher-risk or non-delegable decisions may still require an external human or later escalation under an applicable governing source.
+### 5.2 Proposed architecture
 
-This mode would not mean “owner may approve anything.” It would provide a way to represent legitimate role concentration without pretending that several independent people participated.
+The Decision-Scoped Governance Applicability Model is a proposed semantic architecture for future governance design. It explains how shared applicability facts, authority assignments, and controls could be resolved without changing the domain meaning owned by existing contracts.
 
-### 5.2 Multi Maintainer
+### 5.3 Future normative work
 
-Multi Maintainer describes a repository with several recurring contributors or maintainers and a practical ability to separate some governance functions.
+If the architecture is later accepted through an eligible human governance process, separate future work would be needed to:
 
-Candidate characteristics include:
+- create one normative owner for shared applicability semantics;
+- establish exact controlled vocabularies and evidence requirements;
+- define compatibility with existing contracts;
+- determine any minimal Foundation recognition;
+- define prospective adoption and legacy assessment boundaries; and
+- independently review and approve every normative revision.
 
-- named role assignments with scope and effective intervals;
-- explicit distinction among proposer, reviewer, approver, architecture owner, and release authority;
-- decision-class or risk-based separation-of-duty profiles;
-- reconstructable delegation for absences or bounded responsibilities;
-- recorded conflict review where relationships or interests may affect independence;
-- independent review for selected architecture, authority, security, or lifecycle decisions;
-- defined escalation when reviewers disagree or eligible authority is unavailable; and
-- maintained continuity when a role holder changes.
+None of that future work is authorized by this proposal.
 
-The mode would not require every decision to use every role. Applicability would depend on the decision class, risk, scope, and future governing profile.
+### 5.4 Architectural invariants
 
-### 5.3 Enterprise Governance
+The proposed model preserves the following boundaries:
 
-Enterprise Governance describes repositories subject to formal organizational, regulatory, audit, cross-product, or high-impact decision controls.
+- Foundation Architecture remains architecturally supreme.
+- One canonical source controls each governed artifact identity and effective revision.
+- Human authority is explicit, attributable, bounded, and independently evidenced.
+- AI cannot create human approval or governance authority.
+- Approval, effectiveness, adoption, protection, implementation, release, and runtime remain independent.
+- Technical custody does not create governance authority.
+- Historical meaning is not rewritten by current evaluation.
+- Missing or conflicting evidence is exposed rather than defaulted.
+- Shared applicability semantics have one future normative owner.
+- Domain contracts retain their existing semantic ownership.
+- Provider-specific systems may project or evaluate the model but cannot redefine it.
 
-Candidate characteristics include:
+## 6. Decision-Scoped Governance Applicability Model
 
-- formally sourced role and authority assignments;
-- organizational identity and authority directories or equivalent evidence;
-- mandatory role separation for defined decision classes where later governance establishes it;
-- board or committee authority for selected cross-cutting decisions;
-- quorum and voting evidence where collective authority is used;
-- formal conflict-of-interest treatment;
-- controlled delegation, alternates, recusal, and escalation;
-- bounded authority intervals and periodic revalidation;
-- audit-grade decision integrity and retention;
-- cross-repository and product-scope coordination; and
-- explicit release, implementation, and operational authority distinct from architecture approval.
+The proposed conceptual flow is:
 
-Enterprise Governance would add evidence mechanisms, not a higher artifact authority tier. A committee name or quorum result would still require a valid authority source, exact scope, and attributable participants.
+```text
+Governed Operation
+        ↓
+Universal Authority Core
+        ↓
+Decision Context
+        ↓
+Applicability Evaluation
+        ↓
+Conjunctive Governance Controls
+        ↓
+Authority Assignment and Evidence Validation
+        ↓
+Attributable Resolution Result
+        ↓
+Operation-specific Policy Decision
+```
 
-### 5.4 Mode Properties
+The Resolution Result would be an input to, not a replacement for, the existing operation-specific Policy Decision. It would not itself create `Allow`, lifecycle state, approval, or authority.
 
-The candidate modes share these proposed properties:
+### 6.1 Governed Operation
 
-- a mode describes operating context, not lifecycle;
-- a mode does not grant authority;
-- a mode does not reduce higher-order constraints;
-- a mode does not make an artifact Approved or Effective;
-- mode selection and change would require separate attributable evidence;
-- missing or conflicting mode evidence would not be resolved by repository size, contributor count, or AI inference; and
-- mode-specific evidence would supplement rather than replace universal identity and decision evidence.
+#### Purpose
 
-## 6. Authority Types
+A Governed Operation is the exact governance act being evaluated. It establishes the smallest meaningful decision boundary.
 
-Authority types below are candidate responsibility roles. They do not create company positions, authority classes, or current assignments.
+Illustrative operations include:
 
-| Candidate authority type | Candidate responsibility | Explicit boundary |
-| --- | --- | --- |
-| Repository Owner | Maintains repository custody, access administration, hosting configuration, and continuity. | Repository control does not by itself grant architecture, approval, release, or governance authority. |
-| Architecture Owner | Maintains architectural coherence, scope boundaries, dependencies, and decision lineage. | Architecture ownership does not automatically grant approval, lifecycle-transition, release, or implementation authority. |
-| Reviewer | Evaluates an exact candidate against declared criteria and records findings and evidence. | Review does not create approval, authority, effectiveness, adoption, or release permission. |
-| Approver | Makes an attributable approval or rejection decision within a valid authority source, scope, operation, and interval. | Approval does not create effectiveness, adoption, Design Freeze, Product Binding, implementation, release, or execution authority. |
-| Release Authority | Authorizes a defined release, deployment, or operational promotion after all applicable governance and technical evidence is satisfied. | Release authority does not amend architecture, create approval evidence, or bypass lifecycle, protection, product, or policy controls. |
-| Governance Board | Exercises collective decision authority for scopes explicitly assigned by a future charter or equivalent source. | The board name does not create authority; member identity, scope, quorum, conflicts, votes, and decision evidence remain necessary where applicable. |
+- approving an exact architecture proposal revision;
+- adopting an exact governance contract for a declared scope;
+- declaring an Approved artifact Effective for a scope and interval;
+- creating or lifting a Design Freeze;
+- authorizing a release;
+- delegating a bounded operation;
+- changing a governance applicability policy; or
+- recording a cross-repository decision.
 
-One person could hold several candidate roles in Single Maintainer mode. Multiple role assignments would remain independently named so later distribution does not change the meaning of earlier evidence. Combining roles would not combine or expand authority sources.
+#### Rationale
 
-## 7. Applicability Matrix
+One repository may contain operations with different impact, risk, confidentiality, reversibility, and external obligations. Evaluating the operation avoids assigning one governance posture to an entire repository or organization.
 
-This matrix is exploratory. `Universal`, `Conditional`, and `Enterprise-only` describe candidate applicability categories for later design; they are not current requirements or exemptions.
+#### Relationship to existing CADP governance
 
-| Governance evidence or mechanism | Universal | Conditional | Enterprise-only | Candidate rationale |
-| --- | --- | --- | --- | --- |
-| Attributable human identity | YES | NO | NO | Every human governance decision needs a resolvable decision-maker regardless of repository size. |
-| Decision timestamp with timezone | YES | NO | NO | Temporal evaluation and immutable history require a decision boundary. |
-| Artifact identity and exact revision | YES | NO | NO | Decisions must bind to the artifact actually evaluated. |
-| Artifact and decision scope | YES | NO | NO | Authority and consequences must remain bounded. |
-| Authority source reference | YES | NO | NO | A role or repository permission should not stand alone as eligibility evidence. |
-| Authority interval or continuing-status evidence | YES | NO | NO | Decision-time eligibility and later reliance must be distinguishable. |
-| Decision rationale or stable reference | YES | NO | NO | Audit reconstruction requires the basis of the decision. |
-| Integrity and lineage evidence | YES | NO | NO | Evidence must remain attributable and resistant to silent alteration. |
-| Separation-of-duty evaluation | NO | YES | NO | Applicability could depend on decision risk, mode, external obligations, and available independent actors. |
-| Independent reviewer | NO | YES | NO | Some decisions may warrant independent review; routine low-risk decisions may not. |
-| Delegation record | NO | YES | NO | Required only when authority is exercised through delegation rather than directly. |
-| Conflict-of-interest review | NO | YES | NO | Depth could depend on decision class, relationships, financial interest, or regulatory exposure. |
-| Recusal and alternate authority | NO | YES | NO | Relevant when a conflict, absence, or independence rule prevents the primary holder from acting. |
-| Release Authority distinct from Approver | NO | YES | NO | Useful when architecture approval and operational release require different evidence. |
-| Committee or board approval | NO | NO | YES | Collective authority is an organizational mechanism associated with a formally governed enterprise scope. |
-| Quorum | NO | NO | YES | Quorum applies only when a valid collective authority source defines it. |
-| Recorded vote and dissent | NO | NO | YES | Formal collective decisions may need participant-level evidence and retained dissent. |
-| Periodic authority recertification | NO | NO | YES | Formal enterprises may require recurring revalidation beyond event-driven changes. |
+The Governed Operation aligns with the Authority and Delegation Contract and Policy Decision Contract, which already evaluate a specific subject, operation, resource, scope, and interval. It also aligns with lifecycle transition evidence, which identifies the exact target dimension and intended state.
 
-An eventual applicability mechanism would need to prevent `Conditional` from meaning “optional by convenience” and prevent `Enterprise-only` from being inferred merely because an organization is large. Each applicable requirement would need an attributable governing source.
+#### Boundary and limitations
 
-## 8. Governance Evolution
+The operation identity does not grant permission, supply authority, or determine applicable controls by itself. A broad label such as “approve” is insufficient without the subject, exact artifact revision, scope, purpose, and decision boundary needed by applicable governance.
 
-The proposed evolution path is:
+#### Future normative ownership and migration
 
-**Single Maintainer → Multi Maintainer → Enterprise Governance**
+The future shared applicability owner would define the common operation-identification boundary. Domain contracts would retain ownership of the meaning and prerequisites of their own operations. Existing records would not be rewritten merely to add a modern operation envelope.
 
-This progression represents increasing organizational structure, not artifact maturity or lifecycle state.
+### 6.2 Universal Authority Core
 
-### 8.1 Stable Core Across Modes
+#### Purpose
 
-Evolution could preserve the same abstract evidence dimensions:
+The Universal Authority Core establishes the minimum attributable authority and evidence boundary needed before conditional applicability can be evaluated.
 
-- subject identity;
-- authority source;
-- role;
+At the architectural level, the core contains:
+
+- attributable actor identity;
+- actor form;
+- authority function being exercised;
+- authority source identity;
+- authority source revision or other exact canonical identity;
+- scope;
 - permitted operation;
-- artifact and resource scope;
-- effective interval;
-- delegation status;
-- separation and conflict evaluation;
-- confidentiality eligibility;
+- validity interval;
 - decision timestamp;
-- integrity evidence; and
-- immutable lineage.
+- decision subject and exact governed resource where applicable;
+- evidence integrity; and
+- revocation status at the relevant decision time.
 
-The evidence depth and organizational source could change while the meanings of identity, scope, approval, delegation, and lifecycle remain stable.
+#### Rationale
 
-### 8.2 Single to Multi Maintainer
+Conditional controls cannot determine whether the context source was eligible if context eligibility itself depends on those controls. The Universal Authority Core provides a bootstrap boundary that does not depend on a repository mode or on the final control set.
 
-A repository could evolve by:
+For context supplied by a human actor, the core would establish the actor's bounded eligibility to declare or attest the relevant context. For context derived from canonical sources, the core would establish the source identity, revision, provenance, and authorized derivation boundary.
 
-- creating explicit assignments for roles previously held by one person;
-- defining scopes and intervals for each assignment;
-- identifying decision classes that use independent review or approval;
-- recording delegation and escalation paths;
-- preserving earlier single-maintainer records with their original context; and
-- applying the new operating profile prospectively.
+#### Relationship to existing CADP governance
 
-Historical decisions would not be rewritten merely because later governance becomes more distributed.
+The core does not replace the Authority and Delegation Contract, Approval Record Contract, or Canonical Artifact Contract. It organizes the minimum shared inputs those contracts already require: identity, source, exact revision, scope, operation, interval, integrity, and revocation evidence.
 
-### 8.3 Multi Maintainer to Enterprise Governance
+#### Boundary and limitations
 
-A repository could evolve further by:
+Passing the Universal Authority Core would not:
 
-- sourcing roles from formal organizational authority;
-- defining collective authorities for selected scopes;
-- introducing committee, quorum, voting, recusal, and alternate evidence where applicable;
-- strengthening integrity, retention, and periodic revalidation;
-- coordinating authority across repositories and products; and
-- preserving prior mode declarations and authority assignments as history.
+- authorize the final Governed Operation;
+- satisfy a conditionally activated control;
+- establish approval, effectiveness, adoption, or Design Freeze;
+- validate a delegation merely because one is referenced;
+- make a context claim correct; or
+- produce a Policy Decision `Allow`.
 
-### 8.4 Mode Transition Boundary
+It establishes only that contextual evaluation can proceed from attributable and canonically resolvable inputs. Missing, conflicting, stale, out-of-scope, or unverifiable core evidence would prevent less restrictive defaulting and would be carried forward as unresolved.
 
-A future mode transition could be represented as a separate governed declaration with an exact source revision, scope, decision authority, rationale, transition timestamp, and affected decision profiles. That declaration would not amend the contracts whose abstract evidence fields remain unchanged.
+#### Future normative ownership and migration
 
-The proposal does not create such a declaration, define its artifact type, or authorize any transition.
+The future shared applicability owner would own the common Universal Authority Core boundary while consuming authority, identity, lifecycle, and integrity meanings from existing contracts. Legacy evidence would be assessed under contemporaneous rules rather than retrofitted into a fabricated core record.
 
-## 9. Relationship to Existing Contracts
+### 6.3 Decision Context
 
-This proposal treats current contracts as authoritative sources of candidate semantics within their existing lifecycle and scope. It neither edits nor reinterprets them.
+#### Purpose
 
-### 9.1 Authority and Delegation Contract
+Decision Context records independent facts that may affect which governance controls apply to the Governed Operation. It contains applicability facts, not conclusions that controls were satisfied.
 
-The Authority and Delegation Contract already owns actor eligibility, scope, operation, interval, delegation, non-delegable boundaries, and AI limits. A future authority model could supply structured operating-context and role-assignment evidence for that evaluation without replacing the contract or turning modes into authority tiers.
+Candidate dimensions include:
 
-### 9.2 Approval Record Contract
+| Candidate dimension | Architectural question |
+| --- | --- |
+| Operation type | What exact governance act is being evaluated? |
+| Artifact class | What kind of governed subject is affected? |
+| Scope | Which platform, product, repository, component, cross-repository, or other bounded scope is affected? |
+| Impact | What is the bounded consequence if the operation proceeds? |
+| Reversibility | Can the operation be safely reversed, and under what boundary? |
+| Security relevance | Does the operation affect security constraints or controls? |
+| Safety relevance | Does the operation affect a declared safety boundary? |
+| Legal or regulatory obligation | Does an external legal or regulatory source govern the operation? |
+| Contractual obligation | Does an external contractual source activate governance evidence? |
+| Confidentiality | Which handling or eligibility constraints affect the operation and evidence? |
+| Cross-repository effect | Does the operation change or rely upon more than one canonical repository scope? |
+| Collective authority requirement | Does a valid authority source require action by a collective body? |
+| Independent review availability | Can required independence be supplied for this operation and scope? |
+| Emergency or exception status | Is a separately governed emergency, variance, or exception mechanism asserted? |
 
-The Approval Record Contract already requires attributable identity, authority, eligibility, exact artifact binding, scope, timestamp, confidentiality, integrity, and separation or conflict evidence where applicable. This proposal could become an architectural basis for determining which organizational evidence profiles apply in different operating contexts. It does not propose specific contract text.
+These are candidate dimensions, not registered fields or values.
 
-### 9.3 Governance Lifecycle Contract
+#### Rationale
 
-The Governance Lifecycle Contract already separates approval, effectiveness, adoption, disposition, protection, and implementation. Governance mode would remain an independent operating-context input and would not become a lifecycle state. A future design could use mode and decision profiles when resolving transition authority evidence without changing lifecycle semantics.
+The dimensions are orthogonal and composable. A decision may simultaneously be high impact, security relevant, cross-repository, contractually constrained, and subject to collective authority. No one label replaces those facts.
 
-### 9.4 Design Freeze Contract
+#### Relationship to existing CADP governance
 
-The Design Freeze Contract already requires independent freeze authority, approval, exact baseline, scope, interval, and integrity evidence. A future authority model could describe whether a freeze decision uses one approver, separated roles, or collective authority for a particular scope. The freeze would still require all existing independent prerequisites.
+Decision Context would reference canonical identity, scope, confidentiality, lifecycle, authority, and current-state evidence already owned by applicable CADP sources. It would not copy or reinterpret those source meanings.
 
-### 9.5 Canonical Artifact Contract
+#### Boundary and limitations
 
-The Canonical Artifact Contract already defines stable identity, type, namespace, owner, source, revision, scope, lifecycle, confidentiality, lineage, and integrity categories. A future architecture could evaluate whether governance-mode declarations, authority assignments, and decision profiles should become governed artifact classes under that model. This proposal creates none of those artifacts or registry values.
+Decision Context cannot:
 
-### 9.6 Contract Evolution Boundary
+- grant authority;
+- declare a control unnecessary without an applicable rule;
+- infer missing facts from repository size or organization name;
+- override a higher-authority source;
+- convert an emergency assertion into valid emergency authority; or
+- replace an immutable input manifest or Policy Decision.
 
-If this proposal is later accepted as architectural direction, any contract impact would require:
+Context facts must remain distinct from compliance conclusions. For example, “collective authority required” is a context fact sourced from an authority instrument; “quorum satisfied” is evidence evaluated against an activated control.
 
-- separate contract design;
-- explicit versioning;
-- compatibility analysis;
+#### Future normative ownership and migration
+
+The future shared applicability owner would define a minimal common vocabulary and the boundary for adding domain-specific facts. Consuming contracts could supply domain facts within that boundary without independently redefining shared dimensions. Prospective adoption would avoid forcing current structures onto earlier decisions.
+
+### 6.4 Applicability Evaluation
+
+#### Purpose
+
+Applicability Evaluation determines which shared governance rules govern the exact operation and context.
+
+#### Rationale
+
+Applicability and control satisfaction are different questions:
+
+- Applicability asks whether a control governs the operation.
+- Activation adds every applicable control to the requirement set.
+- Satisfaction asks whether valid authority and evidence meet that control.
+
+Applicability Evaluation is universal for every Governed Operation. An individual control may be `Not Applicable`, but evaluation of whether it applies is never optional.
+
+#### Relationship to existing CADP governance
+
+The model preserves the Policy Decision Contract's distinction between `Not Applicable` and permission. A rule being `Not Applicable` does not establish that another rule permits the operation. The final operation still requires the existing provider-neutral Policy Decision over every applicable input.
+
+#### Boundary and limitations
+
+Applicability cannot be selected by convenience, AI confidence, repository profile, contributor count, or the desired outcome. A rule evaluation would need exact rule identity and revision, triggering facts, scope, effective interval, precedence, normative source, and attributable rationale.
+
+Missing required context or unresolved rule identity would not default the control to inactive. It would remain unresolved and fail closed where the operation is protected under existing governance.
+
+#### Future normative ownership and migration
+
+The future shared applicability owner would own common applicability semantics, rule identity, precedence, and multi-condition resolution. This proposal defines no rule language, algorithm, schema, or registry values.
+
+### 6.5 Governance Controls
+
+#### Purpose
+
+A Governance Control is a conditionally activated requirement that must be evaluated before the Governed Operation can receive its final Policy Decision.
+
+Illustrative controls include:
+
 - independent review;
-- human approval; and
-- lifecycle treatment under the existing governance model.
+- separation of duty;
+- conflict-of-interest evaluation;
+- confidentiality eligibility;
+- delegation evidence;
+- quorum;
+- recorded vote;
+- dissent capture;
+- external review;
+- release authorization;
+- multi-party approval;
+- emergency ratification; and
+- periodic recertification.
 
-This proposal does not authorize that work or predetermine its result.
+These examples do not create current controls or applicability rules.
 
-## 10. Open Questions
+#### Rationale
 
-1. Is governance mode repository-wide, or may different components and decision scopes use different modes?
-2. Which authority may select or change a governance mode?
-3. What evidence establishes the initial authority source in a new Single Maintainer repository?
-4. How is a role combination evaluated when one human is proposer, reviewer, and approver?
-5. Which decision characteristics make separation of duty or independent review applicable?
-6. Is decision risk represented by reusable profiles, explicit rules, or case-specific evidence?
-7. How are external reviewers or approvers represented when they are not repository maintainers?
-8. How are temporary alternates, absence coverage, and emergency authority distinguished?
-9. What constitutes sufficient conflict disclosure in each mode?
-10. Can a Governance Board act across several repositories, and how is its scope bounded?
-11. How are quorum, abstention, recusal, dissent, and tie-breaking represented without coupling CADP to one organizational form?
-12. What prevents an unauthorized downgrade from Enterprise Governance to Single Maintainer?
-13. How are mode transitions applied prospectively to active approvals, delegations, freezes, and adoptions?
-14. What minimum integrity evidence is sufficient before signature or identity-provider standards exist?
-15. Which concepts need controlled registry values, and which remain policy references?
+Controls are activated from actual context conditions rather than organization labels. Quorum, for example, follows from a valid collective authority source—not from an `Enterprise` label. Independent review follows from an applicable risk, impact, authority, contract, or other governing condition—not from maintainer count alone.
 
-## 11. Risks
+#### Relationship to existing CADP governance
 
-| Risk | Architectural concern | Candidate mitigation direction |
+Each domain contract retains the meaning of its own control. The Approval Record Contract continues to own approval meaning and evidence. The Governance Lifecycle Contract continues to own lifecycle transitions. The Design Freeze Contract continues to own freeze semantics and freeze-safe evidence. The Authority and Delegation Contract continues to own delegation validity.
+
+#### Boundary and limitations
+
+The proposal removes `Enterprise-only` as a normative category. It does not make committee, quorum, dissent, recertification, or separation controls universal. Their applicability would be derived from actual conditions and an applicable normative source.
+
+Applicable controls form a conjunctive set: every activated control remains independently necessary unless an explicit Approved and Effective higher or governing rule resolves a conflict. One satisfied control cannot cure an invalid independent input.
+
+#### Future normative ownership and migration
+
+The future shared applicability owner would define activation and composition semantics. Domain contracts would retain control meaning and domain-specific evidence requirements. This avoids duplicating approval, lifecycle, freeze, or authority semantics inside the shared contract.
+
+### 6.6 Authority Assignments
+
+#### Purpose
+
+Authority Assignments connect an attributable actor to a bounded responsibility without treating a title, repository permission, or actor form as self-validating.
+
+The proposed model separates these axes:
+
+| Axis | Question answered | Illustrative values or evidence |
 | --- | --- | --- |
-| Mode used as a bypass | A repository could select a lighter mode to avoid applicable controls. | Bind mode selection to an attributable authority source and prohibit mode from weakening higher constraints. |
-| Role title mistaken for authority | Labels such as Owner or Approver could be treated as self-validating. | Preserve independent identity, source, scope, operation, interval, and eligibility evaluation. |
-| Hidden role concentration | One person could appear independent by using several role labels. | Record human identity and role combinations explicitly. |
-| Enterprise concepts leak into universal rules | Quorum or boards could become assumed requirements for all repositories. | Keep collective mechanisms in separately applicable profiles. |
-| Conditional means optional | Decision-makers could omit controls without resolving applicability. | Require a governing source for both applicability and non-applicability in later design. |
-| Governance downgrade | Mode changes could reduce controls during a disputed decision. | Make transitions prospective, attributable, scoped, and historically retained. |
-| Multiple mode sources | Conflicting declarations could produce inconsistent decisions. | Require one canonical declaration per evaluated scope and return `Indeterminate` on conflict. |
-| Contract duplication | Mode profiles could restate and drift from existing contracts. | Reference contract-owned semantics and keep profiles limited to applicability evidence. |
-| Excessive process | Small repositories could become unable to make routine decisions. | Preserve universal evidence while allowing conditional organizational mechanisms. |
-| False assurance | More roles or committee records could be mistaken for valid authority. | Continue evaluating source authority, exact scope, identity, integrity, and current eligibility. |
+| Actor form | What kind of entity acted? | Individual human, collective human body, external legal or regulatory authority. |
+| Responsibility function | What governance function was performed? | Context declarer, reviewer, approver, architecture authority, release authority, compliance reviewer, records custodian. |
+| Authority source | Why may the actor perform the function? | Canonical charter, appointment, approved delegation, board resolution, contract, law, regulation, or other governed instrument. |
+| Scope | Where and over what subject may the authority be exercised? | Platform, product, repository, component, artifact, operation class, or another explicit boundary. |
+| Permitted operation | Which exact act may the actor perform? | Review, approve, declare Effective, adopt, freeze, release, delegate, or another explicitly sourced operation. |
+| Validity interval | When is the assignment eligible? | Exact start and end or explicitly continuing boundary, subject to current revocation and supersession evidence. |
+| Delegation | Is eligibility direct or supplied through a valid bounded chain? | Exact delegation identity, source, revision, operations, scope, interval, constraints, and revocation state. |
+| Technical custody | Who can technically administer or change the repository or system? | Repository ownership, hosting administration, merge capability, deployment access, or records custody. |
 
-## 12. Alternatives Considered
+#### Rationale
 
-### 12.1 One Universal Enterprise Model
+Revision 1 mixed actor forms, functions, and technical custody in one authority-type list. That allowed labels such as Repository Owner, Approver, Release Authority, and Governance Board to appear equivalent even though they answer different questions.
 
-Apply separation of duty, committee approval, quorum, and formal recertification to every repository.
+In Revision 2:
 
-This offers uniformity but would impose nonexistent organizational structures on single-maintainer repositories and could encourage fictional evidence.
+- an individual or collective body is an actor form;
+- reviewer or approver is a responsibility function;
+- a charter, appointment, delegation, contract, law, or resolution is an authority source;
+- permission is bounded to an operation, scope, and validity interval;
+- delegation is a separately validated source path; and
+- repository ownership is technical custody, not governance authority.
 
-### 12.2 Informal Maintainer Conventions
+#### Relationship to existing CADP governance
 
-Allow each repository to describe authority in local prose without a common architecture.
+The Authority and Delegation Contract remains the normative-capable owner of authority eligibility and delegation mechanics. The Approval Record Contract remains the owner of approval evidence. This proposal adds no role, authority class, or assignment.
 
-This is simple initially but weakens cross-repository consistency, deterministic evaluation, and future migration.
+#### Boundary and limitations
 
-### 12.3 Contract-Specific Applicability Rules
+A single person may hold several functions only where applicable higher governance permits that combination and required conflict or separation controls are satisfied. Several function labels cannot simulate independent actors. A collective body would need attributable evidence that it validly acted under its authority source. An automated system may supply supporting evidence but cannot become the human authority or create human approval.
 
-Define operating-context rules independently inside each contract.
+Technical custody may coexist with governance authority only when separate authority evidence establishes it. Tool access or successful execution never fills a missing assignment axis.
 
-This keeps rules near their consumers but risks duplicate mode definitions, inconsistent terminology, and circular applicability.
+#### Future normative ownership and migration
 
-### 12.4 Organization-Chart Authority
+The future shared applicability owner would define how applicable controls request authority functions and relationships. Authority assignment validity would continue to be evaluated under the Authority and Delegation Contract. Existing title-based records would be assessed from their actual evidence rather than automatically translated into new roles.
 
-Treat corporate title or reporting hierarchy as the authority model.
+### 6.7 Resolution Result
 
-This is easy to understand but confuses employment structure with operation-specific governance eligibility and does not cover independent contributors or repository-local scope.
+#### Purpose
 
-### 12.5 Product-Specific Authority Models
+The Resolution Result is the attributable evidence of applicability resolution for one Governed Operation.
 
-Allow every product to define its own roles and evidence model.
+At the architectural level, it records:
 
-This supports local variation but undermines CADP’s product-independent governance and makes common tooling and audit difficult.
+- evaluated operation and exact subject;
+- Decision Context identity or revision;
+- canonical context sources and revisions;
+- applicability rules evaluated and their exact revisions;
+- applicable controls;
+- non-applicable controls and attributable rationale;
+- authority assignments evaluated;
+- evidence required;
+- evidence supplied;
+- unresolved conditions and conflicts;
+- evaluation timestamp;
+- evaluator identity and version;
+- integrity and lineage evidence;
+- re-evaluation triggers; and
+- final evaluation status.
 
-### 12.6 No Explicit Modes
+#### Rationale
 
-Keep the current contracts and resolve every applicability question case by case.
+An outcome without its inputs and rules cannot be reproduced or audited. The result therefore preserves both activated and non-activated controls, including why a control was not applicable.
 
-This avoids a new abstraction but leaves the audit finding’s underlying scalability question unresolved and increases interpretive variation.
+#### Relationship to existing CADP governance
 
-## 13. Recommendation
+The result would be a governed input to the operation-specific Policy Decision. It would align with the Policy Decision Contract's immutable input manifest, explainability, freshness, audit, and four provider-neutral outcomes.
 
-Proceed with independent architecture review of this proposal as a non-normative candidate.
+#### Boundary and limitations
 
-If the proposal survives review, the next architectural work could evaluate a minimal model consisting of:
+The result would not:
 
-- a governance operating-context declaration;
-- scoped authority-role assignments;
-- decision or evidence applicability profiles;
-- prospective mode-transition evidence; and
-- deterministic conflict and missing-evidence behavior.
+- create a lifecycle state;
+- grant authority;
+- create approval;
+- replace the domain contracts;
+- become precedent through repetition;
+- authorize implementation or execution; or
+- permit reuse when bound inputs have changed.
 
-That work should preserve existing contract ownership, keep modes outside lifecycle and authority hierarchies, and avoid creating organization-specific rules in universal contracts.
+This proposal does not define a new status registry. Exact per-control evaluation states and their mapping to `Allow`, `Deny`, `Indeterminate`, and `Not Applicable` remain future normative decisions. Unresolved required inputs must remain visible and cannot be summarized as satisfaction.
 
-No contract drafting, contract revision, registry value, schema, approval, lifecycle transition, or implementation should be inferred or authorized by this recommendation.
+#### Future normative ownership and migration
+
+The future shared applicability owner would define the conceptual result semantics. Serialization, storage, evaluator architecture, and machine interfaces remain separate implementation work.
+
+## 7. Deterministic Evaluation Order
+
+The proposed resolution order is:
+
+### Step 1 — Identify the Governed Operation
+
+Resolve the requested act, subject, exact artifact or resource identity, immutable revision where applicable, scope, purpose, and evaluation time.
+
+### Step 2 — Validate the Universal Authority Core for context declaration
+
+Establish the attributable actor or canonical source permitted to supply each required context fact. Validate the source identity and revision, function, scope, operation, validity interval, integrity, and relevant revocation status without relying on a repository profile or the conditional control set being computed.
+
+### Step 3 — Resolve Decision Context from canonical evidence
+
+Assemble the independent context facts from authorized canonical sources. Preserve their identities, revisions, effective boundaries, confidentiality constraints, and provenance. Record missing or conflicting facts as unresolved.
+
+### Step 4 — Evaluate every applicable rule
+
+Evaluate the shared and domain-supplied applicability rules relevant to the operation. Record applicable and non-applicable outcomes with exact normative rule identities and revisions. Evaluation is universal even when a specific control is not activated.
+
+### Step 5 — Produce the conjunctive control set
+
+Activate every control whose conditions are met. Controls apply together. Conflicts require an explicit normative precedence rule; repository labels and evaluator preference cannot discard a control.
+
+### Step 6 — Resolve required authority functions and evidence
+
+For each activated control, identify the required actor functions, relationships, independence conditions, authority evidence, and domain evidence without yet treating them as satisfied.
+
+### Step 7 — Validate Authority Assignments
+
+Evaluate actor form, responsibility function, authority source, exact revision, scope, permitted operation, validity interval, delegation, revocation, conflicts, confidentiality, and technical-custody separation.
+
+### Step 8 — Validate satisfaction of every activated control
+
+Evaluate the supplied evidence for each control independently. One valid input cannot substitute for another. Record missing, stale, conflicting, out-of-scope, or unverifiable evidence.
+
+### Step 9 — Produce the attributable Resolution Result
+
+Preserve the complete evaluation basis and unresolved conditions. Submit the result with all other required inputs to the operation-specific Policy Decision.
+
+### 7.1 Circularity removed
+
+Revision 1 permitted this cycle:
+
+```text
+Authority validates repository mode
+        ↓
+Repository mode determines authority evidence
+        ↓
+Authority validates repository mode
+```
+
+Revision 2 removes repository mode from the authoritative sequence:
+
+```text
+Minimum source authority is validated independently
+        ↓
+Canonical Decision Context is resolved
+        ↓
+Applicable controls determine additional authority and evidence needs
+        ↓
+Assignments and control evidence are validated
+```
+
+The Universal Authority Core is intentionally narrower than final operation authority. It validates the admissibility and attribution of context inputs, not permission to complete the Governed Operation. Conditional controls can therefore add stronger or additional authority requirements without retroactively determining whether the context source existed.
+
+### 7.2 Missing evidence and fail-closed behavior
+
+No missing context dimension, rule, authority source, assignment, or control evidence may silently default to:
+
+- low impact;
+- no external obligation;
+- no conflict;
+- no separation requirement;
+- no collective authority;
+- no confidentiality constraint;
+- no active protection;
+- no delegation;
+- `Not Applicable`; or
+- permission.
+
+Where existing CADP governance classifies the operation as protected, unresolved required evidence produces `Indeterminate` and fails closed. This proposal does not broaden that existing rule or define safe handling for non-protected cases.
+
+## 8. Multiple Conditions and Illustrative Profiles
+
+### 8.1 Multiple simultaneous conditions
+
+The model supports several context conditions at once. For example, an architecture approval could be high impact, security relevant, contractually constrained, cross-repository, and subject to collective authority. Every rule activated by those facts contributes to the conjunctive control set.
+
+The model does not select one “dominant” profile. An explicit normative precedence rule may resolve a genuine control conflict, but cannot be inferred from label order, organizational size, repository ownership, or convenience.
+
+### 8.2 Named profiles
+
+Single Maintainer, Multi Maintainer, Enterprise Governance, regulated, open-source, or similar labels may remain non-normative convenience templates or examples. A template may suggest candidate context facts for human review, but it must expand into explicit dimensions and be evaluated under the same rules as any other context.
+
+A named profile cannot:
+
+- determine governance requirements;
+- function as a mutually exclusive normative mode;
+- override Decision Context;
+- act as an authority source;
+- establish actor eligibility;
+- bypass Applicability Evaluation;
+- make a control automatically satisfied;
+- weaken a higher rule;
+- resolve missing evidence; or
+- become a lifecycle, authority, maturity, or protection state.
+
+### 8.3 Illustrative profile evolution
+
+A repository may appear to evolve from a single maintainer to several maintainers and later to formal collective governance. Under Revision 2, that evolution is represented by prospective changes to actual authority sources, assignments, scopes, external obligations, and decision contexts—not by a repository-wide normative mode transition.
+
+The same repository can therefore support:
+
+- a low-impact operation performed through one eligible actor;
+- a security operation requiring independent review;
+- a collective decision requiring quorum;
+- a cross-repository decision requiring several approvals; and
+- a later operation governed by a revised authority instrument.
+
+No historical decision is reclassified merely because the organization later changes.
+
+## 9. Normative Ownership and Contract Integration
+
+### 9.1 One future normative owner
+
+Revision 2 recommends one future normative artifact, tentatively named the **Governance Applicability Contract**, as the sole owner of shared applicability semantics.
+
+The future owner would be responsible for:
+
+- the common Governed Operation boundary;
+- Universal Authority Core semantics;
+- Decision Context vocabulary and shared dimensions;
+- applicability rule identity, revision, scope, interval, and precedence;
+- shared control activation semantics;
+- multi-condition and conjunctive resolution;
+- the common applicability Resolution Result;
+- profile expansion boundaries;
+- governance-change protection for shared applicability policy; and
+- prospective and legacy applicability boundaries.
+
+The final artifact name, authority class, scope, lifecycle, and contents remain unresolved and would require separate governance.
+
+### 9.2 Consuming contract ownership
+
+Existing contracts would retain their domain-specific meanings:
+
+| Existing source | Retained semantic ownership | Proposed relationship to future shared owner |
+| --- | --- | --- |
+| Foundation Architecture | Architectural supremacy, authority hierarchy, canonical and lifecycle boundaries, conflict and fail-closed principles. | May later recognize decision-scoped applicability and the single-owner boundary without embedding detailed matrices. |
+| Canonical Artifact Contract | Canonical identity, namespace, semantic version, immutable source revision, envelope categories, lineage, and integrity. | Supplies canonical identities and revisions consumed by applicability evaluation. |
+| Authority and Delegation Contract | Actor eligibility, authority dimensions, delegation chains, revocation, non-delegable boundaries, and authority failure behavior. | Validates assignments requested by activated controls. |
+| Approval Record Contract | Approval identity, human decision evidence, exact artifact binding, temporal validity, revocation, and supersession. | Retains approval meaning while shared applicability identifies which additional controls govern the approval operation. |
+| Governance Lifecycle Contract | Orthogonal review, approval, effectiveness, adoption, disposition, archival, retirement, and protection relationships. | Retains transition meaning while shared applicability identifies context-derived authority and control needs. |
+| Design Freeze Contract | Freeze identity, exact protected baseline, freeze authority, safe paths, protection interval, lifting, expiry, and immutable history. | Retains freeze semantics while shared applicability resolves common context and control activation. |
+| Policy Decision Contract | Operation-specific evaluation, four provider-neutral outcomes, input manifest, freshness, explainability, caching, and audit. | Consumes the applicability Resolution Result as one independently bound input. |
+
+### 9.3 Dependency direction
+
+The future dependency direction should prevent cycles:
+
+1. Foundation establishes architectural precedence and separation.
+2. The shared applicability owner defines common applicability semantics.
+3. Domain contracts own their bounded meanings and expose domain facts or controls through the shared composition boundary.
+4. Authority, lifecycle, identity, and evidence contracts validate the resulting requirements.
+5. The Policy Decision evaluates the exact operation and complete evidence set.
+
+Domain contracts should not independently redefine shared authority applicability. The shared owner should not absorb approval, lifecycle, freeze, canonical identity, delegation, or Policy Decision semantics.
+
+### 9.4 Foundation boundary
+
+A future Foundation revision may minimally recognize:
+
+- Governed Operation as the scope of applicability evaluation;
+- the existence of one shared normative applicability owner;
+- the precedence relationship between Foundation, the shared owner, and consuming contracts; and
+- a prohibition against contract-local redefinition of shared applicability semantics.
+
+The Foundation should not contain detailed Decision Context vocabularies, control matrices, organization profiles, or mutable applicability rules. This proposal does not modify or authorize modification of Foundation.
+
+## 10. Legacy and Historical Treatment
+
+### 10.1 Principles
+
+Governance evolution is prospective. Legacy records must not receive retroactive repository modes or profiles, and modern context structures must not be fabricated for decisions that did not record them.
+
+The absence of a Revision 2-style Decision Context does not automatically invalidate historical evidence. The original record, its contemporaneous rules, and unresolved facts remain independently preserved.
+
+### 10.2 Conceptual legacy classes
+
+The future normative owner should distinguish at least these conceptual conditions:
+
+| Legacy condition | Architectural treatment |
+| --- | --- |
+| Evidence sufficient under contemporaneous rules | Preserve the original decision and its historical validity under the rules applicable at the time. |
+| Substantively sufficient evidence lacking modern structure | Preserve the original evidence and permit a separately attributable, non-destructive derived assessment. |
+| Material evidence missing | Preserve the record and report the applicable invalid or `Indeterminate` result under the governing contract; do not infer missing facts. |
+| No contemporaneous rule can be established | Preserve the record, identify the missing rule boundary honestly, and require explicit historical assessment without fabricating a profile. |
+
+These are architectural categories, not registry values or current decision outcomes.
+
+### 10.3 Derived assessments
+
+A derived assessment may cite legacy evidence and record:
+
+- the exact legacy decision and evidence evaluated;
+- the contemporaneous rules that could be established;
+- the evaluator identity and authority;
+- the assessment timestamp;
+- facts established;
+- facts that remain unknown;
+- current reliance implications under applicable governance; and
+- integrity and lineage back to the original record.
+
+The assessment must remain separate from the original decision and cannot edit, backdate, ratify, or replace it.
+
+### 10.4 Prospective boundary
+
+If a future applicability contract becomes Approved and Effective, it should define an explicit prospective adoption boundary. Decisions before that boundary remain evaluated under contemporaneous rules unless a new Governed Operation requires current reevaluation.
+
+A new reliance decision, supersession, adoption, effectiveness decision, freeze, or release is a new operation and may require current evidence without rewriting the earlier event.
+
+### 10.5 Current Step 4 approval evidence
+
+Revision 2 does not re-evaluate or repair the existing Step 4 approval assertion. The Approval Remediation Package and Approval Status Notice remain the sources describing its current `Indeterminate` reliance status and permitted corrective path. Any corrected human approval would require separate attributable evidence and governance.
+
+## 11. Governance Change and Downgrade Protection
+
+Applicability policy is itself governance. A future normative owner should prevent actors from weakening the controls for an operation while that operation is being evaluated.
+
+At the architectural level, future governance should provide that:
+
+- the Decision Context and applicable rule revisions are fixed and traceable for the evaluated operation;
+- changing applicability policy is a separate Governed Operation;
+- a rule change cannot retroactively remove controls from an open decision;
+- a less restrictive proposed policy cannot authorize its own adoption;
+- missing context cannot be resolved by selecting a lighter profile;
+- emergency or exception assertions require their own valid authority and evidence;
+- emergency use remains explicit, bounded, reviewable, and non-reusable where the governing contract requires it;
+- the exact rule set used remains part of immutable decision evidence; and
+- later policy evolution triggers prospective reevaluation rather than historical rewriting.
+
+This proposal creates none of those controls. It defines the architecture risk and proposed ownership boundary for future normative work.
+
+## 12. Cross-Repository and Federated Governance
+
+Cross-repository governance is represented through composition, not a `Federated Mode`.
+
+A cross-repository Governed Operation may involve:
+
+- one common canonical decision identity;
+- explicitly bounded repository and component scopes;
+- multiple canonical authority sources;
+- repository-specific approval or lifecycle evidence;
+- a coordinating authority whose scope is independently sourced;
+- conjunctive satisfaction of every required repository or shared control;
+- explicit conflict and precedence rules; and
+- immutable lineage across the contributing evidence.
+
+A coordinating authority does not absorb or imply repository-specific authority. One repository's approval does not authorize another repository unless an applicable authority source explicitly establishes that scope. Missing evidence for one required scope cannot be cured by complete evidence from another.
+
+This composition model supports federated governance without adding a repository mode, flattening source ownership, or creating a new authority tier.
+
+## 13. Foundation Alignment
+
+The proposed architecture aligns with the Foundation Architecture as follows:
+
+| Foundation concern | Revision 2 alignment |
+| --- | --- |
+| Single Source of Truth | Context, rules, assignments, and results bind to canonical identities and immutable revisions; named profiles are non-authoritative. |
+| Human approval | The Universal Authority Core and Authority Assignments require attributable human authority evidence where human governance is involved; AI cannot create approval. |
+| Immutable history | Context, rules, results, legacy evidence, and derived assessments preserve lineage without rewriting prior meaning. |
+| Layered memory | Retrieval or repetition cannot create authority or applicability; evidence classification remains independent. |
+| Vendor neutrality | The proposal defines semantics without choosing a model, Git host, identity provider, database, policy engine, or workflow system. |
+| Product independence | Applicability is operation- and scope-based rather than tied to one product's roles or organizational form. |
+| Versioning | Rules, authority sources, context, artifacts, and results use exact versions or immutable revisions. |
+| Composability | Independent context dimensions and controls compose conjunctively while conflicts remain explicit. |
+| Authority hierarchy | Foundation and applicable higher sources retain precedence; profiles, technical custody, and Resolution Results create no tier. |
+| Fail-closed behavior | Missing required facts remain unresolved and produce `Indeterminate` for protected operations under existing governance. |
+| Orthogonal lifecycle | Applicability context and results remain independent from approval, effectiveness, adoption, protection, implementation, release, and runtime. |
+
+The proposal does not assert that Draft Foundation or contracts are Approved or Effective. It preserves their declared lifecycle states.
+
+## 14. Migration and Governance Evolution
+
+Migration is architectural and prospective, not automatic.
+
+### Stage 1 — Review Revision 2
+
+Perform an independent architecture review of this exact proposal revision for determinism, authority boundaries, normative ownership, legacy safety, and Foundation consistency.
+
+### Stage 2 — Record an eligible architecture decision
+
+If review findings are resolved, a separately governed human process may decide whether to accept the architectural direction. This proposal does not select the decision artifact type or create the decision.
+
+### Stage 3 — Design the future normative owner
+
+Define the scope and dependencies of a Governance Applicability Contract or other accepted single owner. Establish the minimum shared vocabulary without absorbing domain semantics.
+
+### Stage 4 — Determine minimal Foundation recognition
+
+Evaluate whether Foundation requires a bounded revision to recognize the architecture and precedence boundary. Any revision would remain separate, versioned, independently reviewed, and human approved.
+
+### Stage 5 — Calibrate consuming contracts
+
+Evaluate contract impacts independently. A likely analysis order is:
+
+1. Approval Record Contract;
+2. Governance Lifecycle Contract;
+3. Design Freeze Contract;
+4. Authority and Delegation Contract and Policy Decision Contract where dependency clarification is required; and
+5. Canonical Artifact Contract only where shared identity or revision categories require clarification.
+
+This order is an analysis recommendation, not authorization to edit.
+
+### Stage 6 — Establish the prospective boundary
+
+Define when new applicability evidence becomes required and how legacy records receive non-destructive assessment.
+
+### Stage 7 — Validate before implementation
+
+Repeat the architecture baseline audit and perform contract-level independent review before any schema, tooling, automation, or operational enforcement is considered.
+
+Repository growth would not require rewriting governance contracts merely to rename a mode. Evolution would occur through revised authority sources, assignments, Decision Context, and applicable rules under stable shared semantics.
+
+## 15. Resolution of Independent Review Findings
+
+| Finding | Revision 2 resolution |
+| --- | --- |
+| M-01 — Conflated Governance Modes | Replaces repository modes with Governed Operation scope and orthogonal Decision Context dimensions. Named profiles remain illustrative only. |
+| M-02 — Circular Dependency | Adds a Universal Authority Core and a deterministic sequence that validates context-source authority before conditional controls. |
+| M-03 — Applicability Versus Activation | Makes Applicability Evaluation universal and separates it from conditional Control Activation and later satisfaction. |
+| M-04 — Enterprise-only Category | Removes `Enterprise-only` as a normative category. Controls derive from actual collective-authority, external-obligation, risk, impact, scope, contractual, safety, security, and other governed conditions. |
+| M-05 — Mixed Authority Classification Axes | Separates Actor Form, Responsibility Function, Authority Source, Scope, Permitted Operation, Validity Interval, Delegation, and Technical Custody. |
+| M-06 — Normative Ownership | Recommends one future Governance Applicability Contract for shared semantics while preserving each existing contract's domain ownership. |
+| M-07 — Backward Compatibility | Defines prospective adoption, four conceptual legacy evidence conditions, and attributable non-destructive derived assessments without retroactive profiles or rewritten history. |
+
+Resolution in this table means the proposal text addresses the design finding. It does not mean the architecture is accepted, the finding is formally closed, or any normative source has changed. Closure requires independent review.
+
+## 16. Risks
+
+| Risk | Architectural consequence | Proposed mitigation boundary |
+| --- | --- | --- |
+| Excessive context dimensions | Applicability becomes difficult to understand and maintain. | Keep a minimal shared vocabulary; require separate architecture review for new shared dimensions; leave domain facts with domain owners. |
+| Hidden rules engine | Machine evaluation becomes opaque or irreproducible. | Require human-readable normative rule identities, exact revisions, attributable rationale, and complete Resolution Results. |
+| Context manipulation | An actor understates impact or external obligations to avoid controls. | Require attributable context sources, canonical evidence, immutable revisions, and independent validation where activated. |
+| Universal Authority Core overreach | Passing the core is mistaken for final authority. | State explicitly that the core validates context admissibility only and cannot authorize the operation or satisfy conditional controls. |
+| Contract dependency cycle | Shared and domain contracts recursively determine one another's applicability. | Use one shared owner, explicit dependency direction, and domain ownership boundaries. |
+| Control conflict | Several applicable rules impose incompatible requirements. | Preserve the conflict and require explicit normative precedence; do not use profile order or evaluator preference. |
+| Profile re-emergence | Convenience templates become de facto authority or exemptions. | Require expansion into explicit context and full applicability evaluation; profiles remain non-normative and non-authoritative. |
+| Technical custody treated as authority | Repository administrators are assumed eligible to approve or release. | Keep custody as a separate axis and require independent authority-source evidence. |
+| Legacy overreach | Modern rules are retroactively applied or historical evidence is rewritten. | Use prospective adoption and non-destructive derived assessments. |
+| Governance downgrade | Applicability rules change during a disputed operation. | Treat policy change as a separate operation and bind the original operation to exact context and rule revisions. |
+| False completeness | A detailed Resolution Result is mistaken for `Allow`. | Preserve the separate operation-specific Policy Decision and all other independently required inputs. |
+| Excessive process | Low-impact operations become unusable. | Make evaluation universal but controls conditional on actual governed context rather than organization labels. |
+| Inconsistent domain triggers | Consuming contracts redefine shared applicability. | Place shared semantics in one normative owner and define a bounded extension relationship. |
+| Cross-repository authority leakage | Authority from one scope is assumed valid in another. | Require explicit scopes, multiple authority sources where needed, and conjunctive satisfaction. |
+
+## 17. Alternatives Considered
+
+### 17.1 Repository governance modes
+
+Classify a repository as Single Maintainer, Multi Maintainer, or Enterprise Governance and use the active mode to select evidence.
+
+This is easy to explain but combines unrelated dimensions, creates transition and circularity problems, and misclassifies high-risk small repositories and low-risk enterprise operations. Rejected as the primary architecture. Retained only as illustrative profile terminology.
+
+### 17.2 Named organizational profiles
+
+Define profiles such as solo, open source, regulated, commercial, enterprise, or federated.
+
+Profiles can aid onboarding but overlap, proliferate, obscure actual conditions, and become a second policy language. Rejected as the authoritative mechanism. A profile may only expand into explicit context for normal evaluation.
+
+### 17.3 One universal enterprise control set
+
+Require separation, committee action, quorum, voting, recertification, and formal conflict procedures for all operations.
+
+This is uniform but imposes nonexistent organizational structures and encourages fictional evidence. Rejected. Applicability evaluation is universal; controls are conditional.
+
+### 17.4 Contract-local applicability
+
+Allow each domain contract to define shared authority and context applicability independently.
+
+This keeps text near its consumer but duplicates semantics, creates drift, complicates audit, and increases dependency cycles. Rejected in favor of one future shared owner with domain-specific semantic boundaries.
+
+### 17.5 Organization-chart or repository-owner authority
+
+Infer governance authority from corporate title, reporting line, repository ownership, or administrative control.
+
+This confuses employment or technical custody with operation-specific authority and does not establish scope, interval, delegation, or permitted operation. Rejected.
+
+### 17.6 Case-by-case human interpretation without a shared model
+
+Resolve every applicability question through local prose or review judgment.
+
+This avoids a new shared artifact but prevents deterministic evaluation, cross-contract consistency, and reliable migration. Rejected as a long-term architecture.
+
+### 17.7 Decision-scoped applicability
+
+Evaluate an exact operation through a Universal Authority Core, orthogonal Decision Context, universal applicability evaluation, conjunctive controls, explicit Authority Assignments, and an attributable Resolution Result.
+
+Recommended for further independent review because it separates the relevant dimensions while preserving existing CADP semantic ownership.
+
+## 18. Open Questions
+
+The architectural direction is sufficiently bounded for review, but the following decisions remain deliberately unresolved:
+
+1. What is the minimum shared Decision Context vocabulary?
+2. Which facts are declared by an eligible actor, and which are derived from canonical sources?
+3. Which responsibility function may attest or validate each category of context?
+4. What exact rule-precedence model resolves incompatible activated controls?
+5. How may a domain contract introduce domain facts or triggers without redefining shared semantics?
+6. Which per-control evaluation states are needed, and how do they map to the existing four Policy Decision outcomes?
+7. What evidence is sufficient to establish decision-time revocation status?
+8. How are collective actors canonically identified, versioned, and related to their members?
+9. What governance process changes shared applicability rules?
+10. What exact prospective adoption boundary protects open decisions during migration?
+11. Which Foundation section would contain the minimal architecture recognition if a Foundation revision is later authorized?
+12. Is `Governance Applicability Contract` the correct final title for the normative owner?
+13. Which historical record should be the first non-destructive migration assessment?
+14. How are context confidentiality and requester-facing explanations separated from protected audit evidence?
+15. Which controls require independent evidence that cannot be supplied by the context declarer?
+
+These questions do not grant discretion to bypass existing governance. They identify future normative decisions that must be resolved before implementation.
+
+## 19. Recommendation
+
+Submit Revision 2 for independent architecture review as a Draft, non-normative proposal.
+
+The review should determine whether the Decision-Scoped Governance Applicability Model:
+
+- eliminates repository modes as the authoritative selector;
+- removes circular authority evaluation;
+- keeps applicability evaluation distinct from control activation and satisfaction;
+- preserves authority, lifecycle, identity, approval, freeze, and Policy Decision ownership;
+- supports deterministic multi-condition resolution;
+- protects legacy evidence and prospective governance evolution;
+- prevents profiles and technical custody from acquiring authority; and
+- defines a credible single normative ownership boundary.
+
+If the proposal passes independent review, the next action should be an eligible human architecture decision about the direction. No contract drafting, Foundation amendment, registry work, schema design, implementation, approval, effectiveness, adoption, Product Binding, Design Freeze, or release action follows automatically.
+
+## 20. Revision History
+
+| Revision | Proposal version | Summary | Governance effect |
+| --- | --- | --- | --- |
+| Revision 1 | 0.1.0 | Used Single Maintainer, Multi Maintainer, and Enterprise Governance repository modes as the primary applicability model. | None; Draft and non-normative. |
+| Independent review | Not a proposal revision | Found conflated applicability dimensions, circular authority evaluation, applicability/activation ambiguity, an unsound `Enterprise-only` category, mixed authority axes, unclear normative ownership, and incomplete legacy treatment. | Review evidence only; no approval or lifecycle effect. |
+| Revision 2 | 0.2.0 | Replaces primary repository modes with the Decision-Scoped Governance Applicability Model. Adds the Universal Authority Core, orthogonal Decision Context, universal Applicability Evaluation, conditional conjunctive controls, separated Authority Assignment axes, one future normative owner, and non-destructive legacy treatment. Named profiles remain illustrative only. | None; remains Draft, non-normative, and without governance or implementation authority. |
+
+Revision 2 has not been accepted, Approved, made Effective, Adopted, Design Frozen, or authorized for implementation.

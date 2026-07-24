@@ -3,7 +3,7 @@
 | Field | Value |
 | --- | --- |
 | Document type | Architecture Governance Methodology |
-| Version | 0.1.0 |
+| Version | 0.2.0 |
 | Lifecycle state | Draft |
 | Current normative effect | None |
 | Current governance authority | None |
@@ -33,6 +33,8 @@ This Draft does not:
 If this methodology later becomes independently Approved and Effective through separately valid governance, its effect is limited to the transition from research into architectural decision making. A research-closure outcome authorizes only the preparation of an ADP. It does not approve the resulting ADP or any architecture described by it.
 
 The [Governance Document Model](../GOVERNANCE_DOCUMENT_MODEL.md) remains controlling for document-class and authority separation. The [Foundation Architecture](../FOUNDATION_ARCHITECTURE.md) remains controlling for architectural precedence, human approval boundaries, immutable history, lifecycle separation, and fail-closed behavior.
+
+This revision applies prospectively. It does not retroactively reclassify, replace, invalidate, or silently rewrite a closure decision made under an earlier revision. The [Governance Rule Discovery Research Closure](GOVERNANCE_RULE_DISCOVERY_RESEARCH_CLOSURE.md) remains historically valid as the record produced under the methodology then in use. Reassessment under this revision requires a new, explicit decision record that preserves lineage to the earlier record.
 
 ## 2. Purpose
 
@@ -105,7 +107,7 @@ A Research Gap is classified according to its architectural impact.
 
 ### 4.4 Critical Gap
 
-A Category A Research Gap whose unresolved state could invalidate the architecture, reverse the architectural direction, create a circular or self-authorizing dependency, permit an unsafe or non-deterministic result, conflict with higher governance, or make a required architectural property unprovable.
+A Category A Research Gap that satisfies the complete Category A Materiality Test in Section 6.1.1. Its unresolved state prevents safe selection of a specific architecture element because it may materially change an architecture boundary, normative ownership, dependency direction, trust or authority root, mandatory safety invariant, fail-closed behavior, decision outcome semantics, compatibility model, confidentiality or authorization boundary, reproducibility invariant, or adoption or migration validity.
 
 Critical Gap is a research-readiness classification. It is not a lifecycle state, authority class, defect severity registry value, or Policy Decision outcome.
 
@@ -161,6 +163,18 @@ The Decision Boundary distinguishes:
 - questions whose relevance is only exploratory.
 
 A research effort cannot claim closure against an undefined or silently changing Decision Boundary.
+
+The Decision Boundary has been reached when:
+
+- the architectural problem and its exclusions are bounded;
+- representative, materially distinct architecture families have been evaluated;
+- at least one viable architectural direction can be proposed without inventing an unresearched foundational decision;
+- critical assumptions are explicit;
+- residual uncertainty can be represented in an ADP without making that ADP internally invalid;
+- fail-closed treatment can contain unresolved cases without concealing a missing architecture boundary; and
+- further research is more likely to refine, specialize, or extend the proposed core than to replace it.
+
+Reaching the Decision Boundary does not presume that research must close. It establishes the point at which the closure criteria can be evaluated neutrally.
 
 ## 5. Research Lifecycle
 
@@ -287,79 +301,106 @@ Reopening does not erase the earlier closure decision. It creates a new research
 
 ### 6.1 Category A — Must Be Resolved Before ADP
 
-Category A applies when at least one plausible answer to an unresolved topic would:
+Category A is reserved for a demonstrated architecture-selection blocker. An unresolved topic qualifies only when leaving it unresolved materially affects at least one of the following:
 
-- invalidate the architecture’s core mechanism;
-- reverse the preferred architectural direction;
-- fundamentally change authority, ownership, trust, or dependency structure;
-- create or remove a circular dependency;
-- make a required safety, confidentiality, determinism, audit, or historical property unprovable;
-- conflict with the Foundation Architecture or an applicable higher governance source;
-- require a materially different Decision Boundary;
-- make external obligations or affected scopes unknowable in a way that defeats the architecture;
-- allow a permissive result from missing or conflicting evidence; or
-- require the later ADP to decide a foundational issue without adequate research.
+- an architecture boundary;
+- normative ownership;
+- dependency direction;
+- a trust or authority root;
+- a mandatory safety invariant;
+- fail-closed behavior;
+- decision outcome semantics;
+- a compatibility model;
+- a confidentiality or authorization boundary;
+- a reproducibility invariant; or
+- adoption or migration validity.
 
-All Category A items must be resolved or the Decision Boundary must be validly narrowed so the issue no longer affects the proposed architecture. Silent narrowing is prohibited.
+The effect must be specific enough to show why a safe architectural choice cannot be made. General importance, severity, uncertainty, complexity, or future usefulness is insufficient.
+
+An item is not Category A merely because it:
+
+- is important, high risk, or described as foundational in general terms;
+- remains unresolved or could benefit from more research;
+- concerns external obligations without showing an architecture-changing consequence;
+- requires future normative detail;
+- will be difficult to implement;
+- would improve completeness;
+- was identified by a reviewer; or
+- may have consequences that are speculative, unsupported, or outside the Decision Boundary.
+
+All Category A items must be resolved, or the Decision Boundary must be explicitly and validly narrowed so the demonstrated material effect no longer applies. Silent narrowing is prohibited.
+
+#### 6.1.1 Category A Materiality Test
+
+Every proposed Category A item must answer all seven questions:
+
+1. What exact architecture element is unsafe to select while this issue remains unresolved?
+2. What materially different architecture alternatives remain possible because of the issue?
+3. Which invariant, ownership boundary, dependency direction, or decision semantic would change between those alternatives?
+4. Why can the uncertainty not be represented explicitly in the ADP?
+5. Why can the issue not be deferred to a contract, domain rule, implementation choice, procedure, future research effort, or residual-risk record?
+6. What evidence shows that additional research is likely to resolve the issue sufficiently to change the ADP?
+7. What concrete completion criterion would demonstrate that the required research is complete?
+
+An answer that is missing, circular, speculative, or unsupported prevents Category A classification. A reviewer’s severity label is evidence to assess, not a substitute for this test.
+
+#### 6.1.2 Burden of Proof
+
+The party proposing Category A bears the burden of demonstrating the material effect and satisfying the Materiality Test with attributable evidence.
+
+Uncertainty alone is insufficient. The proposer does not need to prove that no further useful research could ever exist; instead, the proposer must show why the specifically requested research is necessary before ADP development and how its concrete completion criterion can be met. Open-ended standards such as “research until complete,” “resolve all risk,” or “investigate further” are invalid.
 
 ### 6.2 Category B — May Remain Open During ADP
 
-Category B applies when plausible answers may affect:
+Category B is controlled deferral. It applies when an unresolved topic remains relevant to ADP development but can be carried safely through one or more of the following:
 
-- architectural decomposition;
-- component ownership below the core boundary;
-- optimization;
-- migration sequencing;
-- extension mechanisms;
-- assurance strength above the minimum correctness boundary;
-- non-fundamental terminology;
-- selection among compatible sub-patterns; or
-- later contract allocation,
+- an explicit assumption in the ADP;
+- fail-closed treatment of unresolved cases;
+- an architectural extension point;
+- future architectural decomposition;
+- a domain-specific rule;
+- later contract detail;
+- migration sequencing; or
+- a later revision that does not invalidate the initial architecture.
 
-but every plausible answer preserves the architecture’s core correctness, authority separation, safety boundary, auditability, and compatibility with higher governance.
+Category B may also cover optimization, compatible sub-patterns, assurance above the minimum correctness boundary, non-fundamental terminology, or component ownership below the core boundary. Every plausible answer within the recorded bound must preserve core correctness, authority separation, mandatory safety invariants, fail-closed behavior, auditability, reproducibility, and compatibility with higher governance.
 
-Each Category B item retained at closure requires:
+Each Category B item retained at closure must record:
 
-- a concise statement of the uncertainty;
-- the architectural assumptions that bound it;
-- why it cannot invalidate the architecture;
-- affected sections or components;
-- a responsible future decision forum where known;
-- a revisit trigger; and
-- the latest point at which it must be resolved.
+1. the explicit assumption under which ADP development may proceed;
+2. the current architectural risk created by the uncertainty;
+3. the containment mechanism that prevents the uncertainty from producing an invalid or permissive architecture;
+4. the future owner or decision forum responsible for resolution; and
+5. the objective trigger for reopening or mandatory resolution.
 
-Category B is not a label for inconvenient Category A work.
+Affected architecture and the latest safe resolution point must also be traceable where applicable. Category B is not risk dismissal and cannot conceal work that satisfies the Category A Materiality Test.
 
 ### 6.3 Category C — Future Research
 
 Category C applies when the topic:
 
 - is outside the current Decision Boundary;
-- concerns optional optimization or extension;
-- explores a technology or provider not required by the architecture;
-- improves comparative knowledge without affecting the current decision;
-- concerns implementation after architectural boundaries are fixed; or
+- concerns an optional optimization or an alternative implementation;
+- concerns an uncommon future condition not required for current architectural validity;
+- explores a speculative extension;
+- compares frameworks, technologies, providers, or mechanisms without affecting the selected architecture family;
+- belongs to another architectural domain; or
 - would not change the ADP’s architectural correctness under any presently credible answer.
 
 Category C topics are retained as Future Research. They do not block closure and do not require resolution inside the current ADP.
 
 ### 6.4 Classification Decision Test
 
-For each unresolved item, the classifier answers:
+For each unresolved item:
 
-1. What exact architectural claim depends on this answer?
-2. What are the materially plausible answers?
-3. Could any plausible answer invalidate or reverse the architecture?
-4. Could any plausible answer create unsafe, circular, non-auditable, non-deterministic, or higher-governance-inconsistent behavior?
-5. Can the architecture safely accommodate every plausible answer without changing its core boundary?
-6. Is the question inside the current Decision Boundary?
-7. What evidence supports the proposed classification?
+1. determine whether it is inside the current Decision Boundary;
+2. identify the exact architectural claim and materially plausible answers;
+3. test whether it affects one of the enumerated Category A architectural elements;
+4. if Category A is proposed, apply all seven Materiality Test questions and verify the burden of proof;
+5. if the issue can be safely contained while remaining relevant to the ADP, classify it as Category B and record all five controlled-deferral elements; and
+6. if it cannot affect the selected architecture family within the current boundary, classify it as Category C.
 
-If Questions 3 or 4 are answered yes, the item is Category A.
-
-If Questions 3 and 4 are no, Question 5 is yes, and the item remains relevant to ADP development, it is Category B.
-
-If the item is outside the current Decision Boundary or cannot affect current architectural correctness, it is Category C.
+No classification follows automatically from risk severity, source type, reviewer terminology, or the existence of uncertainty.
 
 ### 6.5 Classification Disagreement
 
@@ -373,7 +414,7 @@ The disagreement is presented to the eligible human closure authority with:
 - affected scope; and
 - the independent reviewer’s assessment.
 
-Until the classification decision is attributable and supported, the research cannot be declared closed.
+The eligible human closure authority applies the same Materiality Test and burden of proof. If Category A is not demonstrated, the authority evaluates Category B containment or Category C separation; lack of consensus alone does not create Category A. The final classification must be attributable, supported, and preserved with contrary evidence.
 
 ## 7. Research Closure Decision Process
 
@@ -408,6 +449,8 @@ Assign every unresolved item to Category A, B, or C using Section 6.
 
 Resolved findings remain in the inventory with their evidence and resolution. They are not deleted merely because they no longer block closure.
 
+Every proposed Category A item includes complete, evidence-supported answers to the seven-question Materiality Test. Every Category B item includes the five required controlled-deferral elements. Review findings are normalized into research questions before classification; a review severity does not determine a research category.
+
 ### Step 4 — Assess Architectural Risk
 
 Evaluate whether unresolved items could affect:
@@ -428,6 +471,8 @@ Evaluate whether unresolved items could affect:
 
 An unsupported assertion that a risk is unlikely is insufficient. The assessment identifies the mechanism, consequence, evidence, and boundary.
 
+Risk identification does not by itself establish Category A. A risk blocks ADP development only when the Category A Materiality Test demonstrates the required architecture-changing effect.
+
 ### Step 5 — Bound Remaining Uncertainty
 
 For each unresolved item, record:
@@ -439,10 +484,12 @@ For each unresolved item, record:
 - assumptions;
 - safety consequence;
 - reason for its category;
+- containment mechanism for Category B;
+- future owner or decision forum;
 - revisit trigger; and
 - the point by which it must be resolved, if applicable.
 
-Uncertainty is bounded only when the architecture remains valid under every plausible outcome retained within that bound.
+Uncertainty is bounded only when the architecture remains valid under every plausible outcome retained within that bound. Fail-closed treatment may establish boundedness when the ADP can state a conservative invariant, unresolved cases cannot produce permissive success, and future specialization cannot violate the initial architecture. Fail-closed treatment cannot conceal a missing architecture boundary or replace a required architecture choice.
 
 ### Step 6 — Assess Architectural Impact
 
@@ -456,6 +503,8 @@ The assessment distinguishes:
 - migration questions;
 - future extensions; and
 - unrelated research.
+
+The assessment distinguishes architecture families from variants within a family, implementation choices, operational procedures, and speculative future conditions. Only a materially distinct and plausible architecture family can be treated as a missing alternative capable of supporting Category A.
 
 ### Step 7 — Record the Recommendation
 
@@ -476,12 +525,12 @@ Before an eligible human may declare research closed, the evidence must demonstr
 
 1. the research artifact, inventory, and review are bound to exact revisions;
 2. the Decision Boundary is explicit and stable for the closure decision;
-3. material architectural alternatives are represented by mechanism and failure mode;
+3. representative, materially distinct architecture families are represented by mechanism and failure mode;
 4. critical assumptions have attributable justification;
-5. no unresolved Category A item remains;
-6. every Category B item meets the Acceptable Uncertainty criteria;
+5. every proposed Category A item has passed the complete Materiality Test and no demonstrated Category A item remains unresolved;
+6. every Category B item meets the Acceptable Uncertainty and controlled-deferral criteria;
 7. every Category C item is explicitly separated from the current decision;
-8. unresolved authority, confidentiality, safety, external-obligation, temporal, or historical issues cannot invalidate the architecture;
+8. unresolved authority, confidentiality, safety, external-obligation, temporal, or historical issues are either demonstrated Category A items or are explicitly contained as Category B or separated as Category C;
 9. the proposed architecture can remain deterministic and auditable under the retained uncertainty;
 10. independent review has evaluated the exact closure candidate;
 11. disagreements and contrary evidence are preserved;
@@ -521,9 +570,17 @@ The problem, scope, affected authority domains, architectural consequences, and 
 
 ### 8.2 Alternative Sufficiency
 
-The research covers materially distinct architectural mechanisms and failure modes. It does not need to enumerate every vendor, product, implementation, or syntactic variant.
+The research covers representative, materially distinct architecture families and their failure modes.
 
-An omitted alternative blocks closure only when credible evidence shows that it could invalidate, reverse, or fundamentally restructure the architecture.
+For this criterion:
+
+- an architecture family differs in boundary, normative ownership, dependency direction, trust or authority root, mandatory invariant, decision semantics, compatibility model, confidentiality or authorization boundary, reproducibility, or adoption or migration validity;
+- an architecture variant preserves those core properties while changing decomposition or a compatible sub-pattern;
+- an implementation alternative realizes an already evaluated family through a different technology, algorithm, data format, or provider;
+- an operational alternative changes procedure, staffing, sequencing, or run-time handling without changing the architecture family; and
+- a speculative future alternative depends on a condition that is neither presently applicable nor supported as plausibly material to the current Decision Boundary.
+
+Only omission of a materially distinct and plausible architecture family can support Category A. Variants, implementation choices, operational choices, and speculative futures do not block closure unless evidence demonstrates that they actually change one of the enumerated Category A architectural elements.
 
 ### 8.3 Assumption Sufficiency
 
@@ -532,7 +589,7 @@ Every assumption necessary for architectural correctness is:
 - explicit;
 - traceable to evidence or an authoritative constraint;
 - tested against plausible contrary conditions; and
-- classified as resolved or Category A.
+- classified as resolved, bounded Category B, or demonstrated Category A using Section 6.
 
 A preference is not evidence for a critical assumption.
 
@@ -549,7 +606,9 @@ Material risks have:
 
 ### 8.5 Uncertainty Sufficiency
 
-Remaining uncertainty is bounded and classified. No Category B or C item can produce a plausible outcome that invalidates the architecture.
+Remaining uncertainty is bounded and classified. Every Category B item records its assumption, current risk, containment, future owner, and reopening trigger. No Category B or C item can produce a plausible outcome that invalidates the architecture within the recorded bound.
+
+Fail-closed treatment is sufficient only when the uncertainty is bounded, a conservative invariant can be stated in the ADP, unresolved cases cannot produce permissive success, and later specialization can occur without violating the initial architecture. It is insufficient when the missing information defines the architecture boundary itself.
 
 ### 8.6 Traceability Sufficiency
 
@@ -581,6 +640,8 @@ Future work is explicitly identified and separated into:
 The existence of future work does not block closure when its boundary and latest safe resolution point are explicit.
 
 ## 9. Permitted Outcomes
+
+The methodology does not prefer closure or continued research. The outcome follows from the evidence and criteria for the exact Decision Boundary.
 
 ### 9.1 RESEARCH CLOSED
 
@@ -618,14 +679,14 @@ Deferral does not imply resolution, acceptance of risk outside the recorded boun
 
 Use `ADDITIONAL RESEARCH REQUIRED` when any of the following is true:
 
-- a Category A item remains unresolved;
+- a Category A item that satisfies the complete Materiality Test remains unresolved;
 - the Decision Boundary is materially ambiguous or unstable;
-- a missing alternative could invalidate or reverse the architecture;
+- a materially distinct and plausible architecture family is omitted and passes the Category A Materiality Test;
 - a critical assumption lacks sufficient evidence;
 - remaining uncertainty is unbounded;
 - a Category B classification cannot be justified;
-- authority, confidentiality, safety, external-obligation, temporal, audit, or historical boundaries remain capable of invalidating the architecture;
-- independent review identifies a material unaddressed gap;
+- an authority, confidentiality, safety, external-obligation, temporal, audit, or historical issue has a demonstrated architecture-changing effect that cannot be contained;
+- an independent review finding is normalized into a research question and demonstrates a Category A material effect;
 - the closure evidence cannot be reproduced; or
 - decision-maker eligibility cannot be established.
 
@@ -639,58 +700,79 @@ The outcome identifies the bounded research required. It does not require invest
 
 Architectural rigor does not require unrestricted topic expansion.
 
-### 10.1 Decision-Boundary Test
+### 10.1 New-Topic Admissibility
 
-A newly proposed research topic can block closure only when it is inside the Decision Boundary or when credible evidence shows that it changes the boundary’s architectural correctness.
+A newly proposed research topic enters the current closure gate only when:
 
-Questions outside that test become Category C or a separate research effort.
+- it is inside the recorded Decision Boundary, or attributable evidence demonstrates that the boundary is materially incomplete;
+- it is stated as a bounded Research Question;
+- its proponent identifies the exact architectural claim affected; and
+- if Category A is proposed, the complete Materiality Test and burden of proof are satisfied.
 
-### 10.2 Architectural-Impact Test
+An inadmissible topic becomes Category C or a separately scoped research effort. It cannot delay closure merely by being raised.
 
-Additional research is required only when the expected answer could:
+### 10.2 Duplicate-Question Control
 
-- resolve a Category A item;
-- reveal a new Category A item;
-- invalidate a critical assumption;
-- materially change alternative selection;
-- change authority, safety, confidentiality, determinism, auditability, or historical correctness; or
-- demonstrate that a Category B uncertainty is not safely bounded.
+Questions that test the same architectural claim, uncertainty, and plausible alternatives are consolidated under one inventory identity. Restatement with different terminology, source framing, risk label, or reviewer wording does not create a new blocker.
 
-Curiosity, possible optimization, additional examples, vendor comparison, or general domain interest cannot alone block closure.
+Additional evidence may be attached to the existing question. A separate question is warranted only when it affects a distinct architectural element or presents a materially distinct plausible architecture family.
 
-### 10.3 Representative-Alternative Rule
+### 10.3 Domain-Boundary Control
 
-Research evaluates materially different architectural mechanisms and failure modes. It need not examine every named framework, technology, vendor, data format, or implementation variation when they instantiate an already investigated mechanism.
+A question belonging primarily to a contract, domain rule, implementation choice, operating procedure, migration plan, or different architecture domain does not enter the current Category A set unless evidence shows that deferral would materially change an enumerated Category A architectural element.
 
-### 10.4 Evidence-Saturation Rule
+The current research records the handoff, owner or future decision forum, containment, and reopening trigger as Category B, or retains the topic as Category C. Domain separation cannot be used to hide a missing architecture boundary.
+
+### 10.4 Review-Finding Normalization
+
+A review finding is input evidence, not a research category. Before it can affect closure, it is normalized into:
+
+- a bounded Research Question;
+- the exact architecture element affected;
+- materially plausible alternatives;
+- evidence and contrary evidence; and
+- a proposed classification under Section 6.
+
+Reviewer severity, repetition, title, or status creates no presumption of Category A.
+
+### 10.5 Evidence Saturation
 
 More research is not required merely because more sources could be consulted. Additional evidence is necessary when it could materially change a Category A resolution, a critical assumption, an alternative comparison, or the boundedness of remaining uncertainty.
 
-When additional evidence would only repeat an already supported conclusion without changing its confidence boundary or consequences, it does not block closure.
+Evidence is saturated for the current question when:
 
-### 10.5 Closure Snapshot
+- representative source types within the Decision Boundary have been considered;
+- material contrary evidence has been addressed;
+- new evidence is more likely to repeat, refine, specialize, or extend the current analysis than to reveal a materially distinct plausible architecture family; and
+- no demonstrated Category A completion criterion remains unmet.
 
-Closure is evaluated against an exact research revision and inventory snapshot. New questions raised after that snapshot are subject to the Decision-Boundary and Architectural-Impact tests.
+The possibility of discovering more information does not defeat saturation.
 
-They do not automatically invalidate the closure candidate.
+### 10.6 Reopening Threshold
 
-### 10.6 Separate Research Streams
+Closure is evaluated against an exact research revision and inventory snapshot. A closed research effort is reopened only when new attributable evidence:
 
-A material topic outside the current Decision Boundary may receive its own research identity, scope, inventory, review, and closure decision.
+- invalidates a critical assumption used by the ADP direction;
+- identifies an omitted, materially distinct, and plausible architecture family;
+- demonstrates that Category B containment cannot preserve a mandatory invariant or fail-closed behavior;
+- establishes that the recorded Decision Boundary excluded a presently applicable architectural obligation; or
+- otherwise satisfies the complete Category A Materiality Test against the closed boundary.
 
-Separation prevents one architecture effort from becoming the permanent container for every related concern.
+Preference changes, additional examples, new implementations, new terminology, duplicate review findings, or evidence that only refines the selected family do not meet the reopening threshold.
+
+A material topic outside the closed boundary may receive its own research identity, scope, inventory, review, and closure decision without reopening the earlier research.
 
 ## 11. Reopening Conditions
 
-Research previously closed under this methodology may be reopened when:
+Research previously closed under this methodology may be reopened only when the Section 10.6 threshold is met. Qualifying evidence may show that:
 
 - new evidence invalidates a critical assumption;
-- an omitted alternative is shown to be capable of reversing or invalidating the architecture;
+- an omitted, materially distinct, and plausible architecture family is shown to be capable of replacing or invalidating the architecture;
 - applicable higher governance changes the Decision Boundary;
-- an external obligation materially changes or is newly established for the scope;
-- a deferred Category B item becomes Category A;
+- an external obligation materially changes or is newly established for the scope and changes an enumerated Category A architectural element;
+- a deferred Category B item now satisfies the Category A Materiality Test;
 - the ADP reveals that a foundational decision lacks research support;
-- source, authority, confidentiality, temporal, or scope evidence used for closure is invalidated;
+- source, authority, confidentiality, temporal, or scope evidence used for closure is invalidated in a way that changes architectural validity;
 - the closure decision was based on materially incomplete or misrepresented evidence; or
 - cross-repository or product expansion changes the architecture rather than merely extending it.
 
@@ -700,10 +782,12 @@ Research is not reopened merely because:
 - a different vendor becomes available;
 - an optimization is proposed;
 - additional examples are found;
+- a prior question is restated;
+- a new review assigns a different severity without new material evidence;
 - a Category C topic becomes interesting; or
 - a later reviewer prefers a different architecture without new material evidence.
 
-The reopening decision identifies the affected earlier closure evidence and preserves the original record.
+The party proposing reopening bears the same burden of proof required for Category A. The reopening decision identifies the affected earlier closure evidence and preserves the original record. It does not edit the earlier decision.
 
 ## 12. Roles and Separation of Responsibilities
 
@@ -771,9 +855,13 @@ A reusable Research Closure evidence set includes:
 - alternatives and exclusions;
 - assumptions and supporting evidence;
 - findings and risks;
-- Category A, B, and C classifications;
+- Category A, B, and C classifications with their supporting evidence;
+- complete answers to the seven-question Materiality Test for every proposed Category A item;
+- the assumption, current risk, containment mechanism, future owner or decision forum, and reopening trigger for every Category B item;
 - remaining uncertainty assessment;
 - architectural-impact assessment;
+- representative-architecture-family assessment;
+- evidence-saturation assessment;
 - independent review identity and revision;
 - research-author recommendation;
 - human closure decision identity and independently valid authority reference;
@@ -794,22 +882,37 @@ This list defines methodology evidence categories only. It does not create a sch
 1. Research Closure is not architecture approval.
 2. Research Closure is not implementation approval.
 3. Research Closure is bound to an exact Decision Boundary and research revision.
-4. No unresolved Category A item may pass into ADP development as a deferred question.
-5. Category B cannot conceal a question capable of invalidating the architecture.
-6. Category C cannot block closure merely because it remains interesting.
-7. Research scope cannot expand without architectural relevance to the Decision Boundary.
-8. A review verdict does not close research.
-9. AI cannot make the closure decision.
-10. A Git commit, merge, tag, branch, or publication does not close research.
-11. Research Closure creates no approval, lifecycle state, authority tier, Product Binding, or Design Freeze.
-12. Missing evidence cannot default to closure.
-13. Closure and reopening preserve immutable history.
-14. Future ADP, contract, implementation, adoption, effectiveness, and freeze decisions remain independently governed.
+4. Category A exists only when the complete Materiality Test and burden of proof are satisfied.
+5. No unresolved, demonstrated Category A item may pass into ADP development as a deferred question.
+6. Importance, uncertainty, risk severity, reviewer identification, or the possibility of more research does not independently create Category A.
+7. Category B is controlled deferral and cannot conceal a question capable of invalidating the architecture.
+8. Every Category B item records an assumption, current risk, containment mechanism, future owner or decision forum, and reopening trigger.
+9. Category C cannot block closure merely because it remains interesting.
+10. Research scope cannot expand without demonstrated architectural relevance to the Decision Boundary.
+11. Only omission of a materially distinct and plausible architecture family can support Category A on alternative-coverage grounds.
+12. A review verdict or severity does not close research or determine a research classification.
+13. AI cannot make the closure decision.
+14. A Git commit, merge, tag, branch, or publication does not close research.
+15. Research Closure creates no approval, lifecycle state, authority tier, Product Binding, or Design Freeze.
+16. Missing evidence cannot default to closure.
+17. Fail-closed containment cannot conceal a missing architecture boundary.
+18. Closure and reopening preserve immutable history.
+19. Methodology revisions do not silently rewrite earlier closure records.
+20. Future ADP, contract, implementation, adoption, effectiveness, and freeze decisions remain independently governed.
 
 ## 16. Methodology Outcome
 
 This document establishes no current Research Closure outcome for any CADP research effort.
 
-In particular, it does not close, approve, reject, or reclassify the Governance Rule Discovery research. That research may be evaluated separately against this methodology only through an independently authorized future closure process.
+In particular, this revision does not close, approve, reject, or reclassify the Governance Rule Discovery research. The existing [Governance Rule Discovery Research Closure](GOVERNANCE_RULE_DISCOVERY_RESEARCH_CLOSURE.md) remains an immutable historical decision made under the earlier methodology. It is neither converted into a decision under Version 0.2.0 nor invalidated by this correction.
+
+Any reassessment of that research under Version 0.2.0 requires a new, attributable closure process and a new decision record that references rather than rewrites the earlier record.
 
 The creation and commit of this Draft methodology are document-existence events only. They do not make the methodology Approved, Effective, Adopted, or Design Frozen.
+
+## 17. Revision History
+
+| Version | Revision purpose | Governance effect |
+| --- | --- | --- |
+| 0.1.0 | Established the initial research-closure categories, process, outcomes, and evidence expectations. | Draft methodology only; no approval or closure outcome created by the methodology document. |
+| 0.2.0 | Corrected overly broad Category A behavior observed during the first application by introducing a falsifiable materiality threshold, burden of proof, controlled Category B deferral, representative-alternative distinctions, evidence saturation, and anti-expansion controls. | Prospective methodology correction only; no existing research is reclassified and no earlier closure record is changed. |

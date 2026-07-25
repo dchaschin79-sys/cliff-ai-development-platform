@@ -7,15 +7,19 @@
 | Contract identity | `CADP-CONTRACT-RULE-SOURCE-CATALOG` |
 | Title | Rule Source Catalog Contract |
 | Document type | Contract Proposal |
-| Version | 0.1.0 |
+| Version | 0.2.0 |
+| Previous version | 0.1.0 |
+| Revision classification | Pre-acceptance Major Maintenance Revision |
+| Revision basis | Independent Contract Review — three Major and three Minor Findings |
 | Status | Draft Contract Proposal |
+| Review state | Revised — Pending Independent Verification |
 | Date | 2026-07-24 |
 | Architecture domain | Governance Rule Discovery |
 | Contract domain | Rule Source Catalog |
 | Primary responsibility | Canonical source identity, description, catalog participation, and catalog relationship semantics |
 | Proposed canonical semantic owner | This contract |
 | Repository | `dchaschin79-sys/cliff-ai-development-platform` |
-| Source baseline | `18eef94e087971ad6cfcbf856e6f0aac106fb485` |
+| Source baseline | `caf90dde13189cbd27278ae5ac3bd895677a714c` |
 | Acceptance | Not created |
 | Effectiveness | Not created |
 | Normative effect | None |
@@ -59,16 +63,25 @@ This contract owns source-catalog semantics only.
 
 This proposal defines the canonical meaning of:
 
-1. Rule Source;
-2. Source Identity;
-3. Source Classification;
-4. Source Descriptor;
-5. Source Category;
-6. Source Participation;
-7. Source Eligibility References;
-8. Source Metadata Ownership;
-9. Canonical Source Identity; and
-10. Source Lifecycle References.
+1. Rule Source Catalog;
+2. Catalog Identity;
+3. Catalog Revision;
+4. Catalog Scope;
+5. Rule Source;
+6. Source Identity;
+7. Exact Source Revision Binding;
+8. Source Classification;
+9. Source Descriptor;
+10. Descriptor Identity;
+11. Descriptor Revision;
+12. Source Category;
+13. Source Reference;
+14. Source Declaration;
+15. Source Participation;
+16. Source Eligibility References;
+17. Source Metadata Ownership;
+18. Canonical Logical Source Identity; and
+19. Source Lifecycle References.
 
 ### 4.2 Explicit Ownership Boundary
 
@@ -112,18 +125,62 @@ A catalog:
 
 This proposal defines catalog meaning, not catalog representation.
 
+Catalog ownership, Catalog Identity, Catalog Revision, and Catalog Scope are separate semantic dimensions:
+
+- **catalog ownership** is the externally governed canonical responsibility for the catalog and its accepted revisions;
+- **Catalog Identity** distinguishes the same logical catalog across revisions;
+- **Catalog Revision** identifies one exact semantic state of that catalog; and
+- **Catalog Scope** bounds the meaning of catalog-owned assertions at that revision.
+
+Technical custody, authorship, repository ownership, file location, or implementation control MUST NOT create catalog ownership or collapse these dimensions.
+
+### 4.4 Catalog Identity
+
+| Semantic aspect | Definition |
+| --- | --- |
+| Purpose | Distinguish one logical Rule Source Catalog from every other catalog across revisions and representations. |
+| Canonical definition | Catalog Identity is the stable logical identity of a Rule Source Catalog. It identifies the same catalog across its Catalog Revisions without identifying any one revision. |
+| Semantically required invariants | One logical catalog MUST have one Catalog Identity within its governed identity boundary. A change of location, representation, custodian, or Catalog Revision MUST NOT create a new Catalog Identity. Two catalogs MUST NOT be treated as identical because they contain equivalent Source References or refer to the same Rule Source. |
+| Relationships | Catalog Identity is the subject of Catalog Revision and Catalog Scope. Source Participation is always interpreted relative to one identified Catalog Identity through an exact Catalog Revision and Catalog Scope. |
+| Ownership boundary | This contract owns Catalog Identity semantics. Independently governed authority determines the eligible canonical owner of a particular Catalog Identity. |
+| Explicit non-goals | This concept does not define identifier syntax, namespaces, registry keys, repository locations, catalog topology, or identity-resolution algorithms. |
+
+### 4.5 Catalog Revision
+
+| Semantic aspect | Definition |
+| --- | --- |
+| Purpose | Distinguish one exact semantic state of a Rule Source Catalog from its earlier and later states. |
+| Canonical definition | Catalog Revision is the immutable semantic state of one Catalog Identity at an exact revision boundary. It does not replace or change the logical Catalog Identity. |
+| Semantically required invariants | A Catalog Revision MUST belong to exactly one Catalog Identity. A later Catalog Revision MUST NOT mutate the meaning or assertions of an earlier revision. Equivalent catalog contents MUST NOT be assumed to be the same Catalog Revision without canonical revision evidence. |
+| Relationships | Catalog Revision binds Catalog Scope and every catalog-owned Source Declaration and Source Participation assertion evaluated at that revision. |
+| Ownership boundary | This contract owns the distinction between logical catalog identity and exact catalog revision. Canonical artifact governance owns revision identity, integrity, and source-of-truth evidence. |
+| Explicit non-goals | This concept does not define version numbering, hashes, revision formats, publication mechanisms, storage, synchronization, or change procedures. |
+
+### 4.6 Catalog Scope
+
+| Semantic aspect | Definition |
+| --- | --- |
+| Purpose | Establish the semantic boundary within which catalog-owned assertions are interpreted. |
+| Canonical definition | Catalog Scope is the governed semantic boundary that qualifies the meaning of Source Declarations and Source Participation within one Catalog Identity and Catalog Revision. |
+| Semantically required invariants | Catalog Scope MUST be attributable, explicit, and revision-bound. Two assertions about the same Rule Source MUST NOT be assumed to concern the same Catalog Scope. Catalog Scope MUST NOT be inferred from repository location, organization name, product name, technical tenancy, or physical catalog placement. |
+| Relationships | Catalog Scope is bound to Catalog Identity and Catalog Revision and qualifies Source Declaration, Source Participation, Source Category, and catalog-owned Source Metadata Ownership assertions. |
+| Ownership boundary | This contract owns the abstract meaning and qualifying role of Catalog Scope. Exact scope values and cross-layer scope relationships remain unresolved under GRD-08 and GRD-12. Federation Boundary owns federation composition and discovery-context scope. |
+| Explicit non-goals | This concept does not define scope values, scope taxonomies, product-specific scope, tenant-specific scope, repository topology, federation topology, access boundaries, or admission workflows. |
+
 ## 5. Rule Source
 
 | Semantic aspect | Definition |
 | --- | --- |
-| Purpose | Provide the stable source concept that a Rule Source Catalog may declare and reference. |
-| Canonical definition | A Rule Source is a canonically identifiable governed source that contains, governs, or provides access to rule-bearing material or to an independently governed source relationship relevant to CADP governance. |
-| Semantically required invariants | A Rule Source remains distinguishable from its location, representation, catalog entry, owner, revision, authority, eligibility, and downstream use. Its identity and exact revision cannot be inferred from proximity, naming, search ranking, model memory, or implementation behavior. Registration does not grant authority or applicability. |
-| Relationships | A Rule Source has a Source Identity, is related to a Canonical Source Identity, may be represented by a Source Descriptor, may carry Source Classification and Source Category relationships, may participate in catalog scopes, and may reference upstream eligibility and lifecycle evidence. |
+| Purpose | Provide the stable, bounded source concept that a Rule Source Catalog may declare and reference. |
+| Canonical definition | A Rule Source is a semantically identifiable governed source of rule-bearing material, or a source of an artifact class later authorized under GRD-01 to carry rule-bearing source relationships. |
+| Semantically required invariants | A Rule Source MUST be distinguishable from its location, representation, catalog declaration, owner, revision, authority, eligibility, and downstream use. Its identity and exact revision MUST NOT be inferred from proximity, naming, search ranking, model memory, or implementation behavior. A catalog, root, resolver, registry mechanism, source-of-sources relationship, access path, traversal result, provenance record, or closure evidence MUST NOT become a Rule Source merely because it points to, aggregates, accesses, registers, or processes Rule Sources. |
+| Relationships | A Rule Source has a Source Identity, may be bound to an Exact Source Revision, may be represented by a Source Descriptor, may carry Source Classification and Source Category relationships, may have Source Participation in a Catalog Scope, and may reference upstream eligibility and lifecycle evidence. |
 | Ownership boundary | This contract owns the source concept as used by a Rule Source Catalog. The source’s content, canonical artifact meaning, authority, eligibility, lifecycle, and applicability remain owned by their respective upstream or downstream governance domains. |
-| Explicit non-goals | This concept does not determine whether the source must be discovered, is closure-relevant, can be resolved, contains an applicable rule, or is sufficient for a Policy Decision. |
+| Explicit non-goals | This concept does not determine the artifact class deferred by GRD-01; whether a source must be discovered, is closure-relevant, can be resolved, contains an applicable rule, or is sufficient for a Policy Decision; or whether any catalog, federation, registry, access, traversal, provenance, or closure mechanism is itself a Rule Source. |
 
-A Rule Source may be repository-local, platform-related, product-bound, tenant-bound where separately governed, externally referenced, inherited, legacy-related, or shared. This statement recognizes architecture-supported source domains; it does not define Source Category values or decide their scope rules.
+A pointing relationship, access path, aggregation mechanism, infrastructure component, registration-governance mechanism, or federation boundary does not acquire Rule Source meaning from its proximity to rule-bearing material.
+
+A Rule Source may be repository-local, platform-related, product-bound, tenant-bound where separately governed, externally referenced, inherited, legacy-related, or shared. This statement recognizes architecture-supported source domains; it does not define Source Category values, decide their scope rules, or resolve GRD-01.
 
 ## 6. Source Identity
 
@@ -132,22 +189,33 @@ A Rule Source may be repository-local, platform-related, product-bound, tenant-b
 | Purpose | Distinguish one Rule Source logically from every other Rule Source across representations and revisions. |
 | Canonical definition | Source Identity is the stable logical identity by which a Rule Source is addressed within governed catalog relationships, independent of storage location, file path, alias, mirror, copy, translation, derived representation, or current revision. |
 | Semantically required invariants | One logical Rule Source cannot have two conflicting Source Identities for the same governed identity boundary. Reuse of a label or location does not establish identity equivalence. A new revision does not by itself create a new Source Identity; a different semantic source cannot inherit an existing identity merely through similarity. |
-| Relationships | Source Identity identifies the subject described by a Source Descriptor and linked to a Canonical Source Identity. It is used by Source Participation and Source Metadata Ownership relationships. |
+| Relationships | Source Identity identifies the subject described by a Source Descriptor and linked to a Canonical Logical Source Identity. Exact Source Revision Binding identifies one immutable revision without changing that logical identity. Source Identity is used by Source Declaration, Source Participation, and Source Metadata Ownership relationships. |
 | Ownership boundary | This contract owns the source-catalog meaning of Source Identity. Canonical artifact identity, external authority over identity, and identity-provider mechanisms remain outside this contract. |
 | Explicit non-goals | This concept does not define an identifier syntax, namespace format, registry key, URI, file name, database key, or identity-resolution algorithm. |
 
 When identity evidence conflicts or cannot distinguish sources deterministically, the catalog relationship must preserve the unresolved condition. It must not select an identity by convenience or model inference.
 
+### 6.1 Exact Source Revision Binding
+
+| Semantic aspect | Definition |
+| --- | --- |
+| Purpose | Bind a source-catalog assertion to one exact immutable revision of its Canonical Logical Source Identity. |
+| Canonical definition | Exact Source Revision Binding is the attributable relationship that identifies the precise revision of a logical Rule Source to which a Source Declaration, Source Descriptor, or Source Participation assertion applies. It is not a second logical source identity. |
+| Semantically required invariants | An exact binding MUST resolve to one immutable source revision under its canonical revision evidence. It MUST NOT float to a later revision, be inferred from the current repository state, or be treated as the Canonical Logical Source Identity itself. Source Identity and Canonical Logical Source Identity MUST NOT be treated as exact revision bindings. |
+| Relationships | Exact Source Revision Binding qualifies Source Descriptor, Source Declaration, Source Participation, Source Classification, Source Category, Source Eligibility References, and Source Lifecycle References where those assertions concern a particular source revision. |
+| Ownership boundary | This contract owns the source-catalog distinction between logical source identity and exact source revision binding. Canonical artifact governance or independently governed external-source governance owns the revision identity, integrity, and evidence. |
+| Explicit non-goals | This concept does not define revision syntax, version numbering, hashes, mutable aliases, lookup behavior, retrieval, storage, integrity mechanisms, or binding algorithms. |
+
 ## 7. Source Classification
 
 | Semantic aspect | Definition |
 | --- | --- |
-| Purpose | Associate a Rule Source with independently governed classifications needed to interpret the source declaration correctly. |
+| Purpose | Associate a Rule Source with independently governed classification meanings needed to interpret the source declaration correctly. |
 | Canonical definition | Source Classification is the governed relationship between a Rule Source and one or more externally owned classification meanings applicable to that source. |
-| Semantically required invariants | A classification retains its originating semantic owner, exact governing revision, and applicable scope. Classification does not create authority, eligibility, lifecycle state, participation, or applicability. Independent classification dimensions are not collapsed into one ranking. |
-| Relationships | Source Classification may reference artifact type, confidentiality, authority class, memory class, or another independently governed classification where applicable. It may inform, but does not determine, Source Category or Source Participation. |
+| Semantically required invariants | A classification MUST retain its originating semantic owner, exact governing revision, and applicable scope. Classification does not create authority, eligibility, lifecycle state, participation, category, or applicability. Independent classification dimensions MUST NOT be collapsed into one ranking. No equivalence between Source Classification and Source Category may be inferred from similar labels or values. |
+| Relationships | Source Classification may reference artifact type, confidentiality, authority class, memory class, or another independently governed classification where applicable. It may coexist with Source Category but does not define, substitute for, override, or determine Source Category or Source Participation. |
 | Ownership boundary | This contract owns only the meaning of associating a Rule Source with an upstream classification. The classification vocabulary and its values remain owned by their originating governance domains. |
-| Explicit non-goals | This concept does not define classification values, a registry, hierarchy, precedence order, inference rule, or validation algorithm. |
+| Explicit non-goals | This concept does not define classification values, Source Category values, a registry, hierarchy, precedence order, cross-dimension equivalence, inference rule, or validation algorithm. |
 
 A missing or conflicting required classification cannot be silently replaced by a catalog-local label.
 
@@ -156,41 +224,69 @@ A missing or conflicting required classification cannot be silently replaced by 
 | Semantic aspect | Definition |
 | --- | --- |
 | Purpose | Provide the coherent semantic description through which a Rule Source is represented to governed catalog consumers. |
-| Canonical definition | A Source Descriptor is the source-owned semantic representation that brings together the Rule Source’s identity and its governed catalog relationships without becoming the source itself or a second canonical owner. |
-| Semantically required invariants | A Source Descriptor refers to exactly one Source Identity within its declared scope. Its assertions remain attributable to their semantic owners. It cannot contradict the Canonical Source Identity, transfer source ownership, create eligibility, or make its own assertions authoritative by existence. A changed semantic assertion creates a new descriptor revision rather than mutating historical meaning. |
-| Relationships | A Source Descriptor relates Source Identity, Canonical Source Identity, Source Classification, Source Category, Source Participation, Source Eligibility References, Source Metadata Ownership, and Source Lifecycle References. |
-| Ownership boundary | This contract owns descriptor meaning and coherence within the Rule Source Catalog domain. Each referenced classification, eligibility result, lifecycle state, authority fact, and canonical identity retains its external owner. |
+| Canonical definition | A Source Descriptor is the catalog-governed semantic representation that coherently brings together references to a Rule Source and its governed source-catalog assertions without becoming the source, owning its content, or becoming a second canonical owner of any referenced meaning. |
+| Semantically required invariants | A Source Descriptor MUST have one canonical Descriptor Identity owner and one canonical Descriptor Revision owner. One Descriptor Identity and Descriptor Revision MUST NOT have competing canonical descriptors. A descriptor refers to exactly one Source Identity within its declared Catalog Scope and Exact Source Revision Binding where required. Every contained assertion MUST remain attributable to its own canonical semantic owner. A descriptor MUST NOT contradict Canonical Logical Source Identity, transfer source-content ownership, create eligibility, or make an assertion authoritative by containment. Changing any descriptor-owned semantic assertion requires a new immutable Descriptor Revision; externally owned assertions remain bound to their external revisions and are not mutated by a descriptor revision. |
+| Relationships | A Source Descriptor relates Descriptor Identity and Descriptor Revision to Source Identity, Exact Source Revision Binding, Canonical Logical Source Identity, Source Classification, Source Category, Source Declaration, Source Participation, Source Eligibility References, Source Metadata Ownership, and Source Lifecycle References. |
+| Ownership boundary | This contract owns Source Descriptor, Descriptor Identity, and Descriptor Revision semantics within the Rule Source Catalog domain. The eligible catalog semantic owner owns canonical Descriptor Identity and Descriptor Revision assertions. The Rule Source content owner retains source-content semantics. Each classification, eligibility result, lifecycle state, authority fact, canonical logical identity, and exact source revision retains its external owner. |
 | Explicit non-goals | This concept does not define descriptor fields, required keys, optional properties, document shape, serialization, storage, schema, API, or rendering. |
 
-A Source Descriptor may be represented in more than one derived form. Equivalent representations must preserve the same governed meaning and canonical descriptor revision.
+A Source Descriptor may be represented in more than one derived form. Equivalent representations MUST preserve the same governed meaning, Descriptor Identity, and Descriptor Revision. Descriptor custody, representation, or publication does not grant ownership of its referenced assertions.
 
 ## 9. Source Category
 
 | Semantic aspect | Definition |
 | --- | --- |
 | Purpose | Distinguish governed source roles or origin domains within Rule Source Catalog semantics without conflating them with authority or lifecycle. |
-| Canonical definition | Source Category is a Rule Source Catalog classification that groups sources by a governed source-role or origin-domain distinction relevant to catalog interpretation. |
-| Semantically required invariants | Category membership is explicit, attributable, revision-bound, and independent from authority, eligibility, lifecycle, confidentiality, applicability, and catalog topology. A category name cannot create participation or make a source universal. Categories that appear similar cannot be merged without governed equivalence evidence. |
-| Relationships | Source Category characterizes a Rule Source or Source Descriptor within a catalog context and may coexist with multiple independently owned Source Classifications. |
-| Ownership boundary | This contract owns the meaning and constraints of Source Category as a catalog concept. Actual category values and their controlled registration are deferred to separately governed work. |
-| Explicit non-goals | This concept does not define category values, product-specific categories, tenant-specific values, taxonomy depth, precedence, topology, or registry representation. |
+| Canonical definition | Source Category is an independent, catalog-owned semantic dimension that groups sources by a governed source-role or origin-domain distinction relevant to catalog interpretation. It is not Source Classification. |
+| Semantically required invariants | A Source Category assertion MUST be explicit, attributable to the catalog semantic owner, revision-bound, Catalog Scope-bound, and independent from Source Classification, authority, eligibility, lifecycle, confidentiality, applicability, and catalog topology. A category name cannot create participation or make a source universal. Category and classification assertions that appear similar MUST NOT be merged, substituted, overridden, or treated as equivalent without separately governed equivalence evidence. |
+| Relationships | Source Category characterizes a Rule Source or Source Descriptor within an identified Catalog Identity, Catalog Revision, and Catalog Scope. It may coexist with multiple independently owned Source Classifications; neither dimension determines the other. |
+| Ownership boundary | This contract owns the meaning and constraints of Source Category as a catalog concept. Actual category values and their future governance are deferred to separately governed work. |
+| Explicit non-goals | This concept does not define category values, classification values, product-specific categories, tenant-specific values, taxonomy depth, precedence, cross-dimension equivalence, topology, or registry representation. |
 
 Source Category does not determine whether a source belongs to a Federation Root, is closure-relevant, or applies to a Governed Operation.
 
-## 10. Source Participation
+## 10. Source Reference
 
 | Semantic aspect | Definition |
 | --- | --- |
-| Purpose | Express that a Rule Source is explicitly declared within a governed catalog scope and is available for evaluation by authorized downstream contract domains. |
-| Canonical definition | Source Participation is the attributable, scope-bound, revision-bound relationship by which a Rule Source is declared as a catalog participant. |
-| Semantically required invariants | Participation is explicit and cannot be inferred from repository location, file proximity, code import, hyperlink, search result, naming, conversational mention, prior discovery, or model memory. Participation preserves the source owner and Canonical Source Identity. It does not approve the source, make it Effective, create authority, establish eligibility, establish discovery membership, or establish rule applicability. |
-| Relationships | Source Participation relates a Rule Source to a catalog scope and may reference Source Eligibility and Source Lifecycle evidence needed by downstream governance. Federation Boundary consumers may evaluate catalog participation under their own accepted semantics. |
-| Ownership boundary | This contract owns catalog participation meaning. Federation Root membership, discovery-boundary membership, closure relevance, resolution, and downstream inclusion remain outside this contract. |
+| Purpose | Permit a governed catalog assertion to identify a Rule Source without asserting that the source participates in a Catalog Scope. |
+| Canonical definition | Source Reference is an attributable reference to a Source Identity and, where the assertion concerns a precise state, an Exact Source Revision Binding. A Source Reference identifies its subject but does not by itself declare any catalog property or participation. |
+| Semantically required invariants | A Source Reference MUST preserve Canonical Logical Source Identity and exact revision evidence where required. Reference existence, repetition, accessibility, catalog location, or inclusion in a Source Descriptor MUST NOT imply Source Declaration, Source Participation, authority, eligibility, lifecycle status, discovery membership, or applicability. |
+| Relationships | Source Reference is used by Source Declaration, Source Descriptor, Source Participation, Source Classification, Source Category, Source Eligibility References, and Source Lifecycle References to identify their subject without inheriting their meaning. |
+| Ownership boundary | This contract owns Source Reference meaning within source-catalog semantics. Canonical artifact governance or independently governed external-source governance owns the referenced logical identity and exact revision. |
+| Explicit non-goals | This concept does not define reference syntax, resolution, retrieval, access paths, links, aliases, locator formats, registration, discovery, or validation. |
+
+## 11. Source Declaration
+
+| Semantic aspect | Definition |
+| --- | --- |
+| Purpose | Express one attributable semantic assertion about a Rule Source within an identified catalog boundary. |
+| Canonical definition | Source Declaration is an assertion made by the authorized canonical semantic owner of that assertion about a Rule Source or its source-catalog relationship, qualified by Catalog Identity, Catalog Revision, Catalog Scope, Source Identity, and Exact Source Revision Binding where required. |
+| Semantically required invariants | Every Source Declaration MUST identify one assertion meaning and one canonical semantic owner. Authorship, technical custody, repository ownership, or catalog maintenance MUST NOT establish authority to make the declaration. A declaration about source content, descriptor identity, descriptor revision, classification, category, participation, eligibility reference, or lifecycle reference MUST retain the distinct owner of that assertion. Declaration existence MUST NOT imply Source Participation unless the declaration is explicitly the catalog-owned Source Participation assertion. |
+| Relationships | Source Declaration uses Source Reference to identify its subject. Source Descriptor may coherently represent multiple Source Declarations while preserving their separate owners. Source Participation and Source Category are catalog-owned kinds of Source Declaration; externally owned classifications, eligibility references, lifecycle references, canonical identity, exact revision, and source-content assertions retain their external ownership. |
+| Ownership boundary | This contract owns the meaning and attribution requirements of Source Declaration. It does not assign a particular person or organization as owner, determine authority eligibility, or transfer the externally governed ownership of the asserted meaning. |
+| Explicit non-goals | This concept does not define declaration fields, workflows, commands, submission, admission, acceptance, publication, validation, evidence formats, or implementation. |
+
+## 12. Source Participation
+
+| Semantic aspect | Definition |
+| --- | --- |
+| Purpose | Express that a Rule Source explicitly participates within one governed Catalog Scope at one Catalog Revision and is available for evaluation by authorized downstream contract domains. |
+| Canonical definition | Source Participation is the catalog-owned Source Declaration that a Rule Source participates in one identified Catalog Identity, Catalog Revision, and Catalog Scope under an Exact Source Revision Binding where required. |
+| Semantically required invariants | Participation MUST be explicit, attributable to the catalog semantic owner, Catalog Scope-bound, and Catalog Revision-bound. It cannot be inferred from Source Reference, another Source Declaration, repository location, file proximity, code import, hyperlink, search result, naming, conversational mention, prior discovery, or model memory. Participation MUST preserve the Rule Source content owner, Canonical Logical Source Identity, and Exact Source Revision Binding. It does not approve the source, make it Effective, create authority, establish eligibility, establish federation or discovery membership, or establish rule applicability. Participation in one Catalog Scope MUST NOT imply participation in another. |
+| Relationships | Source Participation uses Source Reference and relates a Rule Source to an identified Catalog Identity, Catalog Revision, and Catalog Scope. It may reference Source Eligibility and Source Lifecycle evidence needed by downstream governance. Federation Boundary consumers may evaluate Source Participation under their own accepted semantics without converting it into federation membership. |
+| Ownership boundary | This contract owns Source Participation meaning, and the eligible catalog semantic owner owns each Source Participation assertion. Rule Source content ownership, Federation Root membership, discovery-boundary membership, closure relevance, resolution, and downstream inclusion remain outside this contract. |
 | Explicit non-goals | This concept does not define registration workflows, admission algorithms, discovery behavior, traversal, ordering, priority, retrieval, or removal procedures. |
 
-Participation in one catalog scope does not imply participation in another scope. A derived catalog view does not create new participation.
+### 12.1 Terminology Reconciliation
 
-## 11. Source Eligibility References
+- **Source Registration** is a non-canonical process term outside this contract. It MUST NOT be used as a substitute for Source Declaration or Source Participation and does not create either semantic assertion.
+- **Catalog Entry** is a non-canonical representation term. Its existence or representation MUST NOT create Source Reference, Source Declaration, or Source Participation.
+- **Catalog Membership** is not a separate semantic concept. Where legacy material uses that phrase as shorthand, it means exactly Source Participation within one identified Catalog Identity, Catalog Revision, and Catalog Scope; it MUST NOT mean Federation Root membership, discovery-boundary membership, or cross-catalog composition.
+
+A derived catalog view does not create new Source Participation.
+
+## 13. Source Eligibility References
 
 | Semantic aspect | Definition |
 | --- | --- |
@@ -203,57 +299,67 @@ Participation in one catalog scope does not imply participation in another scope
 
 The catalog may preserve that an eligibility reference is absent or unresolved. It does not decide how a downstream discovery attempt processes that condition.
 
-## 12. Source Metadata Ownership
+## 14. Source Metadata Ownership
 
 | Semantic aspect | Definition |
 | --- | --- |
 | Purpose | Keep every source-catalog assertion attributable to one canonical semantic owner and prevent catalog custody from transferring source ownership. |
 | Canonical definition | Source Metadata Ownership is the governed assignment of canonical responsibility for each semantic assertion associated with a Rule Source declaration. |
-| Semantically required invariants | Each semantic assertion has one canonical owner. Catalog maintenance, technical custody, copying, indexing, rendering, synchronization, or repeated use does not transfer ownership. A catalog may own catalog participation and Source Category assertions while referencing identity, classification, eligibility, lifecycle, authority, and content meanings owned elsewhere. Conflicting ownership claims remain explicit. |
-| Relationships | Source Metadata Ownership relates the Rule Source owner, catalog participation owner, Source Category owner, and external owners of referenced identity, classification, eligibility, lifecycle, and authority meanings. |
+| Semantically required invariants | Each semantic assertion MUST have exactly one canonical semantic owner at an exact governing revision and scope. Rule Source content ownership, Descriptor Identity ownership, Descriptor Revision ownership, and ownership of each represented assertion MUST remain distinguishable. Catalog maintenance, technical custody, authorship, copying, indexing, rendering, synchronization, or repeated use does not transfer ownership. The Rule Source content owner does not automatically own Descriptor Identity, Descriptor Revision, Source Category, or Source Participation. The catalog semantic owner does not own source content or externally governed identity, classification, eligibility, lifecycle, authority, or revision meanings. Conflicting or missing ownership claims MUST remain explicit and MUST NOT be resolved through proximity, custody, or inference. |
+| Relationships | Source Metadata Ownership relates the Rule Source content owner; the catalog semantic owner; the Descriptor Identity owner; the Descriptor Revision owner; the owner of each Source Declaration; and the external owners of Canonical Logical Source Identity, Exact Source Revision Binding, Source Classification, Source Eligibility References, Source Lifecycle References, authority meanings, and source-content meanings. The eligible catalog semantic owner owns catalog-specific Source Category and Source Participation assertions. |
 | Ownership boundary | This contract owns the attribution model for source-catalog assertions. It does not assign human authority, approve an owner, redefine canonical artifact ownership, or govern implementation custody. |
 | Explicit non-goals | This concept does not define access control, repository permissions, maintainer roles, database ownership, file ownership, organizational reporting, or delegation. |
 
-No Source Descriptor may imply that one actor owns every referenced semantic dimension merely because the actor maintains the descriptor.
+No Source Descriptor may imply that one actor owns every represented semantic dimension merely because the actor owns or maintains the descriptor. Descriptor Identity and Descriptor Revision each have one canonical owner; no competing canonical descriptor may claim the same identity and revision. A new Descriptor Revision may change only descriptor-owned assertions and references. It MUST NOT mutate the historical meaning or ownership of an externally governed assertion.
 
-## 13. Canonical Source Identity
+## 15. Canonical Logical Source Identity
 
 | Semantic aspect | Definition |
 | --- | --- |
-| Purpose | Bind the catalog’s Source Identity to the independently governed canonical source without allowing the catalog to manufacture canonical status. |
-| Canonical definition | Canonical Source Identity is the externally governed canonical identity and exact revision relationship that controls which source artifact or independently eligible external source is authoritative for a Rule Source declaration. |
-| Semantically required invariants | A catalog cannot make a source canonical through registration, naming, popularity, technical accessibility, or repeated use. One Source Identity cannot resolve to conflicting canonical sources for the same scope and revision. Aliases, mirrors, copies, translations, and derived representations remain distinguishable from the canonical source unless governed equivalence and lineage are established externally. |
-| Relationships | Canonical Source Identity is referenced by Source Identity and Source Descriptor and preserved through Source Participation. It remains attributable through Source Metadata Ownership. |
-| Ownership boundary | This contract owns the requirement that a catalog declaration preserve a canonical source relationship. Canonical artifact governance and independently eligible external-source governance own the canonical identity itself. |
+| Purpose | Bind the catalog’s Source Identity to the independently governed stable logical source without allowing the catalog to manufacture canonical status or conflate identity with revision. |
+| Canonical definition | Canonical Logical Source Identity is the externally governed stable identity that establishes which logical source artifact or independently eligible external source is canonical across revisions. It does not identify any one exact source revision. |
+| Semantically required invariants | A catalog MUST NOT make a source canonical through Source Registration, Source Declaration, Source Participation, naming, popularity, technical accessibility, or repeated use. One Source Identity MUST NOT resolve to conflicting Canonical Logical Source Identities within the same governed identity boundary. Aliases, mirrors, copies, translations, and derived representations remain distinguishable from the canonical logical source unless governed equivalence and lineage are established externally. Canonical Logical Source Identity MUST remain distinct from Exact Source Revision Binding. |
+| Relationships | Canonical Logical Source Identity is referenced by Source Identity and Source Descriptor and preserved through Source Declaration and Source Participation. Exact Source Revision Binding selects one immutable revision of that logical identity when an assertion requires revision precision. Both relationships remain attributable through Source Metadata Ownership. |
+| Ownership boundary | This contract owns the requirement that a catalog assertion preserve the distinction between canonical logical source identity and exact source revision binding. Canonical artifact governance and independently eligible external-source governance own the canonical logical identity and revision evidence themselves. |
 | Explicit non-goals | This concept does not define canonicalization algorithms, alias reconciliation, translation equivalence, source-of-truth migration, integrity mechanisms, or conflict resolution. |
 
-Unresolved canonical identity cannot be repaired by Source Category, Source Classification, Source Participation, or a downstream consumer.
+Unresolved Canonical Logical Source Identity or Exact Source Revision Binding cannot be repaired by Source Category, Source Classification, Source Participation, or a downstream consumer.
 
-## 14. Source Lifecycle References
+## 16. Source Lifecycle References
 
 | Semantic aspect | Definition |
 | --- | --- |
 | Purpose | Preserve relationships to independently governed lifecycle evidence relevant to a Rule Source declaration. |
 | Canonical definition | Source Lifecycle References are attributable relationships from a Rule Source or Source Participation declaration to externally owned lifecycle evidence for the exact source revision and applicable scope. |
 | Semantically required invariants | A reference preserves the lifecycle source, exact revision, scope, temporal boundary, and historical lineage it cites. A catalog cannot create, modify, infer, or collapse lifecycle states. A later lifecycle change does not silently mutate the lifecycle evidence associated with an earlier catalog or discovery revision. |
-| Relationships | Source Lifecycle References may be consumed with Source Eligibility References, Canonical Source Identity, and Source Participation by authorized downstream contracts. |
+| Relationships | Source Lifecycle References may be consumed with Source Eligibility References, Canonical Logical Source Identity, Exact Source Revision Binding, and Source Participation by authorized downstream contracts. |
 | Ownership boundary | This contract owns only the source-catalog relationship to lifecycle evidence. Approval, acceptance, effectiveness, adoption, deprecation, withdrawal, supersession, archival, retirement, and Design Freeze meanings remain externally owned. |
 | Explicit non-goals | This concept does not define lifecycle states, transitions, effective intervals, adoption, approval, Design Freeze, reevaluation rules, or transition workflows. |
 
 A lifecycle reference does not make a source Effective or Adopted and does not establish participation in a particular discovery context.
 
-## 15. Cross-Concept Relationships
+## 17. Cross-Concept Relationships
 
 The semantic relationship among the owned concepts is:
 
 ```text
+Rule Source Catalog
+    ├── distinguished across revisions by Catalog Identity
+    ├── fixed to one semantic state by Catalog Revision
+    └── qualifies catalog-owned assertions through Catalog Scope
+            └── Source Participation asserts participation of a Rule Source
+
 Rule Source
-    ├── identified by Source Identity
-    ├── bound by reference to Canonical Source Identity
+    ├── identified logically by Source Identity
+    ├── related to Canonical Logical Source Identity
+    ├── fixed when required by Exact Source Revision Binding
+    ├── identified without participation by Source Reference
     ├── represented semantically by Source Descriptor
-    ├── associated with Source Classification
-    ├── associated with Source Category
-    ├── declared through Source Participation
+    │       ├── distinguished by Descriptor Identity
+    │       └── fixed by Descriptor Revision
+    ├── described through attributable Source Declarations
+    ├── associated independently with Source Classification
+    ├── associated independently with Source Category
     ├── linked to Source Eligibility References
     ├── linked to Source Lifecycle References
     └── kept attributable through Source Metadata Ownership
@@ -263,30 +369,39 @@ This is a semantic relationship map. It is not a data model, schema, object mode
 
 The relationships do not form an authority hierarchy. None can repair a missing or conflicting canonical owner in another semantic domain.
 
-## 16. Contract Invariants
+## 18. Contract Invariants
 
 If later Accepted and made Effective, the Rule Source Catalog Contract would require these semantic invariants:
 
-1. **Identity uniqueness:** one governed Source Identity distinguishes one logical Rule Source within its applicable identity boundary.
-2. **Canonical identity preservation:** every catalog declaration preserves its relationship to an independently governed Canonical Source Identity.
-3. **Ownership consistency:** every catalog assertion remains attributable to one canonical semantic owner.
-4. **No ownership transfer by registration:** Source Participation does not transfer source ownership or create authority.
-5. **No semantic duplication:** derived descriptors, catalogs, and projections do not become competing semantic owners.
-6. **Descriptor coherence:** one Source Descriptor does not combine conflicting Source Identities or silently overwrite externally owned meanings.
-7. **Classification consistency:** Source Classification preserves the meaning and owner of every referenced upstream classification.
-8. **Category independence:** Source Category remains independent from authority, eligibility, lifecycle, confidentiality, applicability, and topology.
-9. **Explicit participation:** catalog participation is attributable, scope-bound, revision-bound, and never inferred from technical or conversational proximity.
-10. **Eligibility-reference separation:** Source Eligibility References do not create or evaluate eligibility.
-11. **Lifecycle-reference separation:** Source Lifecycle References do not create or change lifecycle state.
-12. **Canonical conflict visibility:** conflicting or unresolved canonical identity remains explicit and cannot be repaired by a catalog-local assertion.
-13. **Revision immutability:** a later source, descriptor, category, classification, ownership, participation, eligibility-reference, or lifecycle-reference change does not rewrite an earlier revision.
-14. **Provider neutrality:** no model, registry product, database, repository host, storage system, schema language, or implementation owns Rule Source Catalog semantics.
-15. **No downstream semantic capture:** Federation Boundary, Discovery Operation Evidence, Closure and Provenance Evidence, Rule Universe Result, Discovery Validation, Governance Applicability, and Policy Decision consumers cannot redefine Rule Source Catalog meanings.
-16. **No self-authorization:** a Rule Source, Source Descriptor, catalog, category, classification, or participation declaration cannot establish its own authority, eligibility, acceptance, effectiveness, or applicability.
+1. **Catalog identity stability:** one Catalog Identity distinguishes one logical Rule Source Catalog across Catalog Revisions and representations.
+2. **Catalog revision immutability:** one Catalog Revision identifies one immutable semantic state and does not mutate earlier or later revisions.
+3. **Catalog scope qualification:** every catalog-owned assertion is explicitly qualified by Catalog Identity, Catalog Revision, and Catalog Scope.
+4. **Source identity uniqueness:** one governed Source Identity distinguishes one logical Rule Source within its applicable identity boundary.
+5. **Logical identity preservation:** every catalog assertion preserves its relationship to an independently governed Canonical Logical Source Identity.
+6. **Exact revision separation:** Exact Source Revision Binding identifies one immutable revision without becoming or changing Canonical Logical Source Identity.
+7. **Reference separation:** Source Reference identifies a Rule Source but does not establish Source Declaration or Source Participation.
+8. **Declaration attribution:** every Source Declaration identifies one assertion meaning and one canonical semantic owner.
+9. **Terminology determinism:** Source Registration and Catalog Entry create no catalog semantics; Catalog Membership, when encountered as legacy shorthand, means only Source Participation within one identified Catalog Scope.
+10. **Ownership consistency:** every catalog assertion remains attributable to exactly one canonical semantic owner.
+11. **No ownership transfer:** Source Declaration, Source Participation, descriptor maintenance, and catalog custody do not transfer Rule Source content ownership or externally owned semantics.
+12. **Descriptor ownership:** Descriptor Identity and Descriptor Revision each have one canonical owner, and no competing canonical descriptor represents the same identity and revision.
+13. **Descriptor coherence:** one Source Descriptor does not combine conflicting Source Identities, conflate revisions, or silently overwrite externally owned meanings.
+14. **No semantic duplication:** derived descriptors, catalogs, and projections do not become competing semantic owners.
+15. **Classification consistency:** Source Classification preserves the meaning and owner of every referenced upstream classification.
+16. **Category independence:** Source Category remains catalog-owned and independent from Source Classification, authority, eligibility, lifecycle, confidentiality, applicability, and topology.
+17. **No classification-category substitution:** Source Classification and Source Category may coexist but do not substitute for, override, or imply one another.
+18. **Explicit participation:** Source Participation is attributable to the catalog semantic owner, Catalog Scope-bound, Catalog Revision-bound, and never inferred from Source Reference or technical or conversational proximity.
+19. **Eligibility-reference separation:** Source Eligibility References do not create or evaluate eligibility.
+20. **Lifecycle-reference separation:** Source Lifecycle References do not create or change lifecycle state.
+21. **Canonical conflict visibility:** conflicting or unresolved canonical logical identity or exact revision remains explicit and cannot be repaired by a catalog-local assertion.
+22. **Historical immutability:** a later catalog, source, descriptor, category, classification, ownership, participation, eligibility-reference, or lifecycle-reference change does not rewrite an earlier revision.
+23. **Provider neutrality:** no model, registry product, database, repository host, storage system, schema language, or implementation owns Rule Source Catalog semantics.
+24. **No downstream semantic capture:** Federation Boundary, Discovery Operation Evidence, Closure and Provenance Evidence, Rule Universe Result, Discovery Validation, Governance Applicability, and Policy Decision consumers cannot redefine Rule Source Catalog meanings.
+25. **No self-authorization:** a Rule Source, Source Descriptor, catalog, category, classification, declaration, or participation assertion cannot establish its own authority, eligibility, acceptance, effectiveness, or applicability.
 
 These invariants define meaning, not validation algorithms or implementation requirements.
 
-## 17. Upstream Dependencies
+## 19. Upstream Dependencies
 
 The contract depends semantically on:
 
@@ -304,7 +419,7 @@ The contract depends semantically on:
 
 This proposal consumes those meanings by reference. It does not redefine them or require an implementation dependency.
 
-## 18. Downstream Consumers
+## 20. Downstream Consumers
 
 The direct planned downstream contract consumers are:
 
@@ -315,7 +430,7 @@ Later indirect consumers may include Closure and Provenance Evidence, Rule Unive
 
 This section defines semantic dependency direction only. It does not define software dependencies, services, APIs, calls, packages, deployment, or runtime sequencing.
 
-## 19. Category B Open Questions
+## 21. Category B Open Questions
 
 The following accepted Category B items affect this contract proposal. They remain unresolved.
 
@@ -334,7 +449,7 @@ No Category B classification, assumption, containment boundary, future owner, or
 
 Questions assigned to Federation Boundary, Discovery Operation Evidence, Closure and Provenance Evidence, Rule Universe Result, or Discovery Validation remain with those future contract candidates and are not imported into this contract.
 
-## 20. Explicit Non-Goals
+## 22. Explicit Non-Goals
 
 This contract proposal does not define:
 
@@ -384,21 +499,43 @@ This contract proposal does not define:
 - Product Bindings; or
 - operational policy.
 
-## 21. Contract Lifecycle and Next Governance Action
+## 23. Revision History and Review Resolution
+
+### 23.1 Revision History
+
+| Version | Classification | Summary |
+| --- | --- | --- |
+| 0.1.0 | Initial Draft Contract Proposal | Established the initial Rule Source Catalog semantic candidate under the Contract Governance Framework. |
+| 0.2.0 | Pre-acceptance Major Maintenance Revision | Resolves three Major and three Minor findings from the independent Contract Review. This revision does not change the accepted architecture, Decision Boundary, contract decomposition, Category B classifications, contract identity, semantic owner, Draft status, or non-normative effect. |
+
+### 23.2 Review Resolution Mapping
+
+| Finding | Resolution | Affected sections |
+| --- | --- | --- |
+| MAJOR-01 — Catalog Identity and Catalog Scope undefined | **Resolved.** Catalog Identity, Catalog Revision, and Catalog Scope are defined as separate semantic dimensions from catalog ownership and from one another. Source Participation is bound to all three. | 4.3–4.6, 12, 17, 18 |
+| MAJOR-02 — Declaration, reference, registration, and participation not reconciled | **Resolved.** Source Reference, Source Declaration, and Source Participation have separate canonical meanings. Source Registration and Catalog Entry are non-canonical terms; legacy Catalog Membership is constrained to exact Source Participation meaning and excluded from federation meaning. | 10–12, 17, 18 |
+| MAJOR-03 — Descriptor ownership not deterministic | **Resolved.** Rule Source content ownership, Descriptor Identity ownership, Descriptor Revision ownership, each represented assertion owner, and catalog-owned assertion ownership are explicitly separated, with one canonical owner per semantic assertion. | 8, 11, 14, 17, 18 |
+| MINOR-01 — Classification and category overlap | **Resolved.** Source Classification is externally owned; Source Category is an independent catalog-owned dimension. Neither substitutes for, overrides, or implies the other. | 7, 9, 18 |
+| MINOR-02 — Canonical identity and revision conflated | **Resolved.** Canonical Logical Source Identity is stable across revisions and Exact Source Revision Binding identifies one immutable revision without creating a second identity. | 6, 6.1, 15–18 |
+| MINOR-03 — Rule Source definition too broad | **Resolved.** Rule Source is limited to a semantically identifiable source of rule-bearing material or an artifact class later authorized under GRD-01; catalog, registry, federation, access, traversal, provenance, and closure mechanisms are excluded by proximity alone. | 5, 18, 21 |
+
+These resolution statements record the scope of this maintenance revision. They are not an independent verification, review approval, contract acceptance, operational effectiveness, or implementation authorization.
+
+## 24. Contract Lifecycle and Next Governance Action
 
 This proposal is at the `Proposal` stage of the Contract Governance lifecycle.
 
 | Lifecycle dimension | Current result |
 | --- | --- |
 | Contract status | Draft Contract Proposal |
-| Independent Review | Not performed |
-| Maintenance Revision | Not created |
-| Verification | Not performed |
+| Independent Review | Completed — `REQUIRES MAJOR REVISION` |
+| Maintenance Revision | Version 0.2.0 created to address the bounded review findings |
+| Verification | Not performed for Version 0.2.0 |
 | Acceptance | Not created |
 | Effectiveness | Not created |
 | Supersession | None |
 | Archival | No |
 
-The next permitted governance action is an independent Contract Review of this exact Draft revision.
+The next permitted governance action is independent verification of this exact Draft revision against the six recorded review findings and the Contract Governance Framework.
 
-Review may identify findings, request a bounded maintenance revision, or determine that architecture or decomposition work must resume. Review does not make this proposal Accepted or Effective.
+Verification may confirm resolution, identify a regression, request another bounded maintenance revision, or determine that architecture or decomposition work must resume. Verification does not make this proposal Accepted or Effective.

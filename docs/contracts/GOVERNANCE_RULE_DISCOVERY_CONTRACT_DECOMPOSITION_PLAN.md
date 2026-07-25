@@ -5,13 +5,15 @@
 | Field | Value |
 | --- | --- |
 | Document type | Contract Decomposition Plan |
-| Version | 0.1.0 |
+| Version | 0.2.0 |
 | Status | Draft planning artifact |
-| Date | 2026-07-24 |
+| Date | 2026-07-25 |
 | Architecture domain | Governance Rule Discovery |
 | Repository | `dchaschin79-sys/cliff-ai-development-platform` |
 | Branch | `main` |
 | Planning baseline | `b5feb2bd00f21e955070c8d8a202117972c5eb1f` |
+| Revision baseline | `cc6acb1a4242e048c44d00cdba3e6a9780e965dc` |
+| Revision basis | Architecture Conformance Analysis final verdict: `SPLIT INTO TWO CONTRACTS` |
 | Accepted architecture | Governed Bounded-Closed Federation |
 | Architecture Acceptance Record | `CADP-AAR-GRD-0001`, Version 1.0.0, Git object `19995bca6768b1de01c3db2055bc618404dbc9ec` |
 | Referenced ADP | Version 0.1.1, Git object `5fc17613f5ef78fb5f546f17bdeded75465da9c0` |
@@ -80,9 +82,9 @@ Relative implementation impact does not authorize implementation and does not pr
 | 4 | Source Resolver | Consolidate | Discovery Operation Evidence Contract |
 | 5 | Discovery Manifest | Consolidate | Discovery Operation Evidence Contract |
 | 6 | Rule Universe Snapshot | Consolidate with complete and incomplete result ownership | Rule Universe Result Contract |
-| 7 | Closure Evidence | Consolidate | Closure and Provenance Evidence Contract |
-| 8 | Provenance Record | Consolidate | Closure and Provenance Evidence Contract |
-| 9 | Temporal Binding | Consolidate | Closure and Provenance Evidence Contract |
+| 7 | Closure Evidence | Retain as a separate candidate | Discovery Closure Evidence Contract |
+| 8 | Provenance Record | Consolidate with discovery-specific temporal coherence | Discovery Evidence Provenance Contract |
+| 9 | Temporal Binding | Consolidate with discovery evidence lineage | Discovery Evidence Provenance Contract |
 | 10 | Discovery Failure | Consolidate with result ownership | Rule Universe Result Contract |
 | 11 | Cross Repository Composition | Consolidate | Federation Boundary Contract |
 | 12 | Discovery Validation | Retain as a separate candidate | Discovery Validation Contract |
@@ -128,7 +130,7 @@ Descriptor and registry candidates should share one canonical source-catalog own
 | Primary responsibility | Discovery-boundary topology and root or root-set participation. |
 | MUST NOT own | Its own authority, source eligibility, source catalog identity, resolution activity, closure proof, result classification, or final rule applicability. |
 | Expected dependencies | Rule Source Catalog Contract candidate, Governance Authority, Universal Eligibility, lifecycle, and accepted architecture. |
-| Consumers | Discovery Operation Evidence and Closure and Provenance Evidence contract candidates. |
+| Consumers | Discovery Operation Evidence, Discovery Evidence Provenance, and Discovery Closure Evidence contract candidates. |
 | Producers | Separately governed boundary-authority processes. |
 | Future review complexity | High; root authority, topology, and composition remain Category B concerns. |
 | Relative implementation impact | High; topology affects discovery coordination, but no mechanism is selected here. |
@@ -144,7 +146,7 @@ Root and cross-repository composition responsibilities should be reviewed under 
 | Primary responsibility | Operation-bound evidence that governed source routes were processed. |
 | MUST NOT own | Source authority, eligibility policy, canonical source identity, route membership, closure proof, applicability, or Policy Decision. |
 | Expected dependencies | Rule Source Catalog and Federation Boundary contract candidates, Universal Eligibility, Canonical Artifact, and provenance ownership. |
-| Consumers | Closure and Provenance Evidence, Rule Universe Result, and Discovery Validation contract candidates. |
+| Consumers | Discovery Evidence Provenance, Discovery Closure Evidence, Rule Universe Result, and Discovery Validation contract candidates. |
 | Producers | Future replaceable discovery mechanisms operating under approved contracts. |
 | Future review complexity | Medium; review must keep activity evidence separate from claims of completeness. |
 | Relative implementation impact | High; future mechanisms may vary substantially, but their variation cannot alter contract ownership. |
@@ -160,7 +162,7 @@ Resolution activity and Discovery Manifest evidence belong together. A separate 
 | Primary responsibility | Attributable evidence of one discovery attempt and its relationship to the fixed boundary. |
 | MUST NOT own | Federation membership, source authority, closure meaning, complete or incomplete result meaning, applicability, or final decision outcomes. |
 | Expected dependencies | Rule Source Catalog, Federation Boundary, and upstream eligibility and authority results. |
-| Consumers | Closure and Provenance Evidence, Rule Universe Result, Discovery Validation, audit, and review. |
+| Consumers | Discovery Evidence Provenance, Discovery Closure Evidence, Rule Universe Result, Discovery Validation, audit, and review. |
 | Producers | Future discovery activity governed by the accepted contract set. |
 | Future review complexity | Medium; manifest evidence must not prove its own completeness. |
 | Relative implementation impact | High; evidence capture will affect later implementations, but no format or transport is selected here. |
@@ -173,7 +175,7 @@ Resolution activity and Discovery Manifest evidence belong together. A separate 
 | Canonical semantic ownership | Consolidate under the Rule Universe Result Contract together with Discovery Failure. |
 | Primary responsibility | Complete-versus-incomplete discovery result ownership as one coherent domain. |
 | MUST NOT own | Closure evidence production, source authority, applicability, Policy Decision outcomes, lifecycle, storage, or serialization. |
-| Expected dependencies | Discovery Operation Evidence and Closure and Provenance Evidence contract candidates. |
+| Expected dependencies | Discovery Operation Evidence, Discovery Evidence Provenance, and Discovery Closure Evidence contract candidates. |
 | Consumers | Governance Applicability for eligible complete results; audit, remediation, review, and reassessment for incomplete results; Discovery Validation for both. |
 | Producers | Future contract-conforming discovery processes. |
 | Future review complexity | High; review must preserve the accepted complete/incomplete artifact separation. |
@@ -186,10 +188,10 @@ A complete snapshot and an incomplete discovery result require one result owner.
 | Planning concern | Assessment |
 | --- | --- |
 | Purpose | Bound the evidence domain supporting a discovery closure assessment. |
-| Canonical semantic ownership | Consolidate under the Closure and Provenance Evidence Contract. |
+| Canonical semantic ownership | Retain under the Discovery Closure Evidence Contract. |
 | Primary responsibility | Evidence basis for closure assessment within the accepted discovery boundary. |
 | MUST NOT own | Federation topology, source authority, eligibility, result classification, downstream applicability, or Policy Decision. |
-| Expected dependencies | Rule Source Catalog, Federation Boundary, and Discovery Operation Evidence contract candidates. |
+| Expected dependencies | Rule Source Catalog, Federation Boundary, Discovery Operation Evidence, and Discovery Evidence Provenance contract candidates. |
 | Consumers | Rule Universe Result and Discovery Validation contract candidates; audit and review. |
 | Producers | Future eligible evidence sources and discovery processes. |
 | Future review complexity | Very high; multiple Category B items affect evidence sufficiency and independence. |
@@ -200,11 +202,11 @@ A complete snapshot and an incomplete discovery result require one result owner.
 | Planning concern | Assessment |
 | --- | --- |
 | Purpose | Bound attributable lineage across discovery evidence. |
-| Canonical semantic ownership | Consolidate under the Closure and Provenance Evidence Contract. |
-| Primary responsibility | Discovery-specific lineage and attribution within the closure-evidence domain. |
+| Canonical semantic ownership | Consolidate under the Discovery Evidence Provenance Contract. |
+| Primary responsibility | Discovery-specific lineage and attribution across discovery evidence. |
 | MUST NOT own | Canonical Artifact identity, authority, approval, result classification, applicability, or storage technology. |
 | Expected dependencies | Canonical Artifact ownership and every upstream discovery contract candidate whose evidence participates in lineage. |
-| Consumers | Rule Universe Result, Discovery Validation, audit, review, and historical reconstruction. |
+| Consumers | Discovery Closure Evidence, Rule Universe Result, Discovery Validation, audit, review, and historical reconstruction. |
 | Producers | Source catalogs, federation-boundary evidence, and discovery-operation evidence. |
 | Future review complexity | High; boundaries with Canonical Artifact provenance must be explicit and non-duplicative. |
 | Relative implementation impact | High; provenance is cross-cutting, but representation may remain distributed. |
@@ -216,7 +218,7 @@ Provenance may be represented across several artifacts without acquiring multipl
 | Planning concern | Assessment |
 | --- | --- |
 | Purpose | Bound discovery-specific temporal and revision evidence. |
-| Canonical semantic ownership | Consolidate under the Closure and Provenance Evidence Contract. |
+| Canonical semantic ownership | Consolidate under the Discovery Evidence Provenance Contract. |
 | Primary responsibility | Temporal coherence of discovery evidence without redefining lifecycle or approval time. |
 | MUST NOT own | Lifecycle states, effective intervals owned by lifecycle governance, approval validity, supersession, authority, or Policy Decision time semantics. |
 | Expected dependencies | Governance Lifecycle, Approval Record, Canonical Artifact, Federation Boundary, and Discovery Operation Evidence ownership. |
@@ -224,6 +226,8 @@ Provenance may be represented across several artifacts without acquiring multipl
 | Producers | Upstream canonical, lifecycle, authority, and discovery evidence sources. |
 | Future review complexity | Very high; current, historical, cross-repository, and later-discovered evidence must remain orthogonal. |
 | Relative implementation impact | High; consistent temporal evidence affects many future consumers, but no clock, transaction, or persistence model is selected. |
+
+Temporal Binding remains a supporting responsibility within discovery evidence provenance because it qualifies the lineage and attribution of discovery evidence. It does not become a second primary responsibility: discovery-specific temporal and revision coherence has no independent meaning in this plan apart from the evidence lineage it qualifies. Discovery Closure Evidence consumes the resulting exact, temporally coherent provenance without owning or redefining it. Lifecycle state, approval validity, authority time, and other externally governed temporal meanings remain outside both contracts.
 
 ### 5.11 Discovery Failure Candidate
 
@@ -233,7 +237,7 @@ Provenance may be represented across several artifacts without acquiring multipl
 | Canonical semantic ownership | Consolidate under the Rule Universe Result Contract. |
 | Primary responsibility | Incomplete discovery result ownership alongside complete result ownership. |
 | MUST NOT own | Failure detection mechanisms, closure-evidence sufficiency, authority, applicability, Policy Decision, retry behavior, resilience design, or operations. |
-| Expected dependencies | Discovery Operation Evidence and Closure and Provenance Evidence contract candidates. |
+| Expected dependencies | Discovery Operation Evidence, Discovery Evidence Provenance, and Discovery Closure Evidence contract candidates. |
 | Consumers | Eligible diagnostics, audit, remediation, review, reassessment, and Discovery Validation. |
 | Producers | Future contract-conforming discovery processes. |
 | Future review complexity | High; failure evidence must remain immutable and cannot become a permissive complete result. |
@@ -250,7 +254,7 @@ Discovery Failure should not become a separate canonical result system. Consolid
 | Primary responsibility | Federated boundary composition across repository scopes. |
 | MUST NOT own | Repository-local canonical artifacts, Product Binding semantics, synchronization, transport, transaction design, source authority, or result classification. |
 | Expected dependencies | Rule Source Catalog, Canonical Artifact, Product Binding where separately approved, Governance Authority, and temporal evidence ownership. |
-| Consumers | Discovery Operation Evidence and Closure and Provenance Evidence contract candidates. |
+| Consumers | Discovery Operation Evidence, Discovery Evidence Provenance, and Discovery Closure Evidence contract candidates. |
 | Producers | Independently governed repository and shared-boundary owners. |
 | Future review complexity | Very high; cross-repository consistency remains Category B. |
 | Relative implementation impact | Very high; coordination may be substantial, but no synchronization or service model is selected. |
@@ -271,18 +275,21 @@ Discovery Failure should not become a separate canonical result system. Consolid
 
 ## 6. Recommended Contract Set
 
-The 12 evaluated candidates should be consolidated into six planned canonical contract domains.
+The 12 evaluated candidates should be consolidated into seven planned canonical contract domains.
 
 | Order | Working candidate name | Primary responsibility | Consolidated candidates |
 | --- | --- | --- | --- |
 | 1 | Rule Source Catalog Contract | Governed source declaration, identity, catalog membership, and catalog relationships for discovery | Rule Source Descriptor; Rule Source Registry |
 | 2 | Federation Boundary Contract | Root or root-set discovery topology and cross-repository boundary composition | Federation Root; Cross Repository Composition |
 | 3 | Discovery Operation Evidence Contract | Attributable evidence of one source-resolution and discovery attempt | Source Resolver; Discovery Manifest |
-| 4 | Closure and Provenance Evidence Contract | Closure-supporting evidence, discovery lineage, and discovery-specific temporal coherence | Closure Evidence; Provenance Record; Temporal Binding |
-| 5 | Rule Universe Result Contract | One canonical complete-versus-incomplete discovery-result boundary | Rule Universe Snapshot; Discovery Failure |
-| 6 | Discovery Validation Contract | Independent conformance evidence for the accepted discovery contract set | Discovery Validation |
+| 4 | Discovery Evidence Provenance Contract | Discovery-specific lineage, attribution, and the temporal and revision coherence that qualifies that lineage | Provenance Record; Temporal Binding |
+| 5 | Discovery Closure Evidence Contract | Evidence basis supporting closure assessment within one accepted discovery boundary | Closure Evidence |
+| 6 | Rule Universe Result Contract | One canonical complete-versus-incomplete discovery-result boundary | Rule Universe Snapshot; Discovery Failure |
+| 7 | Discovery Validation Contract | Independent conformance evidence for the accepted discovery contract set | Discovery Validation |
 
-This recommendation is a decomposition decision for authoring and review planning only. It does not create the six contracts, approve their names, define their contents, or prevent later consolidation during contract review if canonical ownership remains singular and the accepted architecture remains unchanged.
+Discovery Evidence Provenance and Discovery Closure Evidence are independent primary responsibilities. Provenance establishes attributable lineage and the temporal coherence that qualifies that lineage; closure evidence supports a closure assessment by consuming that provenance together with the bounded discovery evidence. Their dependency does not transfer or duplicate ownership. Their order in this plan follows dependency direction, not relative authority.
+
+This recommendation is a decomposition decision for authoring and review planning only. It does not create the seven contracts, approve their names, define their contents, or prevent later consolidation during contract review if canonical ownership remains singular and the accepted architecture remains unchanged.
 
 ## 7. Canonical Semantic Ownership Map
 
@@ -291,11 +298,12 @@ This recommendation is a decomposition decision for authoring and review plannin
 | Discovery source catalog boundary | Rule Source Catalog Contract | Canonical Artifact, Universal Eligibility, Governance Authority, lifecycle, and source-domain ownership |
 | Federation discovery boundary | Federation Boundary Contract | Governance Authority, Universal Eligibility, Product Binding, Canonical Artifact, and repository-local governance |
 | Discovery-attempt evidence | Discovery Operation Evidence Contract | Source and boundary meanings remain upstream |
-| Closure-supporting evidence and discovery lineage | Closure and Provenance Evidence Contract | Canonical Artifact provenance, lifecycle, approval, authority, and eligibility retain their meanings |
+| Discovery evidence lineage, attribution, and discovery-specific temporal coherence | Discovery Evidence Provenance Contract | Canonical Artifact provenance, lifecycle, approval, authority, eligibility, and externally governed time semantics retain their meanings |
+| Closure-supporting evidence | Discovery Closure Evidence Contract | Discovery evidence provenance remains upstream; result classification, applicability, and Policy Decision remain downstream |
 | Complete and incomplete discovery results | Rule Universe Result Contract | Closure evidence remains upstream; applicability and Policy Decision remain downstream |
 | Contract conformance evidence | Discovery Validation Contract | Every validated semantic remains owned by its source contract |
 
-No contract in this plan owns the full Governance Rule Discovery architecture independently. The six candidates divide primary contract responsibilities beneath the single architecture-level semantic ownership boundary accepted by the AAR.
+No contract in this plan owns the full Governance Rule Discovery architecture independently. The seven candidates divide primary contract responsibilities beneath the single architecture-level semantic ownership boundary accepted by the AAR.
 
 ## 8. Dependency Graph
 
@@ -306,17 +314,32 @@ flowchart TB
     C1["1. Rule Source Catalog Contract"]
     C2["2. Federation Boundary Contract"]
     C3["3. Discovery Operation Evidence Contract"]
-    C4["4. Closure and Provenance Evidence Contract"]
-    C5["5. Rule Universe Result Contract"]
-    C6["6. Discovery Validation Contract"]
+    C4["4. Discovery Evidence Provenance Contract"]
+    C5["5. Discovery Closure Evidence Contract"]
+    C6["6. Rule Universe Result Contract"]
+    C7["7. Discovery Validation Contract"]
 
     F --> A
     A --> C1
     C1 --> C2
+    C1 --> C3
     C2 --> C3
+    C1 --> C4
+    C2 --> C4
     C3 --> C4
+    C1 --> C5
+    C2 --> C5
+    C3 --> C5
     C4 --> C5
+    C3 --> C6
+    C4 --> C6
     C5 --> C6
+    C1 --> C7
+    C2 --> C7
+    C3 --> C7
+    C4 --> C7
+    C5 --> C7
+    C6 --> C7
 ```
 
 The graph records semantic dependency direction, not execution sequence or implementation topology. An upstream contract does not authorize a downstream contract, and downstream acceptance cannot repair missing upstream ownership or approval.
@@ -330,16 +353,18 @@ No reverse semantic dependency is permitted. Review feedback may require an upst
 1. **Rule Source Catalog Contract**
 2. **Federation Boundary Contract**
 3. **Discovery Operation Evidence Contract**
-4. **Closure and Provenance Evidence Contract**
-5. **Rule Universe Result Contract**
-6. **Discovery Validation Contract**
+4. **Discovery Evidence Provenance Contract**
+5. **Discovery Closure Evidence Contract**
+6. **Rule Universe Result Contract**
+7. **Discovery Validation Contract**
 
 ### 9.2 Rationale
 
 - The source catalog boundary must be stable before federation membership can be reviewed.
 - The federation boundary must be stable before operation evidence can be assessed against a bounded domain.
-- Operation evidence must be bounded before closure and provenance evidence can be reviewed.
-- Closure and provenance evidence ownership must be stable before complete and incomplete result ownership can be reviewed.
+- Operation evidence must be bounded before its discovery-specific lineage and attribution can be reviewed.
+- Discovery evidence provenance must be stable before closure evidence can depend on that provenance without acquiring lineage ownership.
+- Closure evidence ownership must be stable before complete and incomplete result ownership can be reviewed.
 - Validation consumes the accepted meanings of all preceding contracts and therefore comes last.
 
 This order is implementation-independent. It does not require sequential software delivery, select a workflow, or authorize parallel or sequential implementation.
@@ -348,10 +373,10 @@ This order is implementation-independent. It does not require sequential softwar
 
 | Stage | Required sequence | Review focus | Acceptance dependency |
 | --- | --- | --- | --- |
-| Authoring | C1 → C2 → C3 → C4 → C5 → C6 | Establish one primary responsibility and explicit exclusions for each candidate. | Authoring creates no acceptance. |
-| Internal contract review | C1 → C2 → C3 → C4 → C5 → C6 | Verify architecture traceability, ownership singularity, dependency direction, and non-duplication. | Each review consumes the current reviewed upstream revision. |
-| Independent contract review | C1 → C2 → C3 → C4 → C5 → C6 | Challenge boundary integrity, cross-contract consistency, Category B containment, fail-closed preservation, and provider neutrality. | Downstream independent review begins only after relevant upstream findings are resolved or explicitly bounded. |
-| Contract acceptance | C1 → C2 → C3 → C4 → C5 → C6 | Record a separate human-governed decision for an exact contract revision and scope. | Downstream acceptance cannot establish or repair missing upstream acceptance. |
+| Authoring | C1 → C2 → C3 → C4 → C5 → C6 → C7 | Establish one primary responsibility and explicit exclusions for each candidate. | Authoring creates no acceptance. |
+| Internal contract review | C1 → C2 → C3 → C4 → C5 → C6 → C7 | Verify architecture traceability, ownership singularity, dependency direction, and non-duplication. | Each review consumes the current reviewed upstream revision. |
+| Independent contract review | C1 → C2 → C3 → C4 → C5 → C6 → C7 | Challenge boundary integrity, cross-contract consistency, Category B containment, fail-closed preservation, and provider neutrality. | Downstream independent review begins only after relevant upstream findings are resolved or explicitly bounded. |
+| Contract acceptance | C1 → C2 → C3 → C4 → C5 → C6 → C7 | Record a separate human-governed decision for an exact contract revision and scope. | Downstream acceptance cannot establish or repair missing upstream acceptance. |
 
 Authoring may overlap only where no unresolved upstream ownership question can affect the downstream candidate. Review and acceptance evidence remain separately attributable for each exact candidate revision.
 
@@ -366,22 +391,22 @@ This section maps the 19 accepted Category B items to planned contract domains. 
 | GRD-01 — Artifact class governing the source-of-sources | Rule Source Catalog; Federation Boundary | Preserve for contract review; no artifact class selected. |
 | GRD-02 — Higher authority eligible to establish or revise the boundary | Federation Boundary; Discovery Validation | Consume future eligible authority evidence; no authority assigned. |
 | GRD-03 — One global root or independently governed roots | Federation Boundary | Preserve topology alternatives; no topology selected. |
-| GRD-04 — Trust evidence for negative source declarations | Rule Source Catalog; Closure and Provenance Evidence; Discovery Validation | Preserve evidence uncertainty and future assurance review. |
+| GRD-04 — Trust evidence for negative source declarations | Rule Source Catalog; Discovery Evidence Provenance; Discovery Closure Evidence; Discovery Validation | Preserve evidence uncertainty and future assurance review. |
 | GRD-05 — Acyclic relationships and harmless bounded cycles | Rule Source Catalog; Federation Boundary; Discovery Operation Evidence; Discovery Validation | Preserve graph-policy uncertainty; no traversal rule selected. |
-| GRD-06 — Restricted sources not disclosed to the requester | Discovery Operation Evidence; Closure and Provenance Evidence; Rule Universe Result; Discovery Validation | Preserve confidentiality and non-disclosing evidence boundary. |
-| GRD-07 — External-incorporation decisions requiring legal or specialist review | Rule Source Catalog; Federation Boundary; Closure and Provenance Evidence; Discovery Validation | Preserve specialist-review allocation as future governance work. |
-| GRD-08 — Jurisdiction, customer, contract, and tenant scope expression | Rule Source Catalog; Federation Boundary; Closure and Provenance Evidence | Preserve scope-expression uncertainty; no vocabulary selected. |
-| GRD-09 — Later-discovered historically effective obligations | Closure and Provenance Evidence; Rule Universe Result; Discovery Validation | Preserve historical evidence and future reassessment boundary. |
-| GRD-10 — Alias, mirror, translation, and derived-source reconciliation | Rule Source Catalog; Closure and Provenance Evidence; Discovery Validation | Preserve identity-reconciliation uncertainty under Canonical Artifact ownership. |
-| GRD-11 — Conflict evidence allocation | Discovery Operation Evidence; Closure and Provenance Evidence; Rule Universe Result; Discovery Validation | Preserve domain allocation for later contract review; no precedence rule selected. |
-| GRD-12 — Exact scope relationships across governance layers | Rule Source Catalog; Federation Boundary; Closure and Provenance Evidence | Preserve relationship-model uncertainty and external ownership. |
-| GRD-13 — Minimum evidence for local completeness | Closure and Provenance Evidence; Rule Universe Result; Discovery Validation | Preserve evidence-threshold uncertainty; no threshold selected. |
-| GRD-14 — Self-issued negative declarations or independent verification | Closure and Provenance Evidence; Discovery Validation | Preserve assurance-independence question; no reviewer model selected. |
-| GRD-15 — Emergency source incorporation | Federation Boundary; Discovery Operation Evidence; Closure and Provenance Evidence; Rule Universe Result | Preserve prospective-change and emergency-governance separation. |
-| GRD-17 — Legacy decisions without reconstructable boundaries | Closure and Provenance Evidence; Rule Universe Result; Discovery Validation | Preserve missing historical evidence; do not fabricate modern records. |
+| GRD-06 — Restricted sources not disclosed to the requester | Discovery Operation Evidence; Discovery Evidence Provenance; Discovery Closure Evidence; Rule Universe Result; Discovery Validation | Preserve confidentiality and non-disclosing evidence boundary. |
+| GRD-07 — External-incorporation decisions requiring legal or specialist review | Rule Source Catalog; Federation Boundary; Discovery Evidence Provenance; Discovery Closure Evidence; Discovery Validation | Preserve specialist-review allocation as future governance work. |
+| GRD-08 — Jurisdiction, customer, contract, and tenant scope expression | Rule Source Catalog; Federation Boundary; Discovery Evidence Provenance; Discovery Closure Evidence | Preserve scope-expression uncertainty; no vocabulary selected. |
+| GRD-09 — Later-discovered historically effective obligations | Discovery Evidence Provenance; Discovery Closure Evidence; Rule Universe Result; Discovery Validation | Preserve historical evidence and future reassessment boundary. |
+| GRD-10 — Alias, mirror, translation, and derived-source reconciliation | Rule Source Catalog; Discovery Evidence Provenance; Discovery Closure Evidence; Discovery Validation | Preserve identity-reconciliation uncertainty under Canonical Artifact ownership. |
+| GRD-11 — Conflict evidence allocation | Discovery Operation Evidence; Discovery Evidence Provenance; Discovery Closure Evidence; Rule Universe Result; Discovery Validation | Preserve domain allocation for later contract review; no precedence rule selected. |
+| GRD-12 — Exact scope relationships across governance layers | Rule Source Catalog; Federation Boundary; Discovery Evidence Provenance; Discovery Closure Evidence | Preserve relationship-model uncertainty and external ownership. |
+| GRD-13 — Minimum evidence for local completeness | Discovery Evidence Provenance; Discovery Closure Evidence; Rule Universe Result; Discovery Validation | Preserve evidence-threshold uncertainty; no threshold selected. |
+| GRD-14 — Self-issued negative declarations or independent verification | Discovery Evidence Provenance; Discovery Closure Evidence; Discovery Validation | Preserve assurance-independence question; no reviewer model selected. |
+| GRD-15 — Emergency source incorporation | Federation Boundary; Discovery Operation Evidence; Discovery Evidence Provenance; Discovery Closure Evidence; Rule Universe Result | Preserve prospective-change and emergency-governance separation. |
+| GRD-17 — Legacy decisions without reconstructable boundaries | Discovery Evidence Provenance; Discovery Closure Evidence; Rule Universe Result; Discovery Validation | Preserve missing historical evidence; do not fabricate modern records. |
 | GRD-18 — Fundamental non-delegable human decisions | Federation Boundary; Discovery Validation | Consume Authority and Delegation governance; assign no delegability rule. |
 | GRD-19 — Registry topology and granularity | Rule Source Catalog; Federation Boundary | Preserve central, federated, and hybrid representation alternatives. |
-| GRD-20 — Cross-repository snapshot consistency mechanism | Federation Boundary; Closure and Provenance Evidence; Rule Universe Result; Discovery Validation | Preserve mechanism choice; require later review without selecting a consistency model. |
+| GRD-20 — Cross-repository snapshot consistency mechanism | Federation Boundary; Discovery Evidence Provenance; Discovery Closure Evidence; Rule Universe Result; Discovery Validation | Preserve mechanism choice; require later review without selecting a consistency model. |
 
 Category B ownership remains with the future governance forums identified by the accepted ADP. “Impacted planned contracts” identifies where unresolved questions must remain visible during authoring and review; it does not make those contracts the owner of the deferred question.
 
@@ -436,16 +461,17 @@ Future implementations may distribute representations and evidence processing ac
 
 ## 15. Plan Recommendation
 
-Proceed with six planned contract candidates in the order recorded in Sections 9 and 10:
+Proceed with seven planned contract candidates in the order recorded in Sections 9 and 10:
 
 1. Rule Source Catalog Contract;
 2. Federation Boundary Contract;
 3. Discovery Operation Evidence Contract;
-4. Closure and Provenance Evidence Contract;
-5. Rule Universe Result Contract; and
-6. Discovery Validation Contract.
+4. Discovery Evidence Provenance Contract;
+5. Discovery Closure Evidence Contract;
+6. Rule Universe Result Contract; and
+7. Discovery Validation Contract.
 
-Begin with the Rule Source Catalog Contract candidate only after a separate authoring task binds its exact scope to this plan and the accepted architecture.
+Continue with the Discovery Evidence Provenance Contract candidate only after a separate authoring task binds its exact scope to this revised plan and the accepted architecture. Existing completed contract artifacts remain unchanged.
 
 This recommendation authorizes no contract content, approval, effectiveness, adoption, implementation, migration, deployment, production use, or Design Freeze.
 
@@ -453,7 +479,7 @@ This recommendation authorizes no contract content, approval, effectiveness, ado
 
 | Quality criterion | Plan result |
 | --- | --- |
-| Exactly one planning file created | Satisfied |
+| Exactly one planning file modified | Satisfied |
 | Contracts created | None |
 | Contract semantics defined | None |
 | Contract fields defined | None |
@@ -461,8 +487,15 @@ This recommendation authorizes no contract content, approval, effectiveness, ado
 | APIs defined | None |
 | Storage defined | None |
 | Implementation defined | None |
+| Foundation Architecture changed | No |
+| Contract Governance Framework changed | No |
 | Accepted architecture changed | No |
 | Decision Boundary changed | No |
 | Category B resolved or reclassified | No |
 | Category C moved into scope | No |
-| Next activity | Separate authoring task for the first contract candidate |
+| One primary responsibility per planned contract | Satisfied |
+| Dependency graph directed and acyclic | Satisfied |
+| Duplicated semantic ownership introduced | No |
+| Orphaned semantic responsibility introduced | No |
+| Existing completed contracts changed | No |
+| Next activity | Separate authoring task for the Discovery Evidence Provenance Contract candidate |

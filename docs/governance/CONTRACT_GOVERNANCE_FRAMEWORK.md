@@ -6,13 +6,16 @@
 | --- | --- |
 | Document ID | `CADP-GOV-CONTRACT-FRAMEWORK` |
 | Document type | Governance Methodology |
-| Version | 0.1.0 |
+| Version | 0.2.0 |
+| Previous version | 0.1.0 |
+| Revision classification | Minor Governance Maintenance Revision |
+| Revision purpose | Clarify AI-assisted Acceptance Record preparation while preserving exclusive human acceptance authority |
 | Lifecycle state | Draft |
 | Date | 2026-07-24 |
 | Scope | Platform-wide |
 | Applicability | Every future canonical CADP contract |
 | Repository | `dchaschin79-sys/cliff-ai-development-platform` |
-| Source baseline | `adbf836df64783bf7c642f870fcff31219bad2e4` |
+| Source baseline | `1e1e34ac7f7b53ea452536b3d303985df7bf286d` |
 | Approval requirement | Requires explicit eligible human acceptance |
 | Effectiveness | Not created |
 | Contract created by this document | None |
@@ -35,7 +38,7 @@ This framework governs:
 - contract ownership;
 - contract lifecycle;
 - status and disposition;
-- authoring, review, verification, acceptance, and effectiveness;
+- authoring, review, verification, Acceptance Record preparation, acceptance, and effectiveness;
 - versioning and compatibility;
 - revision and change classification;
 - breaking-change control;
@@ -178,6 +181,9 @@ Maintenance Revision
     ↓
 Verification
     ↓
+Acceptance Record
+(Pending Human Attestation)
+    ↓
 Acceptance
     ↓
 Effectiveness
@@ -187,7 +193,7 @@ Supersession
 Archival
 ```
 
-This sequence is a governance progression, not a single status field or implementation workflow. Review, acceptance, effectiveness, supersession, and archival remain distinct evidence dimensions.
+This sequence is a governance progression, not a single status field or implementation workflow. Review, verification, Acceptance Record preparation, human acceptance, effectiveness, supersession, and archival remain distinct evidence dimensions.
 
 ### 6.1 Proposal
 
@@ -213,7 +219,37 @@ An eligible verifier evaluates whether the recorded findings were resolved in th
 
 Verification does not reopen unrelated design issues, approve the contract, or make it Effective.
 
-### 6.5 Acceptance
+### 6.5 Acceptance Record (Pending Human Attestation)
+
+After successful Verification, an Acceptance Record may be prepared for the exact verified contract identity, semantic version, immutable source revision, scope, Decision Boundary, and evidence lineage.
+
+An Acceptance Record in this stage:
+
+- has status `Pending Human Attestation`;
+- is an unsigned governance evidence artifact;
+- may be prepared by an AI system or a human operating within authorized preparation scope;
+- may contain verified non-attestation evidence, including artifact identity, revision, review and resolution lineage, verification outcome, semantic ownership boundary, preserved deferrals, limitations, and the requested next governance phase;
+- MUST leave every human attestation field incomplete;
+- MUST NOT state or imply that Acceptance has occurred;
+- MUST NOT create acceptance, effectiveness, implementation authority, Design Freeze, or any other governance decision; and
+- does not change the verified contract candidate from Draft status.
+
+The minimal human attestation consists of:
+
+1. **Contract Authority** — the attributable human identity or eligible human body making the decision;
+2. **Authority Basis** — the independently valid authority source and exact revision supporting eligibility for the decision;
+3. **Decision Timestamp** — the attributable date and time at which the human decision is made;
+4. **Scope** — the exact contract, revision, Decision Boundary, and organizational or operational boundary accepted;
+5. **Eligibility Statement** — the human attestation that applicable authority, interval, separation-of-duty, conflict-of-interest, delegation, confidentiality, and other required eligibility conditions have been evaluated and satisfied; and
+6. **Acceptance Statement** — the explicit human decision accepting the exact contract candidate within the declared scope and limitations.
+
+No digital signature is required by this framework. Other applicable governance may require additional integrity, identity, confidentiality, or evidence controls without weakening these minimum semantics.
+
+Only an attributable eligible human Contract Authority may complete the attestation, change the Acceptance Record status from `Pending Human Attestation` to `Accepted`, and authorize the contract-acceptance decision. Completion creates a new immutable Acceptance Record source revision; it does not rewrite a committed Pending Human Attestation revision.
+
+If any required attestation field, authority evidence, eligibility evidence, candidate binding, or integrity evidence is missing, ambiguous, stale, conflicting, or unverifiable, the record remains `Pending Human Attestation` and Acceptance fails closed. A change to the verified candidate revision invalidates the pending record for acceptance and requires the applicable earlier lifecycle stages to be satisfied for the changed revision.
+
+### 6.6 Acceptance
 
 An eligible human Contract Authority records acceptance of one exact contract identity, semantic version, source revision, scope, and decision boundary.
 
@@ -221,29 +257,31 @@ Acceptance requires the necessary architecture, decomposition, review, resolutio
 
 Acceptance does not necessarily imply Effective.
 
-### 6.6 Effectiveness
+### 6.7 Effectiveness
 
 Effectiveness is a separate attributable governance decision that activates an Accepted contract for an explicit scope, purpose, and interval.
 
 Effectiveness does not create implementation, adoption, deployment, Product Binding, release authority, or Design Freeze.
 
-### 6.7 Supersession
+### 6.8 Supersession
 
 Supersession identifies an exact successor contract or revision. It preserves predecessor history and does not silently rewrite prior meaning.
 
 A Superseded contract may remain Effective for an explicit transition interval or preserved legacy scope. Supersession alone does not end effectiveness, revoke acceptance, Archive the predecessor, or authorize migration.
 
-### 6.8 Archival
+### 6.9 Archival
 
 Archival preserves a contract and its lifecycle evidence as history while removing it from current normative use.
 
 Archival is not deletion. An Effective contract cannot become Archived without a separately resolved effectiveness boundary. Archived contract history, acceptance, prior effective intervals, supersession lineage, reviews, and evidence remain immutable.
 
-### 6.9 Rework and Failure Paths
+### 6.10 Rework and Failure Paths
 
 A review or verification failure returns the candidate to bounded revision, further architecture work, or withdrawal as directed by eligible governance. Failure does not automatically create a new contract, rejection, supersession, or archival.
 
 No later stage can backfill missing evidence from an earlier stage.
+
+Preparation of an Acceptance Record cannot backfill missing Verification, authority, eligibility, or human attestation evidence. An incomplete or invalid attestation does not create partial Acceptance; the record remains `Pending Human Attestation` until an eligible human decision is completely and validly recorded or the candidate returns to an applicable earlier stage.
 
 ## 7. Official Contract Status Model
 
@@ -257,6 +295,8 @@ The core contract statuses and dispositions are:
 | Superseded | An exact successor is identified for the same or replacing responsibility. | Does not automatically end effectiveness, revoke acceptance, Archive history, or authorize migration. |
 | Archived | The retained revision has no current normative effect and remains available for audit and reconstruction. | Does not delete history or erase prior acceptance, effectiveness, or supersession evidence. |
 
+`Pending Human Attestation` is the status of a prepared Acceptance Record, not an `Accepted` contract status and not a sixth normative contract status. While an Acceptance Record is pending, the verified contract candidate remains `Draft`. Repository publication, a commit, completion of non-attestation evidence, AI preparation, elapsed time, or successful validation cannot convert either artifact to `Accepted`.
+
 These labels are orthogonal:
 
 - a contract may be Accepted but not Effective;
@@ -264,7 +304,8 @@ These labels are orthogonal:
 - a Superseded contract may remain Effective during an explicit transition;
 - a Superseded contract may remain unarchived;
 - an Archived contract retains historical acceptance and prior effective intervals; and
-- Draft and Archived contracts cannot be currently Effective.
+- Draft and Archived contracts cannot be currently Effective; and
+- a contract associated with an Acceptance Record in `Pending Human Attestation` status remains Draft and cannot be currently Effective.
 
 The framework does not abolish other applicable platform lifecycle dispositions such as Rejected, Withdrawn, Deprecated, Expired, or Retired. Those meanings remain owned by the applicable governance lifecycle sources. They must not be collapsed into the five core contract labels.
 
@@ -314,6 +355,9 @@ The Architecture Authority:
 The Contract Authority:
 
 - makes or records the eligible human contract-acceptance decision;
+- independently evaluates the prepared Acceptance Record and its exact candidate and evidence bindings;
+- completes the human attestation fields through an attributable human act;
+- is the only role permitted to change an Acceptance Record from `Pending Human Attestation` to `Accepted`;
 - binds acceptance to the exact identity, version, revision, scope, and evidence;
 - preserves conditions, limitations, and supersession lineage; and
 - does not create effectiveness, implementation authority, or Design Freeze through acceptance.
@@ -346,7 +390,26 @@ Consumers:
 
 ### 8.9 AI Systems
 
-AI systems may draft, compare, analyze, and verify evidence within authorized scope. They cannot create human acceptance, effectiveness, governance authority, or a waiver of required review.
+AI systems may draft, compare, analyze, and verify evidence within authorized scope. After successful Verification, an AI system may prepare an unsigned Acceptance Record and populate non-attestation evidence for the exact verified candidate.
+
+AI preparation is an evidence-assembly function, not Contract Authority, human attestation, or a governance decision. An AI-prepared Acceptance Record MUST:
+
+- remain in `Pending Human Attestation` status;
+- identify itself as prepared evidence without human acceptance;
+- preserve exact candidate, review, resolution, verification, scope, ownership, limitation, and deferral references; and
+- leave the Contract Authority, Authority Basis, Decision Timestamp, Scope attestation, Eligibility Statement, and Acceptance Statement for completion by the attributable eligible human Contract Authority.
+
+An AI system MUST NOT:
+
+- mark an Acceptance Record or contract `Accepted`;
+- attribute acceptance to a human or body;
+- fabricate, infer, select, or repair authority or eligibility evidence;
+- complete, simulate, sign, or attest any human attestation field;
+- treat a user request, repository role, authorship, Git event, tool access, silence, prior behavior, or AI-generated verification as human acceptance;
+- create effectiveness, governance authority, or a waiver of required review; or
+- convert successful preparation, validation, commit, publication, or tool execution into a governance decision.
+
+Only the attributable eligible human Contract Authority owns the Acceptance decision. AI assistance does not reduce, transfer, delegate, or share that exclusive human authority.
 
 ## 9. Semantic Ownership and Dependencies
 
@@ -478,15 +541,35 @@ Verification determines whether the accepted findings are resolved and whether t
 
 Verification binds to the baseline reviewed revision and the corrected revision. It is evidence for acceptance, not acceptance itself.
 
-### 12.4 Acceptance
+### 12.4 Acceptance Record Preparation
+
+Acceptance Record preparation begins only after successful Verification of the exact candidate revision.
+
+The preparer may assemble:
+
+- the Acceptance Record identity and preparation revision;
+- the exact contract identity, semantic version, immutable source revision, and canonical source;
+- architecture, Architecture Acceptance Record, Contract Decomposition Plan, and framework bindings;
+- review, resolution, and Verification evidence;
+- the verified semantic ownership and Decision Boundary;
+- unresolved deferrals, conditions, limitations, compatibility evidence, and non-authorizations; and
+- the proposed next phase permitted only if human Acceptance is later recorded.
+
+Preparation MUST produce status `Pending Human Attestation` and MUST preserve the six human attestation fields in Section 6.5 for completion by the attributable eligible human Contract Authority. Prepared evidence may support human evaluation but cannot decide, imply, or predict the human outcome.
+
+A prepared record is deterministically ineligible to support Acceptance when it is bound to a different candidate revision, lacks successful Verification evidence, contains completed or attributed human attestation not supplied by the identified eligible human authority, or otherwise lacks required traceability. Such a record remains pending and fails closed.
+
+### 12.5 Acceptance
 
 Acceptance is an attributable human governance decision for one exact candidate revision and scope.
 
-The acceptance record identifies the decision, authority basis, artifact identity, version, immutable source revision, scope, conditions, rationale, evidence lineage, and integrity boundary required by applicable governance.
+The attributable eligible human Contract Authority reviews the prepared evidence, completes the minimal attestation in Section 6.5, and records the decision in a new immutable Acceptance Record revision. The accepted record identifies the decision, authority basis, artifact identity, version, immutable source revision, scope, conditions, rationale, evidence lineage, and integrity boundary required by applicable governance.
+
+Only the completed human attestation can change the Acceptance Record status to `Accepted` and establish contract Acceptance. AI preparation, a Draft record, or an incomplete attestation has no acceptance effect.
 
 Acceptance does not imply Effectiveness.
 
-### 12.5 Effectiveness
+### 12.6 Effectiveness
 
 Effectiveness requires a separate attributable decision after acceptance. The effectiveness decision identifies the applicable scope, purpose, start boundary, end boundary where applicable, dependencies, transition treatment, and affected consumers required by applicable governance.
 
@@ -535,6 +618,7 @@ Archival preserves:
 - all prior versions;
 - architecture and decomposition references;
 - reviews and verification;
+- prepared Acceptance Records in `Pending Human Attestation` status and their immutable revisions;
 - acceptance and effectiveness evidence;
 - compatibility decisions;
 - supersession and transition lineage;
@@ -557,7 +641,7 @@ Every Canonical Contract references exact revisions of:
 7. the immediately preceding revision, or an explicit statement that none exists;
 8. every superseded revision or contract, or an explicit statement that none exists;
 9. every superseding contract or revision known at the evaluated time, or an explicit statement that none exists;
-10. applicable review, resolution, verification, acceptance, effectiveness, and compatibility evidence; and
+10. applicable review, resolution, verification, Acceptance Record preparation, human attestation, acceptance, effectiveness, and compatibility evidence; and
 11. applicable transition, deprecation, archival, or legacy evidence.
 
 A reference identifies the stable artifact identity, semantic version, immutable source revision, relationship, and applicable scope. A floating filename, branch name, repository location, or latest-version reference is insufficient for authoritative traceability.
@@ -577,6 +661,17 @@ Existing contract history is not rewritten. When an existing contract is revised
 - avoid retroactively asserting that historical evidence satisfied requirements that did not yet exist.
 
 This framework does not automatically invalidate, accept, make Effective, supersede, or Archive an existing contract.
+
+Version 0.2.0 is backward compatible with contracts and lifecycle evidence prepared under Version 0.1.0 because it:
+
+- does not change Proposal, Independent Review, Maintenance Revision, or Verification requirements;
+- does not weaken or replace any Acceptance prerequisite;
+- does not reinterpret a prior review, Verification, acceptance assertion, or Accepted record;
+- permits an exact successfully verified candidate to proceed to `Acceptance Record (Pending Human Attestation)` without repeating earlier satisfied stages, provided its candidate revision and governing evidence have not changed;
+- does not convert any existing Draft, review, Verification, approval package, approval assertion, or Acceptance Record into `Accepted`; and
+- preserves the same exclusive eligible human Contract Authority decision boundary.
+
+Existing acceptance evidence remains subject to the governance requirements and validity evaluation applicable to its exact decision and record. This revision does not repair missing historical attestation or authority evidence by declaration.
 
 ## 17. Non-Goals
 
@@ -621,3 +716,12 @@ A future revision:
 - requires separate effectiveness before governing current contract work.
 
 A revision that changes contract authority, lifecycle separation, acceptance boundaries, effectiveness, semantic ownership, breaking-change treatment, or historical preservation requires architecture-impact evaluation.
+
+## 19. Revision History
+
+| Version | Classification | Summary | Compatibility |
+| --- | --- | --- | --- |
+| 0.1.0 | Initial Draft | Established the platform-wide Contract Governance methodology. | Initial version |
+| 0.2.0 | Minor Governance Maintenance Revision | Adds the `Acceptance Record (Pending Human Attestation)` preparation stage, the six-field minimal human attestation, deterministic fail-closed transition rules, and explicit AI preparation limits. Human Acceptance authority, Acceptance prerequisites, architecture ownership, and implementation boundaries are unchanged. | Backward compatible with Version 0.1.0 contract candidates and lifecycle evidence |
+
+This revision remains Draft. Its repository publication, review, or use to prepare evidence does not approve the framework, make it Effective, accept a contract, or authorize implementation.

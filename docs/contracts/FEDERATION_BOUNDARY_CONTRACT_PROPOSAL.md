@@ -7,18 +7,19 @@
 | Contract identity | `CADP-CONTRACT-FEDERATION-BOUNDARY` |
 | Title | Federation Boundary Contract |
 | Document type | Contract Proposal |
-| Version | 0.1.0 |
-| Previous version | None |
-| Revision classification | Initial Draft Contract Proposal |
+| Version | 0.2.0 |
+| Previous version | 0.1.0 |
+| Revision classification | Pre-acceptance Major Maintenance Revision |
+| Revision basis | Independent Contract Review — three Major and one Minor Findings |
 | Status | Draft Contract Proposal |
-| Review state | Initial Draft — Awaiting Independent Contract Review |
+| Review state | Revised — Pending Independent Verification |
 | Date | 2026-07-25 |
 | Architecture domain | Governance Rule Discovery |
 | Contract domain | Federation Boundary |
 | Primary responsibility | Canonical semantics for root or root-set discovery topology and cross-boundary composition |
 | Proposed canonical semantic owner | This contract |
 | Repository | `dchaschin79-sys/cliff-ai-development-platform` |
-| Source baseline | `24feb4baa0d89a91a157ab2746c9d4e175fa6c9d` |
+| Source baseline | `a1733a16dfc315222389abbd73625eac525c3711` |
 | Methodology constraint | Contract Governance Framework Version 0.3.0 is fixed for this task and is not revised or extended |
 | Acceptance | Not created |
 | Publication | Not created |
@@ -88,9 +89,8 @@ This proposal defines the canonical meaning of:
 7. Federation Member;
 8. Federation Membership;
 9. Boundary Composition Relationship;
-10. Boundary Visibility;
-11. Boundary Ownership Preservation; and
-12. Cross-Repository Boundary Composition.
+10. Boundary Ownership Preservation; and
+11. Cross-Repository Boundary Composition.
 
 These are semantic concepts, not fields, types, objects, schemas, interfaces, APIs, files, services, or storage structures.
 
@@ -102,7 +102,6 @@ This contract owns:
 - the boundary role of a Federation Root or Federation Root Set;
 - explicit membership of governed catalog boundaries and source routes in one Federation Boundary Scope;
 - the relationship by which independently governed boundaries compose without transferring ownership;
-- the visibility boundary for federation-owned membership and composition assertions;
 - the preservation of member ownership across federation composition; and
 - the cross-repository specialization of boundary composition.
 
@@ -125,9 +124,9 @@ This contract does not own:
 | Semantic aspect | Definition |
 | --- | --- |
 | Purpose | Establish the exact governed source-of-sources boundary against which downstream discovery activity may evaluate source participation for one declared context. |
-| Canonical definition | A Federation Boundary is the revision-bound semantic boundary formed by one Federation Root or Federation Root Set and its explicit Federation Membership and Boundary Composition Relationships for one Federation Boundary Scope. |
-| Semantically required invariants | A Federation Boundary MUST have one Federation Identity, one exact Federation Boundary Revision, one declared Federation Boundary Scope, and one attributable root or root-set basis. It MUST NOT be inferred from repository layout, catalog placement, technical connectivity, search results, synchronization, model memory, or prior discovery activity. |
-| Relationships | The boundary is identified by Federation Identity, fixed by Federation Boundary Revision, initiated by a Federation Root or Federation Root Set, qualified by Federation Boundary Scope, and composed through Federation Membership and Boundary Composition Relationships. |
+| Canonical definition | A Federation Boundary is the revision-bound semantic boundary formed by one Federation Root or Federation Root Set and its explicit Federation Membership and Boundary Composition Relationships for one Federation Boundary Scope and one exact immutable Decision Context binding. |
+| Semantically required invariants | A Federation Boundary MUST have one Federation Identity, one exact Federation Boundary Revision, one declared Federation Boundary Scope, one exact immutable Decision Context binding, and one attributable root or root-set basis. It MUST NOT be inferred from repository layout, catalog placement, technical connectivity, search results, synchronization, model memory, or prior discovery activity. |
+| Relationships | The boundary is identified by Federation Identity, fixed by Federation Boundary Revision, initiated by a Federation Root or Federation Root Set, qualified by Federation Boundary Scope, bound to an externally owned Decision Context, and composed through Federation Membership and Boundary Composition Relationships. |
 | Ownership boundary | This contract owns Federation Boundary meaning. Independently governed authority establishes whether a particular boundary is eligible, approved, effective, or adopted. |
 | Explicit non-goals | This concept does not define a file, registry, graph, index, service, endpoint, query, traversal, closure proof, or runtime boundary. |
 
@@ -151,7 +150,7 @@ A Federation Boundary identifies the bounded semantic domain available for downs
 | Semantic aspect | Definition |
 | --- | --- |
 | Purpose | Distinguish one immutable semantic state of a Federation Identity from earlier and later states. |
-| Canonical definition | Federation Boundary Revision is the exact immutable state of one Federation Identity, including its root or root-set basis, scope, membership, composition, visibility, and ownership-preservation assertions at one revision boundary. |
+| Canonical definition | Federation Boundary Revision is the exact immutable state of one Federation Identity, including its Decision Context binding, root or root-set basis, scope, membership, composition, upstream confidentiality and information-use eligibility references, and ownership-preservation assertions at one revision boundary. |
 | Semantically required invariants | A Federation Boundary Revision MUST belong to exactly one Federation Identity. Later boundary changes MUST create a new revision and MUST NOT mutate an open or historical boundary revision. Equivalent member sets MUST NOT be assumed to be the same revision without canonical revision evidence. |
 | Relationships | Federation Boundary Revision binds every federation-owned assertion evaluated for the boundary. |
 | Ownership boundary | This contract owns the distinction between logical federation identity and exact boundary revision. Canonical artifact governance owns revision identity, integrity, lineage, and source-of-truth evidence. |
@@ -186,13 +185,27 @@ A Federation Boundary identifies the bounded semantic domain available for downs
 | Semantic aspect | Definition |
 | --- | --- |
 | Purpose | Qualify the boundary-owned assertions for the declared context without making them universal. |
-| Canonical definition | Federation Boundary Scope is the explicit semantic boundary that qualifies one Federation Identity, Federation Boundary Revision, root or root set, membership set, and composition relationship set for a declared discovery context. |
-| Semantically required invariants | Federation Boundary Scope MUST be attributable, explicit, and revision-bound. It MUST NOT be inferred from product name, repository name, tenant label, organization name, physical placement, technical tenancy, or implementation configuration. Membership in one Federation Boundary Scope MUST NOT imply membership in another. |
-| Relationships | Federation Boundary Scope qualifies Federation Root, Federation Root Set, Federation Membership, Boundary Visibility, and Boundary Composition Relationships. It may reference independently governed platform, Product Binding, repository, component, tenant-bound where separately governed, inherited, legacy, and external-incorporation scope evidence. |
+| Canonical definition | Federation Boundary Scope is the explicit semantic boundary that qualifies one Federation Identity, Federation Boundary Revision, root or root set, membership set, and composition relationship set for one exact immutable Decision Context binding. |
+| Semantically required invariants | Federation Boundary Scope MUST be attributable, explicit, revision-bound, and bound to the same exact Decision Context as its Federation Boundary Revision. It MUST NOT be inferred from product name, repository name, tenant label, organization name, physical placement, technical tenancy, or implementation configuration. Membership in one Federation Boundary Scope MUST NOT imply membership in another. |
+| Relationships | Federation Boundary Scope qualifies Federation Root, Federation Root Set, Federation Membership, and Boundary Composition Relationships. It may reference independently governed platform, Product Binding, repository, component, tenant-bound where separately governed, inherited, legacy, and external-incorporation scope evidence. |
 | Ownership boundary | This contract owns the abstract qualifying role of Federation Boundary Scope. Exact scope vocabularies, values, cross-layer relationship types, Product Binding meanings, and external-obligation meanings remain externally owned or unresolved under GRD-08 and GRD-12. |
 | Explicit non-goals | This concept does not define scope values, taxonomies, precedence, applicability, product-specific scope, tenant-specific values, access control, or policy evaluation. |
 
 Federation Boundary Scope does not replace the Catalog Scope owned by the Rule Source Catalog domain. A Catalog Scope qualifies catalog-owned assertions; a Federation Boundary Scope qualifies federation-owned membership and composition assertions. Any relationship between them must remain explicit and revision-bound.
+
+### 8.1 Exact Decision Context Binding
+
+Every Federation Boundary Revision and Federation Boundary Scope consumes one exact immutable Decision Context binding owned outside this contract.
+
+The binding:
+
+- identifies the exact canonical Decision Context source and immutable revision applicable to the boundary;
+- preserves, without redefining, the externally owned context semantics required by the accepted architecture, including the Governed Operation or decision subject, target and requested scope, purpose, evaluation time, and applicable governance baselines;
+- is shared by every root, member, and composition relationship evaluated within that Federation Boundary Revision;
+- does not float to a later context revision or permit a context change to mutate an open or historical boundary; and
+- fails closed for boundary establishment when the required context identity or immutable revision is missing, conflicting, stale, unauthorized, ineligible, or unverifiable.
+
+This contract does not define Decision Context identity, fields, values, representation, construction, ownership, validation, or lifecycle. It owns only the requirement that the exact externally governed binding be consumed consistently by Federation Boundary semantics.
 
 ## 9. Federation Member and Federation Membership
 
@@ -200,12 +213,31 @@ Federation Boundary Scope does not replace the Catalog Scope owned by the Rule S
 
 | Semantic aspect | Definition |
 | --- | --- |
-| Purpose | Identify an independently governed catalog boundary or source route that may participate in a Federation Boundary. |
-| Canonical definition | A Federation Member is an exact governed Catalog Identity and Catalog Revision, or another architecture-permitted source route, referenced by one Federation Membership assertion without transferring its canonical ownership to the federation. |
-| Semantically required invariants | A member MUST retain its upstream canonical identity, exact revision, scope, owner, eligibility references, authority references, and lifecycle references. A repository, catalog, source, Product Binding, external source, or shared boundary MUST NOT become a Federation Member through proximity, accessibility, naming, import, synchronization, search discovery, or model inference. |
-| Relationships | A Federation Member is identified through upstream Rule Source Catalog meanings where applicable and participates only through Federation Membership. |
+| Purpose | Identify an independently governed catalog boundary or source route that is deterministically eligible to participate in a Federation Boundary. |
+| Canonical definition | A Federation Member is exactly one of the two qualifying semantic classes in Section 9.1.1, bound to one canonical upstream identity and immutable revision and referenced by one Federation Membership assertion without transferring its canonical ownership to the federation. |
+| Semantically required invariants | A member MUST have exactly one qualifying class and MUST retain its upstream canonical identity, exact revision, scope, owner, eligibility references, authority references, lifecycle references, and exact Decision Context relationship. A repository, Product Binding, scope label, external obligation, shared storage location, or composed Federation Boundary is not itself a Federation Member. No candidate becomes a member through proximity, accessibility, naming, import, synchronization, search discovery, or model inference. |
+| Relationships | A Federation Member is identified through exact upstream Rule Source Catalog meanings where applicable and participates only through Federation Membership. A composed Federation Boundary participates through a Boundary Composition Relationship, not Federation Membership. |
 | Ownership boundary | This contract owns the federation-member role, not the member's catalog, source, artifact, content, product, repository, or external-obligation semantics. |
 | Explicit non-goals | This concept does not define member data, source contents, catalogs, repository registration, source resolution, or member admission workflows. |
+
+### 9.1.1 Deterministic Qualifying Classes
+
+A candidate is eligible for the Federation Member role only when it is attributable to exactly one of these architecture-traceable semantic classes:
+
+1. **Governed catalog boundary** — one exact Catalog Identity and Catalog Revision under the bound Rule Source Catalog semantics; or
+2. **Governed source route** — one exact Source Declaration or Source Reference bound to a Canonical Logical Source Identity and Exact Source Revision under the bound Rule Source Catalog semantics, where the route participates through exactly one accepted-architecture source relationship: repository-local declaration, platform boundary declaration, explicit Product Binding relationship, explicitly governed tenant or customer scope relationship, attributable external-incorporation relationship, inherited or legacy relationship, or versioned inter-repository dependency.
+
+These classes are closed for this contract revision. They are semantic classifications, not artifact classes, registry values, fields, or implementation types. They do not resolve which artifact class carries the source-of-sources under GRD-01, select a root topology under GRD-03, define scope values under GRD-08 or GRD-12, or select registry topology under GRD-19.
+
+A candidate that:
+
+- satisfies neither class;
+- appears to satisfy both classes without independently governed disambiguation;
+- lacks one exact upstream canonical identity or immutable revision;
+- depends on an unrecognized relationship type; or
+- cannot be bound to the exact Decision Context
+
+is `Indeterminate` for Federation Member eligibility and MUST NOT acquire Federation Membership. No root, registry, repository, Product Binding, implementation, discovery result, or AI inference may expand these qualifying classes.
 
 ### 9.2 Federation Membership
 
@@ -213,7 +245,7 @@ Federation Boundary Scope does not replace the Catalog Scope owned by the Rule S
 | --- | --- |
 | Purpose | Express that one Federation Member participates in one exact Federation Boundary Revision and Federation Boundary Scope. |
 | Canonical definition | Federation Membership is the explicit, attributable, revision-bound relationship connecting one Federation Member to one Federation Boundary. |
-| Semantically required invariants | Membership MUST bind one Federation Identity, Federation Boundary Revision, Federation Boundary Scope, member identity, and exact member revision. It MUST preserve Boundary Visibility and Boundary Ownership Preservation. It MUST NOT be inferred from Source Reference, Source Declaration, Source Participation, repository placement, technical connectivity, prior participation, discovery success, or inclusion in a derived view. |
+| Semantically required invariants | Membership MUST bind one Federation Identity, Federation Boundary Revision, Federation Boundary Scope, exact immutable Decision Context, qualifying member class, member identity, and exact member revision. It MUST preserve required upstream confidentiality and information-use eligibility references and Boundary Ownership Preservation. It MUST NOT be inferred from Source Reference, Source Declaration, Source Participation, repository placement, technical connectivity, prior participation, discovery success, or inclusion in a derived view. |
 | Relationships | Federation Membership may consume Source Participation as upstream evidence but remains a distinct federation-owned assertion. It may be connected to other boundaries through a Boundary Composition Relationship. |
 | Ownership boundary | This contract owns Federation Membership meaning. Rule Source Catalog owns Source Participation, and independently governed authority owns eligibility to create or revise a particular membership assertion. |
 | Explicit non-goals | This concept does not define registration, admission, review, approval, removal, traversal, ordering, priority, closure relevance, retrieval, synchronization, or implementation. |
@@ -221,7 +253,7 @@ Federation Boundary Scope does not replace the Catalog Scope owned by the Rule S
 Source Participation and Federation Membership are not interchangeable:
 
 - Source Participation states that a Rule Source participates in one Catalog Identity, Catalog Revision, and Catalog Scope.
-- Federation Membership states that a governed catalog boundary or architecture-permitted source route participates in one Federation Identity, Federation Boundary Revision, and Federation Boundary Scope.
+- Federation Membership states that one deterministically qualified Federation Member participates in one Federation Identity, Federation Boundary Revision, Federation Boundary Scope, and exact immutable Decision Context.
 - neither relationship implies the other;
 - neither relationship creates authority, eligibility, applicability, closure, or Effectiveness; and
 - a downstream consumer MUST NOT collapse the two meanings because they refer to the same source or catalog.
@@ -231,26 +263,29 @@ Source Participation and Federation Membership are not interchangeable:
 | Semantic aspect | Definition |
 | --- | --- |
 | Purpose | Compose independently governed Federation Boundaries without centralizing or duplicating their canonical meanings. |
-| Canonical definition | A Boundary Composition Relationship is an explicit, attributable, revision-bound relationship by which one Federation Boundary includes, inherits, overlays, or otherwise composes another governed boundary for one declared Federation Boundary Scope. |
-| Semantically required invariants | Every relationship MUST identify the participating Federation Identities, exact Federation Boundary Revisions, applicable scope, temporal basis, Boundary Visibility, and retained ownership. A relationship MUST NOT be inferred from technical connectivity, shared storage, code dependency, common ownership, naming, synchronization, or prior composition. An unresolved relationship capable of changing membership MUST remain explicit and cannot be treated as absent. |
+| Canonical definition | A Boundary Composition Relationship is an explicit, attributable, revision-bound connection between independently governed Federation Boundaries under one Federation Boundary Scope and exact immutable Decision Context. Its relationship type and the meaning of that type are supplied by an independently governed source rather than defined by this contract. |
+| Semantically required invariants | Every relationship MUST identify the participating Federation Identities, exact Federation Boundary Revisions, exact Decision Context binding, applicable scope, temporal basis, externally governed relationship type and governing revision, required upstream confidentiality and information-use eligibility references, and retained ownership. A relationship MUST NOT be inferred from technical connectivity, shared storage, code dependency, common ownership, naming, synchronization, or prior composition. A missing, conflicting, unrecognized, or unverifiable relationship type is `Indeterminate`, creates no composition, and cannot be treated as absence. |
 | Relationships | Boundary Composition Relationships connect Federation Roots, root sets, or subordinate Federation Boundaries while preserving Federation Membership and Boundary Ownership Preservation. |
 | Ownership boundary | This contract owns the meaning of boundary composition. It does not own inheritance precedence, rule conflict resolution, applicability, Product Binding, lifecycle, closure proof, or execution behavior. |
 | Explicit non-goals | This concept does not define relationship values, graph algorithms, traversal order, cycle policy, precedence, merge behavior, conflict resolution, transport, transaction, or synchronization. |
 
-Composition is semantic inclusion within a fixed boundary, not runtime interaction. A composed boundary does not become a copy, mirror, replica, cache, or implementation dependency merely because the relationship exists.
+Composition is a governed semantic connection interpreted only according to its independently governed relationship type within a fixed boundary. It is not runtime interaction. A composed boundary does not become a copy, mirror, replica, cache, or implementation dependency merely because the relationship exists.
 
-## 11. Boundary Visibility
+## 11. Upstream Confidentiality and Information-Use Eligibility
 
-| Semantic aspect | Definition |
-| --- | --- |
-| Purpose | Preserve whether and to what extent a federation-owned membership or composition assertion may be disclosed within an independently eligible context. |
-| Canonical definition | Boundary Visibility is the federation-owned relationship between a Federation Boundary assertion and the independently governed confidentiality and information-use eligibility evidence controlling disclosure of that assertion to an eligible consumer. |
-| Semantically required invariants | Boundary Visibility MUST be explicit, scope-bound, revision-bound, and attributable to independently governed eligibility evidence. Visibility MUST NOT create information-use eligibility, source access, authority, membership, or closure. A non-disclosing or restricted visibility condition MUST NOT permit silent omission of the member or relationship from the governed boundary. |
-| Relationships | Boundary Visibility qualifies Federation Membership and Boundary Composition Relationships and preserves references to upstream confidentiality, source-authorization, purpose, provider, and information-use eligibility evidence. |
-| Ownership boundary | This contract owns only the federation-specific distinction between the existence of a boundary assertion and its eligible disclosure. Universal Eligibility and confidentiality governance own eligibility and disclosure decisions; Closure and Provenance Evidence owns later evidence sufficiency. |
-| Explicit non-goals | This concept does not define visibility values, confidentiality classifications, access control, authorization policy, redaction, encryption, non-disclosing evidence formats, retrieval, or provider behavior. |
+Federation Boundary consumes, but does not own, the exact upstream confidentiality and information-use eligibility semantics required by the accepted architecture.
 
-Boundary Visibility cannot suppress an otherwise valid boundary relationship. Where an eligible consumer cannot receive the relationship details, downstream discovery must use an independently governed eligible evidence path or remain incomplete under the accepted architecture.
+Every Federation Root, Federation Member, Federation Membership assertion, and Boundary Composition Relationship:
+
+- preserves references to the independently governed source-authorization, confidentiality, purpose, provider, and other information-use eligibility evidence required for its exact identity, revision, scope, Decision Context, and temporal boundary;
+- relies on upstream governance to determine whether the boundary assertion or its details may be used or disclosed to an eligible consumer;
+- cannot create, expand, repair, reinterpret, or replace eligibility or disclosure permission;
+- cannot infer eligibility from membership, root status, composition, technical access, catalog participation, or prior use; and
+- cannot silently omit a valid boundary relationship merely because its details are restricted.
+
+Where the required upstream eligibility or disclosure evidence is missing, conflicting, stale, unauthorized, ineligible, or unverifiable, boundary use fails closed for the affected context. Any non-disclosing evidence path and its sufficiency remain owned by the downstream Closure and Provenance Evidence and Discovery Validation domains identified by the approved decomposition.
+
+This contract defines no visibility concept, visibility value, confidentiality classification, access control, disclosure rule, redaction, encryption, non-disclosing evidence format, retrieval behavior, or provider behavior.
 
 ## 12. Boundary Ownership Preservation
 
@@ -258,7 +293,7 @@ Boundary Visibility cannot suppress an otherwise valid boundary relationship. Wh
 | --- | --- |
 | Purpose | Prevent federation composition from transferring canonical ownership of participating catalogs, sources, repositories, products, or external obligations. |
 | Canonical definition | Boundary Ownership Preservation is the federation invariant that every member and composed boundary retains its independently governed canonical semantic owner, artifact owner, scope owner, and authority evidence across federation participation. |
-| Semantically required invariants | Federation Root status, root-set participation, Federation Membership, composition, visibility, technical custody, repository control, aggregation, or repeated use MUST NOT transfer or create ownership. Every federation-owned assertion and every referenced upstream assertion MUST retain exactly one canonical semantic owner. Conflicting or missing ownership evidence MUST remain explicit and fail closed where membership could change. |
+| Semantically required invariants | Federation Root status, root-set participation, Federation Membership, composition, disclosure eligibility, technical custody, repository control, aggregation, or repeated use MUST NOT transfer or create ownership. Every federation-owned assertion and every referenced upstream assertion MUST retain exactly one canonical semantic owner. Conflicting or missing ownership evidence MUST remain explicit and fail closed where membership could change. |
 | Relationships | Boundary Ownership Preservation applies to every Federation Root, Federation Member, Federation Membership, and Boundary Composition Relationship. |
 | Ownership boundary | This contract owns the non-transfer semantics of federation composition. Governance Authority and each upstream semantic domain own the actual authority and ownership assignments. |
 | Explicit non-goals | This concept does not assign an owner, designate an authority, create delegation, define repository permissions, or govern organizational responsibility. |
@@ -268,8 +303,8 @@ Boundary Visibility cannot suppress an otherwise valid boundary relationship. Wh
 | Semantic aspect | Definition |
 | --- | --- |
 | Purpose | Specialize Boundary Composition Relationships for independently governed repository and shared-source boundaries. |
-| Canonical definition | Cross-Repository Boundary Composition is a Boundary Composition Relationship that binds two or more repository or shared-source boundaries to one common Federation Identity, Federation Boundary Revision, Federation Boundary Scope, and declared context while preserving every participating boundary's exact revision and ownership. |
-| Semantically required invariants | Every participating repository and shared boundary MUST retain exact identity, revision, scope, temporal, ownership, authority, eligibility, and lifecycle evidence. Local boundary completeness MUST NOT establish combined completeness. One boundary MUST NOT repair another boundary's missing or conflicting membership evidence. Repository naming, Git remotes, code imports, shared maintainers, mirroring, or deployment topology MUST NOT create composition. |
+| Canonical definition | Cross-Repository Boundary Composition is a Boundary Composition Relationship that binds two or more repository or shared-source boundaries to one common Federation Identity, Federation Boundary Revision, Federation Boundary Scope, and exact immutable Decision Context while preserving every participating boundary's exact revision and ownership. |
+| Semantically required invariants | Every participating repository and shared boundary MUST retain exact identity, revision, scope, temporal, ownership, authority, eligibility, lifecycle, and Decision Context evidence. Every participant MUST bind to the same exact Decision Context. Local boundary completeness MUST NOT establish combined completeness. One boundary MUST NOT repair another boundary's missing or conflicting membership evidence. Repository naming, Git remotes, code imports, shared maintainers, mirroring, or deployment topology MUST NOT create composition. |
 | Relationships | Cross-Repository Boundary Composition consumes repository-local catalog and source-route meanings and supplies a fixed composition boundary to downstream discovery evidence. |
 | Ownership boundary | This contract owns only the cross-repository composition relationship. Repository-local canonical artifacts, Product Bindings, external obligations, source ownership, temporal-evidence sufficiency, provenance, and closure remain externally owned. |
 | Explicit non-goals | This concept does not define monorepo or polyrepo policy, repository layout, synchronization, consistency mechanisms, transactions, network protocols, APIs, storage, mirroring, replication, or deployment. |
@@ -281,11 +316,12 @@ The exact cross-repository snapshot-consistency mechanism remains unresolved und
 ```text
 Federation Identity
     └── fixed to one immutable state by Federation Boundary Revision
+            ├── bound to one externally owned exact Decision Context
             ├── qualified by Federation Boundary Scope
             ├── anchored by Federation Root or Federation Root Set
             ├── contains explicit Federation Membership
             │       ├── references one Federation Member
-            │       ├── preserves Boundary Visibility
+            │       ├── preserves upstream eligibility references
             │       └── preserves Boundary Ownership
             └── composes other boundaries through
                     Boundary Composition Relationships
@@ -304,23 +340,25 @@ If later Accepted, Published, and made Effective, the Federation Boundary Contra
 1. **Single primary responsibility:** every owned concept remains subordinate to root or root-set boundary and cross-boundary composition semantics.
 2. **Federation identity stability:** one Federation Identity distinguishes one logical federation across revisions and representations.
 3. **Boundary revision immutability:** one Federation Boundary Revision identifies one immutable boundary state and never mutates earlier or open evaluations.
-4. **Explicit root basis:** every Federation Boundary is anchored by one explicit Federation Root or Federation Root Set.
-5. **No self-authorizing root:** root status never creates authority, eligibility, approval, ownership, lifecycle state, or effectiveness.
-6. **Scope qualification:** every federation-owned assertion is qualified by Federation Identity, Federation Boundary Revision, and Federation Boundary Scope.
-7. **Explicit membership:** Federation Membership is attributable and never inferred from catalog participation, proximity, location, connectivity, or prior use.
-8. **Catalog separation:** Source Participation remains owned by Rule Source Catalog and never becomes Federation Membership by implication.
-9. **Ownership preservation:** federation participation does not transfer source, catalog, repository, product, external-obligation, or semantic ownership.
-10. **Exact revision binding:** every root, member, and composed boundary remains bound to its exact canonical revision.
-11. **Visible composition:** every membership-changing composition relationship remains explicit; uncertainty is not treated as absence.
-12. **Visibility separation:** Boundary Visibility preserves independently governed eligibility and cannot create access, suppress membership, or prove closure.
-13. **No duplicate semantic owner:** a derived root set, federation view, index, graph, or copy cannot become a competing owner.
-14. **Cross-repository independence:** one repository boundary cannot establish or repair another repository boundary's membership or evidence.
-15. **No topology decision by representation:** central, federated, and hybrid representations cannot select the normative root topology.
-16. **No discovery capture:** discovery activity, manifests, resolution results, closure evidence, provenance, validation, or result artifacts cannot redefine the Federation Boundary.
-17. **No downstream repair:** closure, applicability, or Policy Decision results cannot retroactively create or repair boundary membership.
-18. **Historical immutability:** later boundary, membership, visibility, ownership, or composition changes create prospective evidence and do not rewrite historical revisions.
-19. **Provider neutrality:** Federation Boundary meaning is independent of model, vendor, repository host, database, registry product, graph engine, workflow system, and deployment topology.
-20. **Fail-closed ambiguity:** missing, conflicting, stale, unauthorized, ineligible, revision-mismatched, or unverifiable required boundary evidence remains explicit and cannot produce a valid boundary for protected downstream use.
+4. **Exact Decision Context binding:** every Federation Boundary Revision, scope, root, member, membership assertion, and composition relationship consumes the same exact immutable externally owned Decision Context binding.
+5. **Explicit root basis:** every Federation Boundary is anchored by one explicit Federation Root or Federation Root Set.
+6. **No self-authorizing root:** root status never creates authority, eligibility, approval, ownership, lifecycle state, or effectiveness.
+7. **Scope qualification:** every federation-owned assertion is qualified by Federation Identity, Federation Boundary Revision, Federation Boundary Scope, and exact Decision Context.
+8. **Deterministic member eligibility:** a Federation Member satisfies exactly one closed qualifying class in Section 9.1.1; an unclassified or multiply classified candidate is `Indeterminate` and cannot become a member.
+9. **Explicit membership:** Federation Membership is attributable and never inferred from catalog participation, proximity, location, connectivity, or prior use.
+10. **Catalog separation:** Source Participation remains owned by Rule Source Catalog and never becomes Federation Membership by implication.
+11. **Ownership preservation:** federation participation does not transfer source, catalog, repository, product, external-obligation, or semantic ownership.
+12. **Exact revision binding:** every root, member, and composed boundary remains bound to its exact canonical revision.
+13. **Explicit typed composition:** every composition relationship cites one independently governed relationship type and exact governing revision; this contract does not supply or infer the type's meaning.
+14. **Upstream eligibility consumption:** confidentiality and information-use eligibility remain externally owned and cannot be created or changed by federation semantics.
+15. **No duplicate semantic owner:** a derived root set, federation view, index, graph, or copy cannot become a competing owner.
+16. **Cross-repository independence:** one repository boundary cannot establish or repair another repository boundary's membership or evidence.
+17. **No topology decision by representation:** central, federated, and hybrid representations cannot select the normative root topology.
+18. **No discovery capture:** discovery activity, manifests, resolution results, closure evidence, provenance, validation, or result artifacts cannot redefine the Federation Boundary.
+19. **No downstream repair:** closure, applicability, or Policy Decision results cannot retroactively create or repair boundary membership.
+20. **Historical immutability:** later context, boundary, membership, ownership, eligibility-reference, or composition changes create prospective evidence and do not rewrite historical revisions.
+21. **Provider neutrality:** Federation Boundary meaning is independent of model, vendor, repository host, database, registry product, graph engine, workflow system, and deployment topology.
+22. **Fail-closed ambiguity:** missing, conflicting, stale, unauthorized, ineligible, revision-mismatched, or unverifiable required boundary evidence remains explicit and cannot produce a valid boundary for protected downstream use.
 
 These invariants define meaning, not validation algorithms or implementation requirements.
 
@@ -335,6 +373,8 @@ These invariants define meaning, not validation algorithms or implementation req
 | Contract Decomposition Plan | Federation Boundary responsibility, dependency direction, candidate consolidation, exclusions, and Category B impact | Plan remains a planning source and is not redefined |
 | Rule Source Catalog Proposal v0.2.0 | Catalog Identity, Catalog Revision, Catalog Scope, Rule Source, Source Identity, Source Reference, Source Declaration, Source Participation, eligibility references, lifecycle references, and source-metadata ownership | Upstream proposal remains Draft and owns all source-catalog meanings if later Accepted and Effective |
 | Rule Source Catalog Acceptance Record | Verified upstream revision and current `Pending Human Attestation` status | Record creates no Acceptance; this proposal cannot infer or supply it |
+| Decision Context | Exact immutable binding for the Governed Operation or decision subject, target and requested scope, purpose, evaluation time, and applicable baselines required by the accepted architecture | Decision Context identity, fields, values, construction, ownership, validation, and lifecycle remain externally owned |
+| Universal Eligibility and confidentiality governance | Source authorization, confidentiality, purpose, provider, disclosure, and other information-use eligibility evidence | Federation Boundary preserves exact references only and creates no eligibility or disclosure semantics |
 
 The proposal consumes upstream meanings by exact reference. It does not copy them into a second canonical owner, repair missing upstream authority, or convert a Draft dependency into an Accepted or Effective Contract.
 
@@ -343,7 +383,7 @@ The proposal consumes upstream meanings by exact reference. It does not copy the
 The direct planned downstream consumers are:
 
 1. **Discovery Operation Evidence Contract candidate** — consumes the exact Federation Identity, Federation Boundary Revision, Federation Boundary Scope, Federation Membership, and composition relationships when recording one discovery attempt without redefining the boundary.
-2. **Closure and Provenance Evidence Contract candidate** — consumes the fixed boundary and its retained ownership and visibility relationships when assessing closure-supporting evidence and discovery lineage without acquiring boundary ownership.
+2. **Closure and Provenance Evidence Contract candidate** — consumes the fixed boundary, its retained ownership, and its upstream eligibility references when assessing closure-supporting evidence and discovery lineage without acquiring boundary ownership.
 
 Later indirect consumers may include:
 
@@ -366,7 +406,7 @@ This section defines semantic dependency direction only. It does not define soft
 
 ## 18. Rule Source Catalog Non-Overlap
 
-| Semantic concern | Rule Source Catalog owner | Federation Boundary owner | Non-overlap rule |
+| Semantic concern | Rule Source Catalog responsibility | Federation Boundary responsibility | Non-overlap rule |
 | --- | --- | --- | --- |
 | Logical identity | Catalog Identity and Source Identity | Federation Identity | Similar labels or common custody never establish identity equivalence |
 | Exact revision | Catalog Revision and Exact Source Revision Binding | Federation Boundary Revision | Each revision remains bound to its own semantic owner |
@@ -375,7 +415,7 @@ This section defines semantic dependency direction only. It does not define soft
 | Reference | Source Reference and Source Declaration | Boundary Composition Relationship | A source reference does not create cross-boundary composition |
 | Ownership | Source Metadata Ownership | Boundary Ownership Preservation | Federation preserves upstream ownership and does not reassign catalog assertions |
 | Topology | Explicitly excluded | Root or root-set boundary composition | Catalog representation and registry placement cannot select federation topology |
-| Visibility | Eligibility and lifecycle references are preserved without evaluation | Federation-specific visibility of membership and composition assertions | Neither contract creates confidentiality or authorization eligibility |
+| Confidentiality and disclosure | Source Eligibility References preserve externally owned evidence without evaluation | Consumed external evidence only; Federation Boundary owns no visibility or disclosure semantics | Neither contract creates confidentiality, authorization, visibility, or disclosure eligibility |
 
 If a semantic assertion cannot be assigned deterministically to one of these owners, this proposal remains Draft and the ambiguity must be resolved through the applicable contract-review process. No assertion may be duplicated for convenience.
 
@@ -408,12 +448,13 @@ Category B items assigned to Closure and Provenance Evidence, Discovery Operatio
 This proposal includes only:
 
 - canonical Federation Boundary identity and immutable revision semantics;
+- consumption of one exact immutable externally owned Decision Context binding;
 - root or root-set boundary roles without selecting a final topology;
 - federation-owned membership semantics;
 - conceptual boundary scope qualification;
-- federation-specific membership and composition visibility semantics;
+- preservation of externally owned confidentiality and information-use eligibility references without creating visibility ownership;
 - preservation of independently governed ownership;
-- semantic composition across independently governed boundaries;
+- externally typed semantic composition across independently governed boundaries without defining relationship-type meaning;
 - cross-repository boundary composition without a mechanism choice;
 - deterministic interpretation for equivalent immutable inputs; and
 - fail-closed treatment of unresolved evidence required to establish the boundary.
@@ -543,9 +584,13 @@ The proposal does not float to later source revisions. Any authoritative-input c
 | Exactly one primary responsibility | Satisfied — root or root-set discovery topology and cross-boundary composition |
 | Federation-owned semantics explicit | Satisfied |
 | Consumed semantics explicit | Satisfied |
+| Federation Member eligibility | Deterministic — two closed architecture-traceable qualifying classes |
+| Exact Decision Context binding | Required and externally owned |
+| Boundary Visibility ownership | None — confidentiality and information-use eligibility are consumed upstream semantics |
+| Composition relationship types | Externally governed and never inferred by this contract |
 | Upstream governance explicit | Satisfied |
 | Downstream consumers explicit | Satisfied |
-| Rule Source Catalog overlap | None identified; Section 18 records deterministic ownership separation |
+| Rule Source Catalog overlap | None identified; Sections 9 and 18 record deterministic ownership separation |
 | Category B items preserved unresolved | Satisfied — 11 mapped items |
 | Decision Boundary preserved | Satisfied |
 | Provider neutrality | Satisfied |
@@ -559,6 +604,8 @@ The proposal does not float to later source revisions. Any authoritative-input c
 | Contract Acceptance created | No |
 | Publication or Effectiveness created | No |
 | Design Freeze record created | No |
+| Independent Review findings addressed | Four — three Major and one Minor; pending independent Verification |
+| Regression identified | None |
 
 ## 25. Contract Lifecycle and Next Governance Action
 
@@ -567,8 +614,8 @@ This proposal is at the `Proposal` stage of the Contract Governance lifecycle.
 | Lifecycle dimension | Current result |
 | --- | --- |
 | Contract status | Draft Contract Proposal |
-| Independent Review | Not performed |
-| Maintenance Revision | Not created |
+| Independent Review | Completed — `REQUIRES MAJOR REVISION`; three Major and one Minor Findings |
+| Maintenance Revision | Version 0.2.0 created to address all four findings |
 | Verification | Not performed |
 | Acceptance Record | Not created |
 | Acceptance | Not created |
@@ -577,16 +624,37 @@ This proposal is at the `Proposal` stage of the Contract Governance lifecycle.
 | Supersession | None |
 | Archival | No |
 
-The next permitted governance action is Independent Contract Review of this exact Draft revision.
+The next permitted governance action is independent Verification of this exact Version 0.2.0 Draft revision against the four recorded review findings.
 
-Independent Review must evaluate semantic completeness, single ownership, Rule Source Catalog non-overlap, Category B containment, Decision Boundary preservation, provider neutrality, fail-closed behavior, immutable history, dependency direction, and implementation independence.
+Verification must determine whether:
 
-Review does not modify this proposal, create Acceptance, publish an Effective Contract, make this proposal Effective, resolve upstream `Pending Human Attestation`, authorize implementation, or create a Design Freeze.
+- Federation Member eligibility is closed, deterministic, and traceable to the accepted architecture;
+- every Federation Boundary consumes one exact immutable externally owned Decision Context binding;
+- Boundary Visibility ownership has been removed and upstream confidentiality semantics remain externally owned;
+- composition relationship types remain externally governed and are never inferred;
+- Category B classifications, assumptions, containment boundaries, and triggers remain unchanged; and
+- no semantic regression, governance change, architecture change, or implementation detail was introduced.
 
-## 26. Revision History
+Verification does not modify this proposal, create Acceptance, publish an Effective Contract, make this proposal Effective, resolve upstream `Pending Human Attestation`, authorize implementation, or create a Design Freeze.
+
+## 26. Revision History and Review Resolution
+
+### 26.1 Revision History
 
 | Version | Classification | Summary |
 | --- | --- | --- |
 | 0.1.0 | Initial Draft Contract Proposal | Establishes the Federation Boundary semantic candidate under the accepted Governance Rule Discovery architecture and Contract Governance Framework Version 0.3.0. It preserves the Rule Source Catalog boundary, all affected Category B deferrals, and the accepted Decision Boundary. |
+| 0.2.0 | Pre-acceptance Major Maintenance Revision | Resolves three Major and one Minor Findings from the Independent Contract Review. The primary responsibility, accepted architecture, Decision Boundary, Contract Decomposition, governance methodology, upstream ownership, and all Category B deferrals remain unchanged. |
 
-This initial Draft records no contract review, Verification, human Acceptance, Publication, Effectiveness, adoption, implementation authorization, or Design Freeze.
+### 26.2 Review Resolution Mapping
+
+| Finding | Resolution | Affected sections |
+| --- | --- | --- |
+| MAJ-01 — Federation Member universe is open-ended | **Resolved.** Federation Member eligibility now has two closed, architecture-traceable semantic classes. Unclassified, multiply classified, unrecognized, or incompletely bound candidates are `Indeterminate` and cannot acquire Federation Membership. | 5, 8.1, 9, 14–16, 18, 20 |
+| MAJ-02 — Exact Decision Context binding is missing | **Resolved.** Every Federation Boundary Revision, scope, root, member, membership assertion, and composition relationship consumes the same exact immutable Decision Context binding while Decision Context meaning and representation remain externally owned. | 5, 6.2, 8–10, 13–16, 20 |
+| MAJ-03 — Boundary Visibility ownership is not supported by the decomposition | **Resolved.** Boundary Visibility is no longer an owned semantic concept. The contract consumes exact upstream confidentiality and information-use eligibility references without creating visibility, disclosure, or evidence-sufficiency ownership. | 4, 6.2, 8–12, 14–18, 20 |
+| MIN-01 — Composition terminology implies undefined relationship types | **Resolved.** Boundary Composition Relationship is neutral about relationship meaning, consumes one externally governed type and exact governing revision, and fails closed when that type is missing, conflicting, unrecognized, or unverifiable. | 10, 13, 15, 19–20 |
+
+These resolution statements record the bounded maintenance revision. They are not independent Verification, contract Acceptance, Publication, Effectiveness, implementation authorization, or Design Freeze.
+
+This revised Draft records no Verification, human Acceptance, Publication, Effectiveness, adoption, implementation authorization, or Design Freeze.

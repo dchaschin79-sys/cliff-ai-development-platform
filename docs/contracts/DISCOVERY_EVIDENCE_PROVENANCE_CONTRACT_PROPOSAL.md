@@ -7,23 +7,23 @@
 | Contract identity | `CADP-CONTRACT-DISCOVERY-EVIDENCE-PROVENANCE` |
 | Title | Discovery Evidence Provenance Contract |
 | Document type | Contract Proposal |
-| Version | 0.1.0 |
+| Version | 0.2.0 |
 | Status | Draft Contract Proposal |
-| Review state | Initial Draft — Pending Independent Review |
+| Review state | Maintenance Revision — Pending Contract Review Resolution Verification |
 | Date | 2026-07-25 |
 | Architecture domain | Governance Rule Discovery |
 | Contract domain | Discovery Evidence Provenance |
 | Primary responsibility | Canonical semantics of attributable lineage and identity, revision, and temporal continuity across discovery evidence |
 | Proposed canonical semantic owner | This contract |
 | Repository | `dchaschin79-sys/cliff-ai-development-platform` |
-| Source baseline | `f26e52f63a9118991f8620cbe733bb6b80722664` |
+| Source baseline | `1f198213b186e1242b97f6849c460e33eb0b9f75` |
 | Methodology constraint | Contract Governance Framework Version 0.3.0 and Contract Decomposition Plan Version 0.2.0 are fixed and are not revised or extended |
 | Acceptance | Not created |
 | Publication | Not created |
 | Effectiveness | Not created |
 | Normative effect | None |
 | Implementation authority | None |
-| Supersedes | None — initial proposal |
+| Supersedes | Version 0.1.0 Draft Contract Proposal |
 | Superseded by | None known |
 
 This document is the fourth Draft Contract Proposal developed under the CADP Contract Governance Framework Version 0.3.0.
@@ -94,7 +94,8 @@ This proposal defines the canonical meaning of:
 8. Evidence Identity Continuity;
 9. Evidence Revision Continuity;
 10. Temporal Provenance Binding; and
-11. Provenance Reconstruction Basis.
+11. Unresolved Required-Lineage Condition; and
+12. Provenance Reconstruction Basis.
 
 These are semantic concepts, not fields, types, objects, schemas, interfaces, APIs, files, records, messages, graphs, database structures, storage structures, services, jobs, or runtime components.
 
@@ -109,7 +110,7 @@ This contract owns:
 - continuity relationships that preserve logical evidence identity without redefining that identity;
 - continuity relationships that preserve exact predecessor and successor revision evidence without redefining revision identity, lifecycle, or supersession;
 - Temporal Provenance Binding that qualifies lineage using exact externally governed temporal evidence;
-- preservation of missing, conflicting, stale, ambiguous, or unverifiable required lineage as `Indeterminate`; and
+- attributable, revision-bound Unresolved Required-Lineage Conditions that preserve missing, conflicting, stale, restricted, ambiguous, or unverifiable required lineage without representing it as supported; and
 - the semantic evidence basis from which an eligible reviewer can reconstruct discovery evidence lineage.
 
 This contract does not own:
@@ -132,9 +133,9 @@ This contract does not own:
 | --- | --- |
 | Purpose | Establish the attributable lineage boundary for discovery evidence without acquiring the semantics of the evidence subjects it connects. |
 | Canonical definition | Discovery Evidence Provenance is the immutable, attributable, revision-bound, and temporally qualified semantic evidence by which discovery evidence lineage can be reconstructed across exact externally owned evidence subjects. |
-| Semantically required invariants | Discovery Evidence Provenance MUST have one Provenance Record Identity, one exact Provenance Record Revision, one exact governing Operation Context Binding where operation-bound evidence is involved, and either at least one explicit Provenance Relationship with attributable Provenance Attribution or an explicit unresolved condition showing that no required relationship can be supported. Every relationship requiring temporal qualification MUST have a coherent Temporal Provenance Binding. Provenance MUST NOT be inferred from custody, location, content similarity, access, execution, repository history, implementation behavior, or a downstream result. |
-| Relationships | Discovery Evidence Provenance is fixed by Provenance Record Revision, connects evidence through Provenance Subject Bindings and Provenance Relationships, is attributable through Provenance Attribution, preserves continuity through identity and revision relationships, and is temporally qualified through Temporal Provenance Binding. |
-| Ownership boundary | This contract owns provenance meaning and the discovery-specific lineage relationships only. Every connected evidence subject retains its upstream or downstream semantic owner. |
+| Semantically required invariants | Discovery Evidence Provenance MUST have one Provenance Record Identity, one exact Provenance Record Revision, one exact governing Operation Context Binding where operation-bound evidence is involved, and either at least one explicit Provenance Relationship with attributable Provenance Attribution or at least one attributable Unresolved Required-Lineage Condition. A contract-conforming zero-supported-lineage state MUST contain at least one canonical Unresolved Required-Lineage Condition. Every relationship requiring temporal qualification MUST have a coherent Temporal Provenance Binding. Provenance MUST NOT be inferred from custody, location, content similarity, access, execution, repository history, implementation behavior, or a downstream result. |
+| Relationships | Discovery Evidence Provenance is fixed by Provenance Record Revision, connects supported evidence through Provenance Subject Bindings and Provenance Relationships, preserves unsupported required lineage through Unresolved Required-Lineage Conditions, is attributable through Provenance Attribution, preserves continuity through identity and revision relationships, and is temporally qualified through Temporal Provenance Binding. |
+| Ownership boundary | This contract owns provenance meaning, the discovery-specific lineage relationships, and the unresolved required-lineage conditions only. Every connected or partially identified evidence subject retains its upstream or downstream semantic owner. |
 | Explicit non-goals | This concept does not define an audit store, evidence graph, event stream, ledger, log, trace, manifest, database record, query, schema, serialization, validation result, or closure proof. |
 
 Provenance is evidence, not authority. A complete lineage assertion does not grant source authorization, eligibility, approval, effectiveness, closure, applicability, or Policy Decision authority.
@@ -159,9 +160,9 @@ Provenance is also not self-validating. A record, actor, source owner, repositor
 | Semantic aspect | Definition |
 | --- | --- |
 | Purpose | Distinguish one exact immutable semantic state of Discovery Evidence Provenance from earlier or later states. |
-| Canonical definition | Provenance Record Revision is the exact immutable state of one Provenance Record Identity, including every Provenance Subject Binding, Provenance Attribution, Provenance Relationship, continuity relationship, Temporal Provenance Binding, and explicit unresolved condition asserted at that revision. |
+| Canonical definition | Provenance Record Revision is the exact immutable state of one Provenance Record Identity, including every Provenance Subject Binding, Provenance Attribution, Provenance Relationship, continuity relationship, Temporal Provenance Binding, and Unresolved Required-Lineage Condition asserted at that revision. |
 | Semantically required invariants | A Provenance Record Revision MUST belong to exactly one Provenance Record Identity. A correction, clarification, supplementation, reassessment, or newly discovered relationship MUST create a new revision and MUST NOT mutate an earlier revision. Equivalent content MUST NOT be assumed to identify the same revision without canonical revision evidence. |
-| Relationships | Provenance Record Revision fixes the exact lineage assertions and unresolved conditions available for reconstruction at that revision. |
+| Relationships | Provenance Record Revision fixes the exact supported lineage assertions and Unresolved Required-Lineage Conditions available for reconstruction at that revision. |
 | Ownership boundary | This contract owns the distinction between logical provenance identity and exact provenance state. Foundation canonical governance retains revision identity, integrity, source-of-truth, and general lineage mechanisms. |
 | Explicit non-goals | This concept does not define version numbering, hashes, commit mechanics, storage, synchronization, Publication, Effectiveness, supersession, archival, or retention mechanisms. |
 
@@ -193,16 +194,16 @@ This list establishes the provenance subject boundary only. It does not create, 
 
 | Semantic aspect | Definition |
 | --- | --- |
-| Purpose | Make each provenance assertion attributable without creating authority or redefining upstream Operation Attribution. |
-| Canonical definition | Provenance Attribution is the explicit relationship associating one Provenance Record Revision and each asserted Provenance Relationship with the exact independently governed identity reference responsible for asserting that lineage relationship. |
-| Semantically required invariants | Attribution MUST be explicit, revision-bound, scope-bound, and bound to the same context and Temporal Provenance Binding as the relationship it qualifies. When an assertion consumes upstream Activity Actor Attribution or Evidence Asserter Attribution, those exact role-qualified meanings MUST remain unchanged. An asserter MUST remain distinguishable from an evidence subject, source owner, activity actor, custodian, author, repository owner, reviewer, validator, approver, or downstream consumer. |
-| Relationships | Provenance Attribution qualifies Provenance Relationships and may reference independently governed identity, authority, eligibility, integrity, custody, and temporal evidence without redefining them. |
+| Purpose | Make each supported or unresolved provenance assertion attributable without creating authority or redefining upstream Operation Attribution. |
+| Canonical definition | Provenance Attribution is the explicit relationship associating one Provenance Record Revision, each asserted Provenance Relationship, and each Unresolved Required-Lineage Condition with the exact independently governed identity reference accountable for asserting that supported or unresolved lineage state. |
+| Semantically required invariants | Attribution MUST be explicit, revision-bound, scope-bound, and bound to the same context and applicable Temporal Provenance Binding as the Provenance Relationship or Unresolved Required-Lineage Condition it qualifies. When an assertion consumes upstream Activity Actor Attribution or Evidence Asserter Attribution, those exact role-qualified meanings MUST remain unchanged. An asserter MUST remain distinguishable from an evidence subject, source owner, activity actor, custodian, author, repository owner, reviewer, validator, approver, or downstream consumer. |
+| Relationships | Provenance Attribution qualifies Provenance Relationships and Unresolved Required-Lineage Conditions and may reference independently governed identity, authority, eligibility, integrity, custody, and temporal evidence without redefining them. |
 | Ownership boundary | This contract owns the attributable relationship for provenance assertions. Identity eligibility, actor authority, delegation, authentication, integrity assurance, custody, and review eligibility remain externally owned. |
 | Explicit non-goals | This concept does not define a person, user, organization, service account, AI system, agent, model, process identity, governance role, approver, validator, authority tier, signature, credential, or authentication method. |
 
 Attribution is not authority and is not proof. A named identity does not acquire source, discovery, approval, validation, or policy authority merely because a provenance assertion is attributed to it.
 
-Missing, ambiguous, conflicting, or unverifiable Provenance Attribution makes the affected relationship `Indeterminate`. Attribution MUST NOT be inferred from repository authorship, file ownership, technical access, network identity, custody, model invocation, or prior behavior.
+Missing, ambiguous, conflicting, or unverifiable Provenance Attribution makes the affected Provenance Relationship `Indeterminate` and prevents an asserted unresolved state from qualifying as a canonical Unresolved Required-Lineage Condition. Attribution MUST NOT be inferred from repository authorship, file ownership, technical access, network identity, custody, model invocation, or prior behavior.
 
 ## 9. Provenance Relationship
 
@@ -236,6 +237,8 @@ The roles do not define:
 - whether the lineage is independently validated; or
 - whether a downstream result is complete, applicable, controlling, or permitted.
 
+The Evidence Basis Relationship role does not distinguish or imply transformation, equivalence, authority, sufficiency, or any narrower antecedent semantics. A consumer MUST NOT infer those meanings from the consolidated role.
+
 An unrecognized, ambiguous, multiply assigned, or unsupported role is `Indeterminate`. It cannot be converted into an Evidence Basis, Revision Continuity, or Representation Continuity Relationship by inference.
 
 ### 9.3 Relationship Direction and Composition
@@ -243,6 +246,8 @@ An unrecognized, ambiguous, multiply assigned, or unsupported role is `Indetermi
 Relationship direction runs from the lineage-bearing subject whose provenance is being reconstructed to the exact antecedent or continuity subject it cites. This lineage-reference direction does not alter the upstream-to-downstream contract dependency direction in the Contract Decomposition Plan.
 
 A Discovery Evidence Lineage is composed only from explicit Provenance Relationships. Transitive lineage MUST NOT be inferred across a missing, ambiguous, conflicting, stale, unauthorized, ineligible, or unverifiable relationship.
+
+An Unresolved Required-Lineage Condition is preserved alongside the supported relationship composition for reconstruction. It is not a Provenance Relationship, does not enter supported Discovery Evidence Lineage, and cannot create a relationship endpoint, direction, or role by inference.
 
 A repeated subject or relationship does not establish identity equivalence, completeness, or harmless cyclicity. A cycle that prevents deterministic reconstruction remains explicit and `Indeterminate`; this contract defines no general traversal, recursion, termination, or bounded-cycle policy.
 
@@ -252,7 +257,7 @@ A repeated subject or relationship does not establish identity equivalence, comp
 | --- | --- |
 | Purpose | Preserve the reconstructable chain connecting discovery evidence to its exact antecedent evidence. |
 | Canonical definition | Discovery Evidence Lineage is the directed composition of explicit Provenance Relationships associated with one Provenance Record Revision and interpreted under exact subject, context, revision, attribution, and temporal bindings. |
-| Semantically required invariants | Every included relationship MUST satisfy this contract’s semantic boundary. Lineage MUST preserve every explicit unresolved break, conflict, ambiguity, restriction, or unverifiable relationship. It MUST NOT silently bridge a gap, drop an inconvenient relationship, infer a source, or claim that the represented chain is complete for closure. |
+| Semantically required invariants | Every included relationship MUST satisfy this contract’s semantic boundary. The Provenance Reconstruction Basis accompanying the supported lineage MUST preserve every Unresolved Required-Lineage Condition. Supported lineage MUST NOT silently bridge a gap, drop an inconvenient condition, infer a source, or claim that the represented chain is complete for closure. |
 | Relationships | Lineage connects roots, declarations, sources, boundary evidence, operation evidence, closure evidence, complete snapshots, and incomplete results without acquiring their meanings. |
 | Ownership boundary | This contract owns discovery-lineage composition meaning only. Closure Evidence owns the use of provenance within a closure-supporting evidence basis; Rule Universe Result owns complete-versus-incomplete result meaning; Discovery Validation owns conformance outcomes. |
 | Explicit non-goals | This concept does not define traversal, graph closure, route closure relevance, completeness, search, query, visualization, storage, or validation. |
@@ -280,7 +285,7 @@ Identity continuity does not imply revision continuity. Two subject bindings may
 | --- | --- |
 | Purpose | Preserve attributable continuity among exact evidence revisions without rewriting history or redefining lifecycle. |
 | Canonical definition | Evidence Revision Continuity is the provenance relationship that binds one exact evidence revision to its exact predecessor under the same externally governed logical identity. |
-| Semantically required invariants | Both revisions MUST remain independently identifiable and immutable. A later revision MUST NOT alter an earlier assertion, context, temporal basis, unresolved condition, or lineage. A missing, conflicting, circular, or unverifiable predecessor relationship is `Indeterminate`. |
+| Semantically required invariants | Both revisions MUST remain independently identifiable and immutable. A later revision MUST NOT alter an earlier assertion, context, temporal basis, Unresolved Required-Lineage Condition, or lineage. A missing, conflicting, circular, or unverifiable predecessor relationship is `Indeterminate`. |
 | Relationships | Evidence Revision Continuity is expressed through a Revision Continuity Relationship and contributes to Provenance Reconstruction Basis. |
 | Ownership boundary | This contract owns lineage continuity among exact revisions. The subject owner retains revision identity and meaning; governance lifecycle retains approval, effectiveness, adoption, disposition, supersession, archival, and retirement meanings. |
 | Explicit non-goals | This concept does not define version numbering, compatibility, change classification, supersession policy, migration, synchronization, storage, or revision-generation mechanisms. |
@@ -292,15 +297,15 @@ A later correction, supplementation, reassessment, boundary change, source chang
 | Semantic aspect | Definition |
 | --- | --- |
 | Purpose | Qualify provenance relationships with exact externally governed time evidence required for coherent lineage reconstruction. |
-| Canonical definition | Temporal Provenance Binding is the discovery-provenance-owned relationship connecting one Provenance Relationship and Provenance Record Revision to the exact evaluation-time binding and every externally governed effective, lifecycle, source, boundary, operation, assertion, or decision-time reference required to interpret that lineage. |
+| Canonical definition | Temporal Provenance Binding is the discovery-provenance-owned relationship connecting one Provenance Relationship or Unresolved Required-Lineage Condition and its Provenance Record Revision to the exact evaluation-time binding and every externally governed effective, lifecycle, source, boundary, operation, assertion, or decision-time reference required to interpret that supported or unresolved lineage state. |
 | Semantically required invariants | The binding MUST preserve the identity, source revision, semantic time role, scope, and historical interval of every required temporal reference. Creation, assertion, discovery, evaluation, approval, effectiveness, adoption, supersession, and decision times MUST remain distinct where they are independently governed. A later temporal or lifecycle state MUST NOT silently mutate an earlier Provenance Record Revision. |
-| Relationships | Temporal Provenance Binding qualifies Provenance Relationships, Evidence Revision Continuity, and Provenance Reconstruction Basis. It consumes the exact evaluation time already present in the externally owned Decision Context binding where applicable. |
+| Relationships | Temporal Provenance Binding qualifies Provenance Relationships, Unresolved Required-Lineage Conditions, Evidence Revision Continuity, and Provenance Reconstruction Basis. It consumes the exact evaluation time already present in the externally owned Decision Context binding where applicable. |
 | Ownership boundary | This contract owns only the relationship that qualifies discovery provenance with external temporal evidence. Decision Context, lifecycle, approval, effectiveness, supersession, source validity, boundary validity, reevaluation, and legal-effect meanings remain externally owned. |
 | Explicit non-goals | This concept does not define clocks, timestamps, time zones, effective intervals, lifecycle states, temporal policy, retroactivity, reevaluation obligations, legal effect, storage, transactions, or synchronization. |
 
 Temporal Provenance Binding does not determine whether evidence was operationally valid, applicable, sufficient for closure, or legally effective. It preserves the exact external evidence needed for those independently owned determinations.
 
-When required temporal evidence is missing, conflicting, stale, ambiguous, or unverifiable, the affected Provenance Relationship is `Indeterminate`. This contract does not convert that condition into a closure decision, Rule Universe result, validation outcome, applicability result, or Policy Decision.
+When required temporal evidence is missing, conflicting, stale, ambiguous, or unverifiable, the affected Provenance Relationship is `Indeterminate`, or the affected Unresolved Required-Lineage Condition preserves the exact missing temporal role under Section 14.2. This contract does not convert either state into a closure decision, Rule Universe result, validation outcome, applicability result, or Policy Decision.
 
 ## 14. Provenance Reconstruction and Historical Preservation
 
@@ -309,13 +314,42 @@ When required temporal evidence is missing, conflicting, stale, ambiguous, or un
 | Semantic aspect | Definition |
 | --- | --- |
 | Purpose | Define the semantic evidence basis from which an eligible reviewer can reconstruct discovery evidence lineage. |
-| Canonical definition | Provenance Reconstruction Basis is the exact set of Provenance Record Revision, subject bindings, relationships, attribution, identity continuity, revision continuity, temporal bindings, and explicit unresolved conditions used to reconstruct one discovery evidence lineage. |
+| Canonical definition | Provenance Reconstruction Basis is the exact set of Provenance Record Revision, subject bindings, supported relationships, Unresolved Required-Lineage Conditions, attribution, identity continuity, revision continuity, and temporal bindings used to reconstruct one discovery evidence lineage state. |
 | Semantically required invariants | The basis MUST remain bound to exact immutable revisions and MUST distinguish asserted, missing, conflicting, restricted, stale, ambiguous, and unverifiable lineage evidence. It MUST NOT claim closure, evidentiary sufficiency, independent validation, or legal completeness. |
 | Relationships | The basis supports audit, review, historical reconstruction, downstream closure evidence, Rule Universe result evidence, and validation without determining their outcomes. |
 | Ownership boundary | This contract owns the reconstruction-basis meaning for provenance. Access eligibility, review authority, assurance level, retention, closure, result, and validation remain externally owned. |
 | Explicit non-goals | This concept does not define a query, report, graph traversal, replay process, audit procedure, storage package, export, interface, or validation algorithm. |
 
-### 14.2 Historical Preservation
+### 14.2 Unresolved Required-Lineage Condition
+
+| Semantic aspect | Definition |
+| --- | --- |
+| Purpose | Preserve an attributable fail-closed provenance fact when a required Provenance Relationship cannot be supported at one exact Provenance Record Revision. |
+| Canonical definition | An Unresolved Required-Lineage Condition is one explicit, immutable, attributable, context-bound, revision-bound, and temporally qualified provenance condition stating that a specific required lineage boundary cannot be represented as a supported Provenance Relationship from the evidence available at that revision. |
+| Identity | Each condition MUST have one identity that distinguishes that specific unresolved lineage boundary within its exact Provenance Record Revision. The identity MUST NOT be reused to conflate different gaps, subjects, contexts, roles, reasons, or revisions. Identity syntax and generation remain implementation concerns. |
+| Required bindings | The condition MUST bind to the exact Provenance Record Revision; the affected evidence subject or best available subject identity when any subject identity is supportable, or otherwise the explicit endpoint-unknown state; the expected, required, or unresolved relationship boundary; the exact applicable evidence context or Decision Context; Provenance Attribution for the accountable asserter; the reason and available evidence basis for the unresolved state; applicable temporal evidence; and every available source or target identity when an endpoint is only partially known. |
+| Attribution requirements | The condition MUST have exact Provenance Attribution identifying the independently governed identity reference accountable for asserting the unresolved provenance state. That attribution does not grant authority, eligibility, approval, validation, or downstream decision ownership. |
+| Temporal requirements | The condition MUST preserve the exact available temporal references needed to interpret when and for which evaluation state the lineage was unresolved. Missing required temporal evidence MUST be identified by its external semantic role and remains `Indeterminate`; it MUST NOT be invented, defaulted, or replaced by record creation time. |
+| Revision behavior | The condition is immutable within its Provenance Record Revision. Correction, supplementation, reassessment, or later support for the required relationship creates a later Provenance Record Revision with explicit revision continuity. The later revision may reference the earlier condition and assert a supported relationship only when every relationship invariant is independently satisfied. |
+| Consistency rules | Equivalent eligible immutable inputs under the same record revision, context, boundary, attribution, and temporal evidence MUST produce the same unresolved-condition interpretation. Conflicting conditions or evidence MUST remain explicit. Repetition, similarity, partial success, or a downstream outcome MUST NOT merge, suppress, or resolve a condition. |
+| Reconstruction role | The condition participates in Provenance Reconstruction Basis as evidence of an unresolved required lineage boundary. It is preserved alongside, but never within, supported Discovery Evidence Lineage. |
+| Fail-closed behavior | The condition cannot be interpreted as a supported Provenance Relationship, cannot supply a missing endpoint or role, and cannot establish absence of antecedent evidence. A contract-conforming Provenance Record Revision with zero supported Provenance Relationships MUST contain at least one canonical Unresolved Required-Lineage Condition. |
+| Ownership boundary | This contract owns only the meaning and historical preservation of the unresolved provenance fact. It does not own or evaluate the downstream consequence of that fact. |
+| Explicit exclusions | The condition does not establish Closure Evidence, coverage, completeness, sufficiency, a Rule Universe Result, Validation, Applicability, a Policy Decision, authority, approval, lifecycle state, or supersession outside provenance revision continuity. It defines no implementation model, schema, event, storage form, or runtime algorithm. |
+
+Endpoint and role uncertainty are represented without manufacturing lineage:
+
+- when neither endpoint can be supported, the condition binds the exact required lineage boundary and applicable evidence context, identifies both endpoints as unresolved, and MUST NOT create placeholder subject identities;
+- when only one endpoint can be supported, the condition binds that exact available subject identity and identifies the unresolved endpoint without inferring it;
+- when the expected relationship role is known, the condition records that exact role as the unresolved boundary without asserting a relationship;
+- when the expected relationship role is not determinable, the condition records role uncertainty as `Indeterminate` and MUST NOT select a role by convenience;
+- when relationship-support attribution is unavailable, the condition records that missing attribution only through a separately attributable accountable asserter; when no accountable asserter can be established for the condition itself, no canonical Unresolved Required-Lineage Condition and therefore no contract-conforming Provenance Record Revision can be established;
+- when applicable temporal evidence is unavailable, the condition preserves every available temporal reference and the exact missing external temporal role as `Indeterminate`; when no temporal basis sufficient to interpret the condition can be established, the condition is not contract-conforming; and
+- when a later Provenance Record Revision resolves the condition, the earlier condition remains immutable, the later revision preserves explicit revision continuity and references the earlier condition, and only the later revision may contain the newly supported Provenance Relationship.
+
+Absence of support is not evidence that antecedent evidence is absent. It does not establish closure failure or closure success and does not determine a Rule Universe Result, Validation outcome, Applicability result, or Policy Decision consequence.
+
+### 14.3 Historical Preservation
 
 A historical Provenance Record Revision must preserve:
 
@@ -326,12 +360,12 @@ A historical Provenance Record Revision must preserve:
 - every identity and revision continuity assertion;
 - every Temporal Provenance Binding;
 - the exact Decision Context, Federation Boundary, and Discovery Operation evidence references it consumed;
-- every restricted, missing, conflicting, stale, ambiguous, or unverifiable lineage condition; and
+- every Unresolved Required-Lineage Condition, including its identity, bindings, attribution, reason, evidence basis, and temporal state; and
 - its relationship to any later Provenance Record Revision without changing the earlier record.
 
 Later source, boundary, operation, closure, result, lifecycle, applicability, or Policy Decision evidence does not overwrite that record. A later assessment may reference it and create new evidence, but it cannot alter the historical lineage basis.
 
-### 14.3 Reconstruction Boundary
+### 14.4 Reconstruction Boundary
 
 Reconstruction demonstrates what lineage evidence an exact Provenance Record Revision asserted. It does not independently prove:
 
@@ -349,14 +383,16 @@ Reconstruction demonstrates what lineage evidence an exact Provenance Record Rev
 | --- | --- | --- | --- |
 | Provenance Record Identity | is fixed at | Provenance Record Revision | This contract owns the provenance identity-to-revision distinction |
 | Provenance Record Revision | contains attributable | Provenance Relationships | This contract owns the discovery-lineage relationship meaning |
+| Provenance Record Revision | preserves attributable | Unresolved Required-Lineage Conditions | Conditions remain unresolved provenance facts and are not supported relationships |
 | Provenance Relationship | connects | Exact Provenance Subject Bindings | Subject identities and revisions remain with their semantic owners |
 | Provenance Relationship | is asserted through | Provenance Attribution | This contract owns attribution of the lineage assertion, not identity or authority |
+| Unresolved Required-Lineage Condition | is asserted through | Provenance Attribution | Missing relationship support does not permit unattributed provenance evidence |
 | Evidence Basis Relationship | points from | Lineage-bearing subject to exact antecedent evidence | The relationship does not transfer the antecedent’s ownership |
 | Revision Continuity Relationship | points from | Exact successor revision to exact predecessor revision | Subject owner retains revision meaning; lifecycle retains supersession meaning |
 | Representation Continuity Relationship | points from | Representation to exact canonical evidence identity and revision | Representation does not become a canonical semantic owner |
-| Provenance Relationship | is qualified by | Temporal Provenance Binding | External time meanings remain externally owned |
+| Provenance Relationship or Unresolved Required-Lineage Condition | is qualified by | Temporal Provenance Binding | External time meanings remain externally owned |
 | Discovery Evidence Lineage | composes | Explicit Provenance Relationships | Composition does not infer missing relationships or establish closure |
-| Provenance Reconstruction Basis | preserves | Exact lineage evidence and unresolved conditions | Reconstruction does not create validation or sufficiency |
+| Provenance Reconstruction Basis | preserves | Supported lineage evidence and Unresolved Required-Lineage Conditions | Reconstruction does not convert conditions into relationships or create validation or sufficiency |
 | Discovery Closure Evidence | consumes | Discovery Evidence Provenance | Closure contract cannot redefine provenance |
 | Rule Universe Result | consumes | Discovery Evidence Provenance and Closure Evidence | Result contract owns complete-versus-incomplete result meaning |
 | Discovery Validation | evaluates conformance of | Discovery Evidence Provenance | Validation contract owns validation outcomes |
@@ -378,7 +414,7 @@ If later Accepted, Published, and made Effective, this contract would require:
 9. **No inferred relationship:** proximity, similarity, access, custody, implementation behavior, or downstream success cannot create lineage.
 10. **Identity continuity evidence:** logical identity continuity depends on exact external canonical identity evidence.
 11. **Revision continuity evidence:** successor and predecessor revisions remain explicit, immutable, and independently identifiable.
-12. **Temporal qualification:** every temporally dependent relationship preserves exact external time evidence through Temporal Provenance Binding.
+12. **Temporal qualification:** every temporally dependent Provenance Relationship or Unresolved Required-Lineage Condition preserves exact available external time evidence through Temporal Provenance Binding.
 13. **Temporal role separation:** independently governed creation, assertion, discovery, evaluation, approval, effectiveness, adoption, supersession, and decision times are not collapsed.
 14. **No lifecycle capture:** temporal provenance does not define or change lifecycle, effective intervals, supersession, or reevaluation obligations.
 15. **No source capture:** provenance does not define or alter Rule Source Catalog meanings.
@@ -390,11 +426,18 @@ If later Accepted, Published, and made Effective, this contract would require:
 21. **No applicability capture:** provenance cannot determine that a rule applies.
 22. **No Policy Decision capture:** provenance cannot decide normative precedence or a Policy Decision outcome.
 23. **Historical immutability:** later evidence creates a new revision and never rewrites historical lineage.
-24. **Explicit unresolved evidence:** missing, conflicting, stale, restricted, ambiguous, or unverifiable required lineage remains `Indeterminate`.
-25. **No silent omission:** an inconvenient or inaccessible required relationship cannot be removed from the reconstruction basis.
-26. **Deterministic interpretation:** equivalent eligible immutable inputs produce the same provenance interpretation.
-27. **Provider neutrality:** no model, repository host, graph engine, database, workflow system, storage product, or implementation owns provenance semantics.
-28. **Implementation independence:** files, logs, traces, messages, tables, services, and software behavior cannot redefine provenance.
+24. **Canonical unresolved evidence:** missing, conflicting, stale, restricted, ambiguous, or unverifiable required lineage is preserved through an attributable, exact-revision-bound Unresolved Required-Lineage Condition.
+25. **No unsupported empty state:** a contract-conforming Provenance Record Revision with zero supported Provenance Relationships contains at least one canonical Unresolved Required-Lineage Condition.
+26. **Condition attribution:** every Unresolved Required-Lineage Condition has exact Provenance Attribution; absence of an accountable asserter prevents a contract-conforming condition and record revision.
+27. **Condition is not relationship:** an Unresolved Required-Lineage Condition cannot be interpreted as or enter supported lineage as a Provenance Relationship.
+28. **No absence inference:** absence of relationship support does not prove absence of antecedent evidence.
+29. **No downstream inference:** an Unresolved Required-Lineage Condition establishes neither closure failure nor closure success and determines no Rule Universe Result, Validation, Applicability, or Policy Decision consequence.
+30. **Historical unresolved preservation:** later support creates a later Provenance Record Revision and never erases or mutates an earlier unresolved condition.
+31. **Revision succession:** later resolution preserves explicit revision continuity and historical reconstruction of the earlier unresolved state.
+32. **No silent omission:** an inconvenient or inaccessible required relationship or unresolved condition cannot be removed from the reconstruction basis.
+33. **Deterministic interpretation:** equivalent eligible immutable inputs produce the same supported or unresolved provenance interpretation.
+34. **Provider neutrality:** no model, repository host, graph engine, database, workflow system, storage product, or implementation owns supported or unresolved provenance semantics.
+35. **Implementation independence:** files, logs, traces, messages, tables, services, and software behavior cannot redefine supported or unresolved provenance.
 
 ## 17. Consumed Semantics and Upstream Dependencies
 
@@ -418,7 +461,7 @@ Every consumed meaning is referenced at an exact immutable revision where requir
 
 The planned downstream consumers are:
 
-1. **Discovery Closure Evidence Contract candidate** — consumes exact provenance lineage, identity and revision continuity, temporal bindings, and explicit unresolved relationships when defining closure-supporting evidence. It cannot redefine provenance or convert lineage into closure by itself.
+1. **Discovery Closure Evidence Contract candidate** — consumes exact provenance lineage, identity and revision continuity, temporal bindings, and Unresolved Required-Lineage Conditions when defining closure-supporting evidence. It cannot redefine provenance, convert a condition into a supported relationship, or convert lineage into closure by itself.
 2. **Rule Universe Result Contract candidate** — consumes exact provenance and closure evidence when owning Complete Rule Universe Snapshot and Incomplete Discovery Result semantics. It cannot reinterpret provenance or repair a lineage gap.
 3. **Discovery Validation Contract candidate** — evaluates conformance of provenance evidence and cross-contract relationships without acquiring provenance ownership.
 4. **Audit, review, and historical-reconstruction consumers** — reconstruct exact lineage under independently valid eligibility without treating reconstruction as Acceptance, closure, validation, implementation authority, or a Policy Decision.
@@ -428,6 +471,7 @@ No downstream consumer may:
 - alter a Provenance Record Identity or Revision;
 - create or infer a missing subject binding, attribution, relationship role, identity continuity, revision continuity, or temporal binding;
 - convert an `Indeterminate` relationship into supported lineage;
+- convert an Unresolved Required-Lineage Condition into a supported Provenance Relationship or infer a downstream consequence from it;
 - treat a provenance record as proof of closure, completeness, validation, applicability, or Policy Decision correctness;
 - mutate historical lineage through a later source, boundary, operation, closure, result, or lifecycle change;
 - transfer upstream source, federation, operation, authority, eligibility, lifecycle, or canonical ownership to provenance; or
@@ -446,6 +490,7 @@ This section defines semantic dependency direction only. It does not define soft
 | Discovery Operation identity, evidence revision, context binding, attribution, manifest, treatment, activity, and observations | Discovery Operation Evidence | References and relates exact operation evidence | References without redefinition |
 | Discovery evidence lineage | Does not own | Owns | Consumes |
 | Provenance identity and record revision | Does not own | Owns | Consumes |
+| Unresolved required lineage fact | Upstream owners supply available subject, context, and evidence meanings | Owns only the attributable, revision-bound Unresolved Required-Lineage Condition | Consumers preserve the condition and determine consequences only under their own contracts |
 | Identity and revision continuity within lineage | Subject owner supplies canonical identity and revision evidence | Owns discovery-lineage continuity relationships | Consumes |
 | Temporal evidence meaning | Decision Context, lifecycle, source, boundary, operation, and other retained owners | Owns only Temporal Provenance Binding | Consumes |
 | Closure-supporting evidence and sufficiency relationship | Does not own | Does not own | Discovery Closure Evidence owns |
@@ -543,8 +588,9 @@ This proposal includes only:
 - preservation of evidence identity continuity through external canonical identity evidence;
 - preservation of evidence revision continuity without lifecycle or supersession ownership;
 - Temporal Provenance Binding as an inseparable qualifier of lineage;
+- attributable, exact-revision-bound Unresolved Required-Lineage Conditions that remain separate from supported Provenance Relationships;
 - Provenance Reconstruction Basis and immutable historical preservation;
-- fail-closed `Indeterminate` interpretation for unsupported required provenance relationships;
+- fail-closed preservation of unsupported required provenance without inferring relationship support or downstream consequences;
 - provider-neutral and implementation-independent semantics; and
 - containment of the 13 mapped Category B items without resolution.
 
@@ -648,10 +694,11 @@ This proposal does not define:
 
 Discovery Evidence Provenance fails closed at its own semantic boundary.
 
-When a required Provenance Record Identity, Provenance Record Revision, Provenance Subject Binding, subject owner, logical identity, exact revision, scope, context binding, Provenance Attribution, relationship direction, relationship role, identity-continuity evidence, revision-continuity evidence, Temporal Provenance Binding, or antecedent evidence reference is missing, conflicting, stale, restricted, ambiguous, unauthorized, ineligible, or unverifiable:
+When support for a required Provenance Relationship is missing, conflicting, stale, restricted, ambiguous, unauthorized, ineligible, or unverifiable within an otherwise attributable Provenance Record Revision:
 
-- the affected Provenance Relationship is `Indeterminate`;
+- the candidate relationship state is `Indeterminate`, and no supported Provenance Relationship is asserted;
 - the unsupported relationship cannot enter a supported Discovery Evidence Lineage;
+- an attributable Unresolved Required-Lineage Condition under Section 14.2 must preserve the exact unresolved boundary, available subject identities, applicable context, reason, evidence basis, and temporal state;
 - the missing relationship cannot be inferred from location, naming, content similarity, custody, technical access, repository history, model output, prior operations, later results, or implementation behavior;
 - a representation cannot become canonical provenance through repetition or convenience;
 - a later record cannot silently repair or mutate the earlier Provenance Record Revision;
@@ -659,9 +706,11 @@ When a required Provenance Record Identity, Provenance Record Revision, Provenan
 - downstream consumers must preserve the unresolved state; and
 - this contract does not determine the resulting closure, Rule Universe, validation, applicability, or Policy Decision consequence.
 
-Fail-closed provenance does not itself classify the overall discovery result as incomplete, determine closure failure, or produce a validation failure. It prevents only the unsupported provenance claim within this contract’s ownership boundary. The downstream owner applies its own contract to the preserved evidence state.
+When required Provenance Record Identity, Provenance Record Revision, applicable evidence context, or accountable attribution for the Unresolved Required-Lineage Condition itself is missing, ambiguous, conflicting, or unverifiable, no contract-conforming canonical condition can be established. If the record has no supported Provenance Relationship, no contract-conforming Provenance Record Revision can then be established. This failure cannot be converted into unattributed canonical provenance.
 
-No amount of repetition, elapsed time, provider confidence, model confidence, implementation success, administrative convenience, downstream demand, or favorable outcome changes an `Indeterminate` provenance relationship into supported lineage.
+Fail-closed provenance does not treat inability to support a relationship as evidence that antecedent evidence is absent. It does not itself classify the overall discovery result as incomplete, determine closure failure or success, or produce a Rule Universe Result, Validation outcome, Applicability result, or Policy Decision consequence. It prevents only the unsupported provenance claim within this contract’s ownership boundary. The downstream owner applies its own contract to the preserved evidence state.
+
+No amount of repetition, elapsed time, provider confidence, model confidence, implementation success, administrative convenience, downstream demand, or favorable outcome changes an `Indeterminate` provenance relationship or Unresolved Required-Lineage Condition into supported lineage.
 
 ## 24. Provider Neutrality and Implementation Independence
 
@@ -715,27 +764,44 @@ This proposal defines no implementation, runtime, API, schema, storage, algorith
 
 ### 25.2 Contract Dependency Traceability
 
-```text
-Foundation and Existing Governance
-    ↓
-Accepted Governance Rule Discovery Architecture
-    ↓
-Rule Source Catalog Proposal v0.2.0 — Draft
-    ↓
-Federation Boundary Proposal v0.2.0 — Draft
-    ↓
-Discovery Operation Evidence Proposal v0.2.0 — Draft
-    ↓
-Discovery Evidence Provenance Proposal v0.1.0 — this Draft
-    ↓
-Discovery Closure Evidence
-    ↓
-Rule Universe Result
-    ↓
-Discovery Validation
+```mermaid
+flowchart TB
+    F["Foundation and Existing Governance"]
+    A["Accepted Governance Rule Discovery Architecture"]
+    C1["Rule Source Catalog Proposal v0.2.0 — Draft"]
+    C2["Federation Boundary Proposal v0.2.0 — Draft"]
+    C3["Discovery Operation Evidence Proposal v0.2.0 — Draft"]
+    C4["Discovery Evidence Provenance Proposal v0.2.0 — this Draft"]
+    C5["Discovery Closure Evidence"]
+    C6["Rule Universe Result"]
+    C7["Discovery Validation"]
+
+    F --> A
+    A --> C1
+    C1 --> C2
+    C1 --> C3
+    C2 --> C3
+    C1 --> C4
+    C2 --> C4
+    C3 --> C4
+    C1 --> C5
+    C2 --> C5
+    C3 --> C5
+    C4 --> C5
+    C3 --> C6
+    C4 --> C6
+    C5 --> C6
+    C1 --> C7
+    C2 --> C7
+    C3 --> C7
+    C4 --> C7
+    C5 --> C7
+    C6 --> C7
 ```
 
-This is semantic dependency direction, not implementation flow, runtime sequence, acceptance inheritance, or authority delegation. A downstream contract cannot repair an upstream Draft, missing Acceptance, invalid revision, or semantic ambiguity.
+Rule Source Catalog, Federation Boundary, and Discovery Operation Evidence are each direct upstream dependencies of Discovery Evidence Provenance. These dependencies are not merely transitive. Section 17 of this proposal and the Governance Rule Discovery Contract Decomposition Plan Version 0.2.0 govern the authoritative dependency allocation.
+
+The diagram represents semantic dependency direction, not implementation flow, runtime sequence, acceptance inheritance, or authority delegation. A downstream contract cannot repair an upstream Draft, missing Acceptance, invalid revision, or semantic ambiguity.
 
 ### 25.3 Required Future Traceability
 
@@ -757,13 +823,18 @@ Any later revision, review, Acceptance Record, Published Contract, or Effectiven
 
 | Quality criterion | Proposal result |
 | --- | --- |
-| Exactly one repository file created | Satisfied — this Contract Proposal only |
+| Bounded maintenance file scope | Satisfied — only this Contract Proposal is modified |
 | Exactly one primary responsibility | Satisfied — attributable Discovery Evidence Provenance only |
 | Deterministic semantic owner | Satisfied — every owned lineage concept maps to this contract |
+| MAJ-01 — canonical unresolved required-lineage semantics | Resolved — Section 14.2 defines identity, bindings, attribution, temporal qualification, revision behavior, consistency, reconstruction, fail-closed behavior, and exclusions |
+| MIN-01 — direct dependency traceability | Resolved — Section 25.2 represents all direct upstream edges and names the authoritative allocation sources |
+| OBS-01 — broad Evidence Basis Relationship | Preserved — no role split; Section 9.2 prohibits inference of narrower semantics |
 | Temporal Binding allocation | Supporting provenance-coherence responsibility only; lifecycle and temporal-policy ownership excluded |
 | Rule Source Catalog overlap | None — exact source and catalog meanings are consumed only |
 | Federation Boundary overlap | None — exact boundary meanings are consumed only |
 | Discovery Operation Evidence overlap | None — exact operation-evidence meanings are consumed only |
+| Discovery Closure Evidence overlap | None — conditions preserve provenance facts only and determine no closure consequence |
+| Self-validating provenance | Prohibited — condition attribution is not proof, and no condition validates its own correctness or sufficiency |
 | Closure ownership | Excluded |
 | Rule Universe result ownership | Excluded |
 | Validation ownership | Excluded |
@@ -787,32 +858,32 @@ Any later revision, review, Acceptance Record, Published Contract, or Effectiven
 
 | Lifecycle evidence | Current state |
 | --- | --- |
-| Proposal | Draft Contract Proposal Version 0.1.0 |
-| Independent Review | Not created |
-| Maintenance Revision | Not created |
+| Proposal | Draft Contract Proposal Version 0.2.0 |
+| Independent Review | Completed — `REQUIRES MAJOR REVISION`; MAJ-01, MIN-01, and OBS-01 recorded |
+| Maintenance Revision | Completed — MAJ-01 and MIN-01 addressed; OBS-01 preserved without scope expansion |
 | Verification | Not created |
 | Acceptance Record | Not created |
 | Acceptance | Not created |
 | Publication | Not created |
 | Effectiveness | Not created |
-| Supersession | None |
+| Supersession | Version 0.2.0 replaces Version 0.1.0 for continued Draft review; no Accepted Contract is superseded |
 | Archival | No |
 
-The next permitted governance action is Independent Contract Review of this exact Version 0.1.0 Draft revision.
+The next permitted governance action is Contract Review Resolution Verification of this exact Version 0.2.0 Draft revision.
 
-Independent Review should verify:
+Contract Review Resolution Verification should verify:
 
-- one primary responsibility and deterministic ownership;
-- semantic completeness of attributable lineage, identity continuity, revision continuity, and supporting temporal binding;
-- exact consumption of Rule Source Catalog, Federation Boundary, and Discovery Operation Evidence meanings;
-- separation from Closure Evidence, Rule Universe Result, Discovery Validation, Governance Applicability, and Policy Decision;
-- deterministic relationship roles and fail-closed handling of unsupported lineage;
-- historical preservation and reconstructability without retroactive mutation;
-- preservation of all 13 mapped Category B items and exclusion of Category C;
-- provider neutrality and implementation independence; and
-- no Foundation, architecture, Framework, decomposition, upstream contract, lifecycle, or implementation change.
+- MAJ-01 is fully resolved through canonical, attributable, exact-revision-bound Unresolved Required-Lineage Condition semantics;
+- MIN-01 is fully resolved through explicit direct dependency edges;
+- OBS-01 remains preserved without relationship-role expansion;
+- no new primary responsibility or overlap with Discovery Operation Evidence or Discovery Closure Evidence was introduced;
+- Temporal Provenance Binding remains an inseparable supporting responsibility;
+- unresolved provenance infers no downstream consequence;
+- all 13 mapped Category B items remain unresolved and unreclassified;
+- provider neutrality and implementation independence remain intact; and
+- Foundation, architecture, Framework, Contract Decomposition, upstream contracts, and implementation remain unchanged.
 
-Independent Review does not create Acceptance, Publication, Effectiveness, implementation authority, adoption, or Design Freeze.
+Contract Review Resolution Verification does not create Acceptance, Publication, Effectiveness, implementation authority, adoption, or Design Freeze.
 
 ## 28. Methodology Validation Observations
 
@@ -825,3 +896,4 @@ The fixed Contract Governance Framework Version 0.3.0 and Contract Decomposition
 | Version | Classification | Summary |
 | --- | --- | --- |
 | 0.1.0 | Initial Draft Contract Proposal | Establishes the Discovery Evidence Provenance semantic candidate under the accepted Governance Rule Discovery architecture, Contract Governance Framework Version 0.3.0, and revised Contract Decomposition Plan Version 0.2.0. Defines attributable lineage, evidence identity and revision continuity, supporting Temporal Provenance Binding, and reconstruction semantics while preserving upstream ownership, downstream closure/result/validation separation, all 13 mapped Category B deferrals, Category C exclusion, provider neutrality, implementation independence, and the accepted Decision Boundary. |
+| 0.2.0 | Bounded Maintenance Revision | Resolves Independent Review MAJ-01 by defining canonical, attributable, exact-revision-bound Unresolved Required-Lineage Condition semantics and resolves MIN-01 by representing all direct provenance dependencies. Preserves OBS-01 without splitting the Evidence Basis Relationship role. Introduces no new primary responsibility, downstream consequence, Category B resolution, Framework change, architecture change, decomposition change, implementation, or provider-specific meaning. |

@@ -7,23 +7,23 @@
 | Contract identity | `CADP-CONTRACT-DISCOVERY-CLOSURE-EVIDENCE` |
 | Title | Discovery Closure Evidence Contract |
 | Document type | Contract Proposal |
-| Version | 0.1.0 |
+| Version | 0.2.0 |
 | Status | Draft Contract Proposal |
-| Review state | Initial Draft — Pending Independent Review |
+| Review state | Bounded Maintenance Revision — Pending Contract Review Resolution Verification |
 | Date | 2026-07-25 |
 | Architecture domain | Governance Rule Discovery |
 | Contract domain | Discovery Closure Evidence |
 | Primary responsibility | Canonical semantics of the evidence basis supporting a bounded discovery-closure determination |
 | Proposed canonical semantic owner | This contract |
 | Repository | `dchaschin79-sys/cliff-ai-development-platform` |
-| Source baseline | `8578f24bdb6ad6221dd58778504a67c46f437206` |
+| Source baseline | `763a53dae83fc213e7a69735ae65af1ab14d455b` |
 | Methodology constraint | Contract Governance Framework Version 0.3.0 and Contract Decomposition Plan Version 0.2.0 are fixed and are not revised or extended |
 | Acceptance | Not created |
 | Publication | Not created |
 | Effectiveness | Not created |
 | Normative effect | None |
 | Implementation authority | None |
-| Supersedes | None — initial proposal |
+| Supersedes | Version 0.1.0 Draft Contract Proposal for continued review only |
 | Superseded by | None known |
 
 This document is the fifth Draft Contract Proposal developed under the CADP Contract Governance Framework Version 0.3.0 and the Governance Rule Discovery Contract Decomposition Plan Version 0.2.0.
@@ -278,22 +278,24 @@ Closure Evidence Composition may contain multiple evidence items for one require
 
 `Bounded` means the relationship is valid only for its exact requirement, context, scope, evidence revision, criterion revision, and temporal basis. It cannot be generalized to another source route, boundary, context, requirement, time, or downstream decision.
 
-Where an applicable criterion or minimum threshold is deferred, including under Category B, this contract cannot manufacture a Bounded Sufficiency Relationship. The affected requirement remains unresolved or insufficient as supported by the exact available evidence.
+Where an applicable criterion is unknown or deferred, its applicability is unresolved, or its required threshold is unavailable, this contract cannot manufacture a Bounded Sufficiency Relationship. The affected condition is an Unresolved Closure Condition.
+
+Insufficient Closure Evidence applies only when an exact applicable criterion and threshold are known, the evidence exists, and that evidence fails the criterion. The same closure condition MUST NOT be classified simultaneously as both unresolved and insufficient. Multiple independently attributable closure conditions may coexist within the same Closure Evidence Composition and retain their separate classifications.
 
 ## 13. Explicit Evidence Completeness Assertion
 
 | Semantic aspect | Definition |
 | --- | --- |
 | Purpose | Make explicit and attributable the claim that every requirement in one fixed Closure Evidence Requirement Boundary is represented in one exact Closure Evidence Composition. |
-| Canonical definition | Explicit Evidence Completeness Assertion is an attributable, revision-bound, context-bound assertion that the composition contains an evidence-item binding or explicit unresolved condition for every requirement in the fixed requirement boundary. |
-| Semantically required invariants | The assertion MUST identify the exact Closure Evidence Revision, requirement boundary, composition, context, attribution, temporal basis, and every declared limitation. It MUST NOT omit unresolved requirements and MUST NOT be inferred from enumeration size, manifest completion, search success, absence of errors, implementation success, or model confidence. |
+| Canonical definition | Explicit Evidence Completeness Assertion is an attributable, revision-bound, context-bound assertion that every requirement in the fixed requirement boundary is represented explicitly as Supported Closure Evidence, Incomplete Closure Evidence, Insufficient Closure Evidence, or an Unresolved Closure Condition. |
+| Semantically required invariants | The assertion MUST identify the exact Closure Evidence Revision, requirement boundary, composition, context, attribution, temporal basis, and every declared limitation. It MUST NOT omit any supported, incomplete, insufficient, or unresolved requirement and MUST NOT be inferred from enumeration size, manifest completion, search success, absence of errors, implementation success, or model confidence. |
 | Relationships | The assertion describes representation coverage within the evidence basis and participates in Deterministic Closure Evidence Interpretation and historical reconstruction. |
 | Ownership boundary | This contract owns only the representation-coverage assertion. It does not establish that each item is sufficient, valid, independently assured, or accepted and does not determine that discovery closure has been demonstrated. |
 | Explicit non-goals | This concept does not define global completeness, legal completeness, source-universe completeness, Rule Universe Result validity, Validation, Applicability, or Policy Decision correctness. |
 
 An Explicit Evidence Completeness Assertion is not self-proving. It cannot substitute for Bounded Sufficiency Relationships, independent assurance evidence, unresolved-condition preservation, downstream evaluation, or Validation.
 
-A composition may have an explicit completeness assertion while still containing Unresolved Closure Conditions or Insufficient Closure Evidence. Such an assertion means only that the fixed requirement boundary is represented without silent omission.
+A composition may have an explicit completeness assertion while containing Supported Closure Evidence, Incomplete Closure Evidence, Insufficient Closure Evidence, or Unresolved Closure Conditions. Representation coverage means only that each requirement in the fixed boundary has an explicit evidence-domain state without silent omission. It does not establish evidentiary sufficiency, source-universe completeness, discovery closure, Validation, Applicability, or any downstream decision.
 
 ## 14. Closure Evidence Condition Semantics
 
@@ -337,11 +339,11 @@ When an endpoint, requirement, criterion, or evidence identity is only partially
 | Semantically required invariants | Insufficiency MUST identify the exact item, requirement, criterion, criterion revision, context, attribution, evidence basis, and reason the Bounded Sufficiency Relationship cannot be supported. Insufficiency MUST NOT be inferred from provider confidence or unspecified expectations. |
 | Ownership boundary | This contract owns only the evidence insufficiency condition relative to an exact external criterion. It does not create the criterion, threshold, closure decision, Rule Universe Result, Validation outcome, Applicability result, or Policy Decision consequence. |
 
-Where no exact applicable criterion can be established, the condition is unresolved rather than insufficient. This contract does not invent a threshold to obtain a more convenient classification.
+Where an exact criterion is unknown or deferred, criterion applicability is unresolved, or the required threshold is unavailable, the condition is unresolved rather than insufficient. Insufficiency applies only where the criterion is known and applicable, the evidence exists, and the evidence fails that criterion. The same closure condition MUST NOT be classified simultaneously as both unresolved and insufficient. This contract does not invent a criterion or threshold to obtain a more convenient classification.
 
 ### 14.5 Condition Coexistence
 
-Supported, incomplete, unresolved, and insufficient meanings apply to exact evidence items and requirements. Multiple incomplete, unresolved, and insufficient conditions may coexist in one Closure Evidence Revision and MUST all remain visible.
+Supported, incomplete, unresolved, and insufficient meanings apply to exact evidence items and requirements. For one exact closure condition, unresolved and insufficient are mutually exclusive. Multiple independently attributable incomplete, unresolved, and insufficient conditions may coexist in one Closure Evidence Revision and MUST all remain visible under their separate classifications.
 
 An aggregate Closure Evidence Composition is Supported Closure Evidence only when:
 
@@ -359,7 +361,7 @@ This aggregate evidence interpretation is still only evidence-domain semantics. 
 | Semantic aspect | Definition |
 | --- | --- |
 | Purpose | Ensure equivalent exact evidence inputs produce the same closure-evidence meanings independent of provider or representation. |
-| Canonical definition | Deterministic Closure Evidence Interpretation is the provider-neutral interpretation of every requirement and evidence item in one exact Closure Evidence Revision as supported, incomplete, unresolved, insufficient, or unaffected, while preserving all coexisting conditions and without producing a downstream decision. |
+| Canonical definition | Deterministic Closure Evidence Interpretation is the provider-neutral interpretation of every requirement and evidence item in one exact Closure Evidence Revision as supported, incomplete, unresolved, or insufficient, while preserving all independently attributable coexisting conditions and without producing a downstream decision. These four meanings form the complete interpretation set; no undefined or implicit fifth state is permitted. |
 | Semantically required invariants | Equivalent eligible immutable inputs under the same exact contract revisions, requirement boundary, context, scope, attribution, provenance, temporal evidence, criteria, and limitations MUST produce the same evidence interpretation. Missing or conflicting required interpretation inputs MUST remain unresolved and fail closed. No condition may be dropped to force a single favorable label. |
 | Relationships | The interpretation consumes the fixed requirement boundary, evidence composition, sufficiency relationships, completeness assertions, and evidence conditions and forms part of Closure Evidence Reconstruction Basis. |
 | Ownership boundary | This contract owns deterministic closure-evidence interpretation only. Rule Universe Result owns complete-versus-incomplete result classification; Discovery Validation owns conformance; Governance Applicability and Policy Decision retain their respective meanings. |
@@ -857,9 +859,12 @@ Any later revision, review, Acceptance Record, Published Contract, or Effectiven
 
 | Quality criterion | Proposal result |
 | --- | --- |
-| Exactly one repository file created | Satisfied — this Contract Proposal only |
+| Exactly one repository file modified | Satisfied — this Contract Proposal only |
 | Exactly one primary responsibility | Satisfied — Discovery Closure Evidence only |
 | Deterministic semantic owner | Satisfied — every owned concept is subordinate to the closure-supporting evidence basis |
+| MAJ-01 | Resolved — missing or deferred criteria are unresolved; only known applicable criteria failed by existing evidence are insufficient; one condition cannot be both |
+| MIN-01 | Resolved — the undefined fifth interpretation is removed; the interpretation set is closed to supported, incomplete, unresolved, and insufficient |
+| MIN-02 | Resolved — representation coverage explicitly includes supported, incomplete, insufficient, and unresolved states without implying a downstream conclusion |
 | Rule Source Catalog overlap | None — exact source and catalog meanings are consumed only |
 | Federation Boundary overlap | None — exact boundary meanings are consumed only |
 | Discovery Operation Evidence overlap | None — exact operation-evidence meanings are consumed only |
@@ -890,21 +895,27 @@ Any later revision, review, Acceptance Record, Published Contract, or Effectiven
 
 | Lifecycle evidence | Current state |
 | --- | --- |
-| Proposal | Draft Contract Proposal Version 0.1.0 |
-| Independent Review | Not created |
-| Maintenance Revision | Not created |
+| Proposal | Draft Contract Proposal Version 0.2.0 |
+| Independent Review | Completed — MAJ-01, MIN-01, MIN-02, OBS-01, OBS-02, and OBS-03 recorded |
+| Maintenance Revision | Completed — bounded Version 0.2.0 revision resolves MAJ-01, MIN-01, and MIN-02 only |
 | Verification | Not created |
 | Acceptance Record | Not created |
 | Acceptance | Not created |
 | Publication | Not created |
 | Effectiveness | Not created |
-| Supersession | None |
+| Supersession | Version 0.2.0 replaces Version 0.1.0 for continued Draft review; no Accepted Contract is superseded |
 | Archival | No |
 
-The next permitted governance action is Independent Contract Review of this exact Version 0.1.0 Draft revision.
+The next permitted governance action is Contract Review Resolution Verification of this exact Version 0.2.0 Draft revision.
 
-Independent Review should verify:
+Contract Review Resolution Verification should verify:
 
+- MAJ-01 is resolved through mutually exclusive unresolved and insufficient classification semantics;
+- MIN-01 is resolved by removing the undefined fifth interpretation;
+- MIN-02 is resolved through explicit supported, incomplete, insufficient, and unresolved representation coverage;
+- OBS-01 remains preserved through singular closure-supporting evidence ownership;
+- OBS-02 remains preserved through exact provenance consumption without lineage duplication;
+- OBS-03 remains preserved without using the pending provenance Acceptance Record as semantic authority;
 - one primary responsibility and deterministic ownership;
 - semantic completeness of closure-evidence identity, revision, context, attribution, requirement boundary, item binding, composition, bounded sufficiency, completeness assertion, evidence conditions, and reconstruction;
 - exact consumption of Rule Source Catalog, Federation Boundary, Discovery Operation Evidence, and Discovery Evidence Provenance meanings;
@@ -915,7 +926,7 @@ Independent Review should verify:
 - provider neutrality and implementation independence; and
 - no Foundation, architecture, Framework, decomposition, upstream contract, lifecycle, or implementation change.
 
-Independent Review does not create Acceptance, Publication, Effectiveness, implementation authority, adoption, or Design Freeze.
+Contract Review Resolution Verification does not create Acceptance, Publication, Effectiveness, implementation authority, adoption, or Design Freeze.
 
 ## 29. Methodology Validation Observations
 
@@ -928,3 +939,4 @@ The fixed Contract Governance Framework Version 0.3.0 and Contract Decomposition
 | Version | Classification | Summary |
 | --- | --- | --- |
 | 0.1.0 | Initial Draft Contract Proposal | Establishes the Discovery Closure Evidence semantic candidate under the accepted Governance Rule Discovery architecture, Contract Governance Framework Version 0.3.0, and Contract Decomposition Plan Version 0.2.0. Defines closure-evidence identity, revision, context binding, attribution, requirement boundary, item binding, composition, bounded sufficiency, explicit evidence completeness assertions, supported, incomplete, unresolved, and insufficient evidence semantics, deterministic interpretation, and historical reconstruction while preserving upstream ownership, downstream result and Validation separation, all 13 mapped Category B deferrals, Category C exclusion, provider neutrality, implementation independence, and the accepted Decision Boundary. |
+| 0.2.0 | Bounded Maintenance Revision | Resolves Independent Review MAJ-01 by making unresolved and insufficient classifications deterministic and mutually exclusive for the same closure condition; resolves MIN-01 by removing the undefined fifth interpretation; and resolves MIN-02 by defining representation coverage across supported, incomplete, insufficient, and unresolved evidence states. Preserves OBS-01, OBS-02, and OBS-03, the single closure-supporting evidence responsibility, upstream provenance ownership, downstream result and Validation separation, all 13 Category B deferrals, Category C exclusion, provider neutrality, implementation independence, and the accepted Decision Boundary. |

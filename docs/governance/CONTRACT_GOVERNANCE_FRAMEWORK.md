@@ -6,16 +6,16 @@
 | --- | --- |
 | Document ID | `CADP-GOV-CONTRACT-FRAMEWORK` |
 | Document type | Governance Methodology |
-| Version | 0.2.0 |
-| Previous version | 0.1.0 |
+| Version | 0.3.0 |
+| Previous version | 0.2.0 |
 | Revision classification | Minor Governance Maintenance Revision |
-| Revision purpose | Clarify AI-assisted Acceptance Record preparation while preserving exclusive human acceptance authority |
+| Revision purpose | Formalize semantic-equivalent publication of an Accepted contract as the canonical source eligible for Effectiveness |
 | Lifecycle state | Draft |
-| Date | 2026-07-24 |
+| Date | 2026-07-25 |
 | Scope | Platform-wide |
 | Applicability | Every future canonical CADP contract |
 | Repository | `dchaschin79-sys/cliff-ai-development-platform` |
-| Source baseline | `1e1e34ac7f7b53ea452536b3d303985df7bf286d` |
+| Source baseline | `d6bcc635ec9d6cc241c66ec0a62ba6435ab7b6a9` |
 | Approval requirement | Requires explicit eligible human acceptance |
 | Effectiveness | Not created |
 | Contract created by this document | None |
@@ -38,7 +38,7 @@ This framework governs:
 - contract ownership;
 - contract lifecycle;
 - status and disposition;
-- authoring, review, verification, Acceptance Record preparation, acceptance, and effectiveness;
+- authoring, review, verification, Acceptance Record preparation, acceptance, publication, and effectiveness;
 - versioning and compatibility;
 - revision and change classification;
 - breaking-change control;
@@ -88,7 +88,7 @@ A Canonical Contract:
 - uses explicit versioning;
 - preserves revision and supersession lineage;
 - remains implementation-independent; and
-- acquires normative effect only through separate valid acceptance and effectiveness decisions.
+- acquires normative effect only through valid acceptance, semantic-equivalent Publication, and a separate valid effectiveness decision.
 
 ### 4.2 Why Contracts Exist
 
@@ -108,11 +108,26 @@ Contracts do not exist to prescribe technology, centralize all representations, 
 
 ### 4.3 Canonical Source and Derived Representations
 
-One contract identity and version has one canonical source revision.
+After Publication, one contract identity and version has one canonical Published Contract source revision.
 
 Copies, indexes, generated references, rendered forms, registries, schemas, implementation types, documentation extracts, and product-local projections are derived representations unless an independently governed source-of-truth transition states otherwise.
 
 A derived representation may carry or translate contract meaning. It may not become a second canonical semantic owner, alter the source meaning, or resolve a conflict by convenience.
+
+### 4.4 Lifecycle Artifact Roles
+
+Contract lifecycle artifacts have distinct responsibilities:
+
+| Artifact | Canonical role | Authority boundary |
+| --- | --- | --- |
+| Proposal | Design candidate and, after Acceptance and Publication, permanent historical design evidence for the exact semantics reviewed and accepted. | A Proposal is not the normative source referenced for current use. It cannot create Acceptance, Publication, Effectiveness, or implementation authority. |
+| Acceptance Record | Governance evidence binding an attributable eligible human Acceptance decision to the exact Proposal revision, scope, Decision Boundary, and evidence lineage. | An Acceptance Record proves or prepares evidence about a decision. It is not the contract’s semantic specification and cannot replace or reinterpret it. |
+| Published Contract | The single canonical semantic specification produced from an Accepted Proposal through semantic-equivalent Publication. | Publication establishes the canonical contract source but does not itself make the contract Effective or authorize implementation. |
+| Effective Contract | The Published Contract after a separate valid Effectiveness decision activates its exact identity, semantic version, canonical source revision, scope, purpose, and interval. | It is the single normative semantic authority that future contracts, implementations, and governance artifacts SHALL reference for current applicable use. |
+
+Publication is an explicit source-of-truth transition from the Accepted Proposal revision to one Published Contract revision. The transition preserves exact semantic identity, meaning, ownership, obligations, invariants, relationships, scope, exclusions, Decision Boundary, deferrals, limitations, and lineage. The Proposal and Acceptance Record remain immutable historical and governance evidence and do not become competing semantic owners.
+
+For one contract identity, semantic version, scope, and applicable interval, only one exact Published Contract revision may be the Effective Contract. A copy, proposal, acceptance record, summary, index, generated representation, implementation type, or later publication candidate cannot become an alternate normative semantic source.
 
 ## 5. Mandatory Contract Principles
 
@@ -131,6 +146,8 @@ Each contract has one primary responsibility. Supporting responsibilities are pe
 An Accepted contract revision is immutable in historical meaning. Correction, clarification, extension, or replacement creates a new source revision and, where applicable, a new semantic version.
 
 No later revision may silently reinterpret what an earlier Accepted revision meant.
+
+Publication preserves that accepted meaning exactly and cannot be used to correct, clarify, extend, replace, or reinterpret it.
 
 ### 5.4 Deterministic Interpretation
 
@@ -186,6 +203,8 @@ Acceptance Record
     ↓
 Acceptance
     ↓
+Publication
+    ↓
 Effectiveness
     ↓
 Supersession
@@ -193,7 +212,7 @@ Supersession
 Archival
 ```
 
-This sequence is a governance progression, not a single status field or implementation workflow. Review, verification, Acceptance Record preparation, human acceptance, effectiveness, supersession, and archival remain distinct evidence dimensions.
+This sequence is a governance progression, not a single status field or implementation workflow. Review, verification, Acceptance Record preparation, human acceptance, Publication, effectiveness, supersession, and archival remain distinct evidence dimensions.
 
 ### 6.1 Proposal
 
@@ -255,33 +274,57 @@ An eligible human Contract Authority records acceptance of one exact contract id
 
 Acceptance requires the necessary architecture, decomposition, review, resolution, verification, authority, eligibility, rationale, and integrity evidence. A commit, author statement, reviewer verdict, or AI assertion is not acceptance.
 
-Acceptance does not necessarily imply Effective.
+Acceptance does not imply Publication or Effectiveness.
 
-### 6.7 Effectiveness
+### 6.7 Publication
 
-Effectiveness is a separate attributable governance decision that activates an Accepted contract for an explicit scope, purpose, and interval.
+Publication creates the single canonical semantic specification from an exact Accepted Proposal revision.
+
+Publication SHALL:
+
+- occur only after valid `Accepted` status exists for the exact Proposal identity, semantic version, immutable source revision, scope, and Decision Boundary;
+- bind the Published Contract to the exact Accepted Proposal and Acceptance Record revisions;
+- preserve semantic equivalence with the Accepted Proposal;
+- preserve contract identity, semantic version, canonical ownership, primary responsibility, obligations, invariants, relationships, scope, exclusions, deferrals, limitations, and Decision Boundary;
+- establish one exact Published Contract source revision as the canonical contract source;
+- preserve the Proposal, review, Maintenance Revision, Verification, and Acceptance Record as immutable evidence;
+- introduce no semantic change;
+- introduce no implementation, API, schema, storage, serialization, algorithm, runtime, deployment, or technology choice; and
+- introduce no new governance decision, authority, approval, effectiveness, adoption, or Design Freeze.
+
+Publication permits only non-semantic presentation and lifecycle-document changes required to express the Accepted semantics as the canonical Published Contract. Every permitted difference from the Accepted Proposal MUST be attributable, reviewable, and demonstrably meaning-preserving.
+
+If any semantic change is required or semantic equivalence cannot be demonstrated, Publication SHALL NOT occur. A new Proposal lifecycle SHALL begin for the proposed change, with the applicable review, revision, Verification, Acceptance, Publication, and Effectiveness stages. Publication cannot be used as a maintenance shortcut, reinterpretation mechanism, or source of new contract meaning.
+
+Publication does not itself make the Published Contract Effective. Until the separate Effectiveness decision in Section 6.8 is valid, the Published Contract is canonical but non-operative and has no current normative authority.
+
+### 6.8 Effectiveness
+
+Effectiveness is a separate attributable governance decision that activates the exact Published Contract revision for an explicit scope, purpose, and interval.
 
 Effectiveness does not create implementation, adoption, deployment, Product Binding, release authority, or Design Freeze.
 
-### 6.8 Supersession
+### 6.9 Supersession
 
 Supersession identifies an exact successor contract or revision. It preserves predecessor history and does not silently rewrite prior meaning.
 
 A Superseded contract may remain Effective for an explicit transition interval or preserved legacy scope. Supersession alone does not end effectiveness, revoke acceptance, Archive the predecessor, or authorize migration.
 
-### 6.9 Archival
+### 6.10 Archival
 
 Archival preserves a contract and its lifecycle evidence as history while removing it from current normative use.
 
 Archival is not deletion. An Effective contract cannot become Archived without a separately resolved effectiveness boundary. Archived contract history, acceptance, prior effective intervals, supersession lineage, reviews, and evidence remain immutable.
 
-### 6.10 Rework and Failure Paths
+### 6.11 Rework and Failure Paths
 
 A review or verification failure returns the candidate to bounded revision, further architecture work, or withdrawal as directed by eligible governance. Failure does not automatically create a new contract, rejection, supersession, or archival.
 
 No later stage can backfill missing evidence from an earlier stage.
 
 Preparation of an Acceptance Record cannot backfill missing Verification, authority, eligibility, or human attestation evidence. An incomplete or invalid attestation does not create partial Acceptance; the record remains `Pending Human Attestation` until an eligible human decision is completely and validly recorded or the candidate returns to an applicable earlier stage.
+
+Publication cannot backfill missing Acceptance or Effectiveness evidence. A semantically divergent, incompletely bound, multiply canonical, or unverifiable publication candidate fails closed and cannot become the Published Contract. Any required semantic change returns the work to a new Proposal lifecycle.
 
 ## 7. Official Contract Status Model
 
@@ -291,15 +334,19 @@ The core contract statuses and dispositions are:
 | --- | --- | --- |
 | Draft | A mutable proposal under authoring or review with no normative authority. | Not Accepted, Effective, implemented, deployed, or Design Frozen. |
 | Accepted | An exact immutable revision has valid contract-acceptance evidence. | Does not necessarily imply Effective, adopted, implemented, deployed, or Design Frozen. |
-| Effective | An Accepted revision is operationally applicable for an explicit scope, purpose, and interval under a separate effectiveness decision. | Does not imply implementation, adoption, deployment, Product Binding, or operation-specific permission. |
+| Effective | An exact Published Contract revision is operationally applicable for an explicit scope, purpose, and interval under a separate effectiveness decision. | Does not imply implementation, adoption, deployment, Product Binding, or operation-specific permission. |
 | Superseded | An exact successor is identified for the same or replacing responsibility. | Does not automatically end effectiveness, revoke acceptance, Archive history, or authorize migration. |
 | Archived | The retained revision has no current normative effect and remains available for audit and reconstruction. | Does not delete history or erase prior acceptance, effectiveness, or supersession evidence. |
 
 `Pending Human Attestation` is the status of a prepared Acceptance Record, not an `Accepted` contract status and not a sixth normative contract status. While an Acceptance Record is pending, the verified contract candidate remains `Draft`. Repository publication, a commit, completion of non-attestation evidence, AI preparation, elapsed time, or successful validation cannot convert either artifact to `Accepted`.
 
+`Published` identifies completion of the semantic-equivalent canonical-source transition in Section 6.7. It is not a substitute for `Accepted` or `Effective`, and it does not add a sixth normative contract status. An Accepted Proposal may have a Published Contract that is not yet Effective. Only a Published Contract with valid current Effectiveness evidence is an Effective Contract and may exercise current normative semantic authority.
+
 These labels are orthogonal:
 
 - a contract may be Accepted but not Effective;
+- an Accepted contract may be unpublished;
+- a Published Contract may be non-Effective;
 - a contract may be Accepted and Effective;
 - a Superseded contract may remain Effective during an explicit transition;
 - a Superseded contract may remain unarchived;
@@ -366,8 +413,8 @@ The Contract Authority:
 
 The Effectiveness Authority:
 
-- makes the separate decision to activate an Accepted contract for a declared scope and interval;
-- verifies that acceptance and all effectiveness prerequisites remain valid; and
+- makes the separate decision to activate an exact Published Contract revision for a declared scope and interval;
+- verifies that Acceptance, Publication, semantic-equivalence evidence, canonical source identity, and all other effectiveness prerequisites remain valid; and
 - does not authorize implementation, adoption, or deployment unless separately empowered for those operations.
 
 ### 8.7 Implementation Teams
@@ -383,7 +430,8 @@ Implementation Teams:
 
 Consumers:
 
-- bind their use to exact eligible contract versions and revisions;
+- bind current normative use to exact eligible Effective Contract identities, semantic versions, canonical source revisions, scopes, and intervals;
+- reference the Effective Contract rather than its Proposal or Acceptance Record when consuming current normative semantics;
 - preserve dependency and compatibility evidence;
 - do not treat derived representations as new canonical owners; and
 - cannot redefine upstream contract semantics locally.
@@ -410,6 +458,18 @@ An AI system MUST NOT:
 - convert successful preparation, validation, commit, publication, or tool execution into a governance decision.
 
 Only the attributable eligible human Contract Authority owns the Acceptance decision. AI assistance does not reduce, transfer, delegate, or share that exclusive human authority.
+
+After valid Acceptance, an AI system MAY prepare an Effective Contract publication candidate by rendering the Accepted Proposal semantics into the Published Contract form and assembling semantic-equivalence and lineage evidence.
+
+An AI system MUST NOT:
+
+- alter, add, remove, narrow, expand, reinterpret, or resolve any Accepted semantic meaning during publication preparation;
+- publish or represent as published any contract that lacks valid `Accepted` status for the exact bound revision and scope;
+- select a different Proposal, Acceptance Record, contract version, source revision, scope, or Decision Boundary by convenience;
+- treat publication preparation, a commit, or publication as an Effectiveness decision; or
+- mark a Published Contract `Effective` without the separate attributable decision of the eligible Effectiveness Authority.
+
+AI publication preparation remains an administrative evidence and document-production function. It creates no governance decision, semantic authority, or implementation authorization.
 
 ## 9. Semantic Ownership and Dependencies
 
@@ -517,11 +577,11 @@ A new contract identity does not erase the predecessor. Supersession and transit
 
 ### 11.4 Emergency and Operational Pressure
 
-Urgency, implementation failure, deployment schedule, consumer demand, security incident, or unavailable reviewer does not downgrade the required change class or bypass review, verification, acceptance, or effectiveness.
+Urgency, implementation failure, deployment schedule, consumer demand, security incident, or unavailable reviewer does not downgrade the required change class or bypass review, verification, acceptance, Publication, or effectiveness.
 
 Applicable emergency governance may authorize a separately bounded operation. It does not silently amend a Canonical Contract.
 
-## 12. Review, Resolution, Verification, Acceptance, and Effectiveness
+## 12. Review, Resolution, Verification, Acceptance, Publication, and Effectiveness
 
 ### 12.1 Independent Review
 
@@ -567,13 +627,35 @@ The attributable eligible human Contract Authority reviews the prepared evidence
 
 Only the completed human attestation can change the Acceptance Record status to `Accepted` and establish contract Acceptance. AI preparation, a Draft record, or an incomplete attestation has no acceptance effect.
 
-Acceptance does not imply Effectiveness.
+Acceptance does not imply Publication or Effectiveness.
 
-### 12.6 Effectiveness
+### 12.6 Publication
+
+Publication begins only after the exact contract candidate has valid human Acceptance evidence.
+
+The publication evidence SHALL identify:
+
+- the contract identity and semantic version;
+- the exact Accepted Proposal source revision;
+- the exact Accepted Acceptance Record revision;
+- the exact Published Contract source revision;
+- the semantic-equivalence relationship;
+- the unchanged semantic ownership, primary responsibility, scope, Decision Boundary, obligations, invariants, exclusions, deferrals, and limitations;
+- every non-semantic publication difference;
+- the canonical source-of-truth transition; and
+- the retained review, Maintenance Revision, Verification, and historical lineage.
+
+Publication completes only when one exact Published Contract revision is established as the canonical semantic specification and semantic equivalence to the Accepted Proposal is demonstrable. The Proposal remains historical design evidence. The Acceptance Record remains governance evidence. Neither is the current normative specification.
+
+If equivalence is Indeterminate or any publication difference changes meaning, Publication fails closed. The candidate is not published, no Effective Contract exists, and a new Proposal lifecycle is required for the changed semantics.
+
+### 12.7 Effectiveness
 
 Effectiveness requires a separate attributable decision after acceptance. The effectiveness decision identifies the applicable scope, purpose, start boundary, end boundary where applicable, dependencies, transition treatment, and affected consumers required by applicable governance.
 
-An Accepted contract that lacks valid effectiveness evidence remains non-operative.
+The Effectiveness decision SHALL bind the exact Published Contract revision and its Acceptance and Publication evidence. A Published Contract that lacks valid effectiveness evidence remains canonical but non-operative.
+
+After valid Effectiveness, the Published Contract becomes the Effective Contract and the single normative semantic specification referenced for current applicable use. Proposal and Acceptance Record references remain required for lineage and audit, not as competing normative semantic sources.
 
 ## 13. Supersession and Transition
 
@@ -598,6 +680,7 @@ Transition may permit a predecessor and successor to remain Effective for differ
 
 A successor does not automatically:
 
+- become Published;
 - become Effective;
 - deactivate the predecessor;
 - migrate consumers;
@@ -614,12 +697,12 @@ Supersession acts prospectively. Historical decisions remain bound to the exact 
 
 Archival preserves:
 
-- the canonical contract revision;
+- the Published Contract and every prior canonical contract revision;
 - all prior versions;
 - architecture and decomposition references;
 - reviews and verification;
 - prepared Acceptance Records in `Pending Human Attestation` status and their immutable revisions;
-- acceptance and effectiveness evidence;
+- acceptance, Publication, semantic-equivalence, and effectiveness evidence;
 - compatibility decisions;
 - supersession and transition lineage;
 - related contract references;
@@ -641,12 +724,15 @@ Every Canonical Contract references exact revisions of:
 7. the immediately preceding revision, or an explicit statement that none exists;
 8. every superseded revision or contract, or an explicit statement that none exists;
 9. every superseding contract or revision known at the evaluated time, or an explicit statement that none exists;
-10. applicable review, resolution, verification, Acceptance Record preparation, human attestation, acceptance, effectiveness, and compatibility evidence; and
-11. applicable transition, deprecation, archival, or legacy evidence.
+10. applicable review, resolution, verification, Acceptance Record preparation, human attestation, acceptance, Publication, semantic-equivalence, effectiveness, and compatibility evidence;
+11. the exact Published Contract revision and its canonical source-of-truth transition evidence, or an explicit statement that Publication has not occurred; and
+12. applicable transition, deprecation, archival, or legacy evidence.
 
 A reference identifies the stable artifact identity, semantic version, immutable source revision, relationship, and applicable scope. A floating filename, branch name, repository location, or latest-version reference is insufficient for authoritative traceability.
 
 Missing or conflicting required traceability prevents acceptance or current operational reliance until resolved under applicable governance.
+
+For current normative use, a consumer SHALL reference the exact Effective Contract. Proposal and Acceptance Record references remain mandatory lineage and governance evidence but are not substitutes for the Effective Contract.
 
 ## 16. Existing and Future Contracts
 
@@ -673,6 +759,19 @@ Version 0.2.0 is backward compatible with contracts and lifecycle evidence prepa
 
 Existing acceptance evidence remains subject to the governance requirements and validity evaluation applicable to its exact decision and record. This revision does not repair missing historical attestation or authority evidence by declaration.
 
+Version 0.3.0 is backward compatible with Version 0.2.0 because it:
+
+- preserves every lifecycle stage and decision boundary through Acceptance;
+- preserves exclusive eligible human Contract Authority over Acceptance;
+- preserves Effectiveness as a separate attributable decision owned by independently eligible Effectiveness Authority;
+- adds Publication only as a semantic-equivalent canonical-source transition between Acceptance and Effectiveness;
+- does not reinterpret a Proposal, review, Maintenance Revision, Verification, Acceptance Record, human attestation, Acceptance decision, or Effectiveness decision;
+- permits an exact Accepted Proposal to proceed to Publication without repeating previously satisfied stages when its accepted semantics, identity, revision, scope, Decision Boundary, and governing evidence remain unchanged;
+- does not convert any Proposal, Acceptance Record, contract, or publication candidate into `Published` or `Effective` by declaration; and
+- preserves historical Effective Contract evidence without retroactively claiming that its publication satisfied requirements that did not yet exist.
+
+An existing Accepted but unpublished contract remains Accepted and non-Effective under this revision. It may proceed through Publication only when the exact accepted semantics and evidence are preserved and semantic equivalence is demonstrable. Historical lifecycle evidence remains immutable.
+
 ## 17. Non-Goals
 
 This framework does not define:
@@ -693,6 +792,7 @@ This framework does not define:
 - infrastructure;
 - technology selection;
 - workflow tooling;
+- publication tooling, repository layout, file naming, or document rendering;
 - registry values;
 - Product Bindings;
 - product-specific rules;
@@ -713,7 +813,7 @@ A future revision:
 - preserves prior meaning;
 - undergoes independent review and verification;
 - requires separate eligible human acceptance; and
-- requires separate effectiveness before governing current contract work.
+- requires semantic-equivalent Publication and separate effectiveness before governing current contract work.
 
 A revision that changes contract authority, lifecycle separation, acceptance boundaries, effectiveness, semantic ownership, breaking-change treatment, or historical preservation requires architecture-impact evaluation.
 
@@ -723,5 +823,6 @@ A revision that changes contract authority, lifecycle separation, acceptance bou
 | --- | --- | --- | --- |
 | 0.1.0 | Initial Draft | Established the platform-wide Contract Governance methodology. | Initial version |
 | 0.2.0 | Minor Governance Maintenance Revision | Adds the `Acceptance Record (Pending Human Attestation)` preparation stage, the six-field minimal human attestation, deterministic fail-closed transition rules, and explicit AI preparation limits. Human Acceptance authority, Acceptance prerequisites, architecture ownership, and implementation boundaries are unchanged. | Backward compatible with Version 0.1.0 contract candidates and lifecycle evidence |
+| 0.3.0 | Minor Governance Maintenance Revision | Adds semantic-equivalent Publication after Acceptance, distinguishes Proposal, Acceptance Record, Published Contract, and Effective Contract roles, and defines the Effective Contract as the single normative semantic specification for current applicable use. Human Acceptance, separate Effectiveness authority, architecture ownership, and implementation boundaries are unchanged. | Backward compatible with Version 0.2.0 contract candidates and lifecycle evidence |
 
 This revision remains Draft. Its repository publication, review, or use to prepare evidence does not approve the framework, make it Effective, accept a contract, or authorize implementation.

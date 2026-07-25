@@ -7,11 +7,11 @@
 | Title | Governance Rule Discovery Architecture Decision Proposal |
 | Document type | Architecture Decision Proposal |
 | Status | Draft Architecture Decision Proposal |
-| Version | 0.1.0 |
+| Version | 0.1.1 |
 | Date | 2026-07-24 |
 | Architecture domain | Governance Rule Discovery |
 | Decision owner | Unassigned — requires designation by eligible human governance |
-| Review state | Proposed — Pending Independent Architecture Review |
+| Review state | Revised — Pending Independent Verification of Review Corrections |
 | Approval state | Not approved |
 | Effectiveness state | Not effective |
 | Normative status | Non-normative |
@@ -67,11 +67,12 @@ This ADP proposes the **Governed Bounded-Closed Federation** architecture family
 Under the proposal:
 
 - rule ownership may remain distributed across platform, product, repository, component, tenant-bound, restricted, and externally referenced domains;
+- Universal Eligibility Gate and Governance Authority results remain distinct upstream inputs whose semantics discovery does not own;
 - an independently governed Federation Root or root set bounds the source declarations eligible for a declared discovery context;
 - governed source declarations and exact canonical revisions are composed deterministically;
 - an operation-bound Discovery Manifest records the discovery activity;
-- closure evidence demonstrates whether every mandatory source route was accounted for;
-- a Rule Universe Snapshot is exposed as complete only when bounded closure is demonstrated;
+- closure evidence demonstrates whether every closure-relevant source route and membership-changing condition was accounted for;
+- a Complete Rule Universe Snapshot exists only when bounded closure is demonstrated;
 - missing or unverifiable mandatory evidence produces explicit incompleteness and fails closed; and
 - discovery remains separate from applicability, Policy Decision, final governance authority, and implementation.
 
@@ -85,14 +86,15 @@ This proposal does not decide detailed root topology, final artifact classes, ap
 
 For each declared discovery context, the proposed architecture will:
 
-1. begin from a Federation Root or root set whose eligibility is established by independently applicable governance;
-2. bound discovery to governed source declarations reachable through authorized and reproducible relationships;
-3. preserve distributed rule ownership and canonical source identity;
-4. bind participating sources to exact revisions, scope, provenance, and temporal evidence;
-5. compose an operation-bound discovery record deterministically;
-6. distinguish demonstrated closure from incomplete or unverifiable discovery;
-7. expose a complete Rule Universe Snapshot only when mandatory closure evidence is satisfied; and
-8. provide that snapshot to downstream Governance Applicability without deciding applicability, policy outcomes, or final governance authority.
+1. consume independently established Universal Eligibility Gate and Governance Authority results without owning or redefining them;
+2. begin from a Federation Root or root set whose eligibility and authority are established outside discovery;
+3. bound discovery to governed source declarations reachable through authorized and reproducible relationships;
+4. preserve distributed rule ownership and canonical source identity;
+5. bind participating sources to exact revisions, scope, provenance, and temporal evidence;
+6. compose an operation-bound discovery record deterministically;
+7. distinguish demonstrated closure from incomplete or unverifiable discovery;
+8. expose a Complete Rule Universe Snapshot only when every closure-relevant route and required evidence condition is satisfied; and
+9. provide that Complete Rule Universe Snapshot to downstream Governance Applicability without deciding applicability, policy outcomes, or final governance authority.
 
 This is a proposed architecture decision, not an approved architecture decision.
 
@@ -104,7 +106,7 @@ The problem is not simply locating documents. It requires establishing:
 
 - which source domains are permitted to contribute rules for the declared context;
 - why those source domains participate;
-- whether every mandatory source route has been resolved;
+- whether every closure-relevant source route and membership-changing condition has been resolved;
 - which canonical source revisions were used;
 - whether source evidence was valid for the evaluation time;
 - whether restricted sources were accounted for through eligible paths;
@@ -112,7 +114,7 @@ The problem is not simply locating documents. It requires establishing:
 - whether the same evidence basis can be reconstructed later; and
 - whether incompleteness remains visible rather than becoming permission.
 
-A discovered source is not automatically authoritative. An authoritative source is one whose eligibility, identity, scope, lifecycle, effective interval, confidentiality eligibility, and revision are independently valid for the evaluated context under existing governance.
+A discovered source is not automatically authoritative or eligible for information use. A participating authoritative source is one whose Universal Eligibility Gate results and independently governed authority, identity, scope, lifecycle, effective interval, canonical responsibility, and revision are separately valid for the evaluated context.
 
 A complete rule universe is not every rule that may exist in the world. It is the bounded set of eligible source contents accounted for under an exact, independently governed discovery boundary.
 
@@ -130,6 +132,7 @@ This proposal decides the following architecture-level matters:
 8. **Reproducibility expectations:** a later eligible reviewer can reconstruct the boundary, source participation, exact revisions, unresolved conditions, and closure basis.
 9. **Cross-repository composition principles:** independently governed repository and shared-source boundaries compose only through explicit, revision-bound relationships.
 10. **Separation of concerns:** discovery supplies bounded source evidence without deciding rule applicability, final Policy Decision outcomes, or governance authority.
+11. **Upstream prerequisite separation:** Universal Eligibility Gate and Governance Authority results are distinct inputs that discovery consumes without owning or redefining their semantics.
 
 ## 6. Out of Scope
 
@@ -161,12 +164,14 @@ The proposal does not decide:
 
 ```mermaid
 flowchart TB
-    GA["Governance Authority<br/>Independent eligibility, ownership, precedence, and approval"]
+    UEG["Universal Eligibility Gate<br/>Source authorization, confidentiality, purpose, provider, and information-use eligibility"]
+    GA["Governance Authority Inputs<br/>Authority, ownership, approval, precedence, and canonical responsibility"]
     GRD["Governance Rule Discovery<br/>Bounded source discovery and closure evidence"]
     GAP["Governance Applicability<br/>Applicability of discovered rules to the decision context"]
     PD["Policy Decision<br/>Evaluation of applicable rules and decision outcomes"]
     IS["Implementation Systems<br/>Replaceable realization and evidence handling"]
 
+    UEG --> GRD
     GA --> GRD
     GRD --> GAP
     GAP --> PD
@@ -177,9 +182,13 @@ flowchart TB
 
 ### 7.2 Dependency Direction
 
-Governance Authority is an upstream eligibility input. It determines whether a Federation Root, source declaration, source owner, revision, scope, or decision actor is eligible under independently applicable governance. Governance Rule Discovery consumes that result and cannot create or repair it.
+The Universal Eligibility Gate is a distinct upstream dependency. Under the independently retained ownership of Foundation and applicable governance, it determines whether information may participate in the declared operation and purpose. Its results cover source authorization, confidentiality eligibility, purpose eligibility, provider eligibility where applicable, and any other independently established information-use eligibility required for the evaluated context. It does not determine governance authority, ownership, approval, precedence, or canonical responsibility.
 
-Governance Rule Discovery identifies and records the eligible discovered corpus and its closure state. Governance Applicability consumes a complete, bounded snapshot to determine which discovered rules apply to the declared context.
+Governance Authority is a separate upstream input. It determines authority, ownership, approval, precedence, canonical responsibility, delegation, and related governance semantics where independently assigned. It does not own or replace the Universal Eligibility Gate.
+
+Governance Rule Discovery consumes the exact eligibility and authority results required by its fixed context. It owns neither result, cannot redefine or repair either result, cannot infer eligibility from source presence, and cannot infer authority from registration or discovery. Unresolved required eligibility prevents closure for every source or evidence path that depends on that eligibility.
+
+Governance Rule Discovery identifies and records the eligible discovered corpus and its closure state. Governance Applicability consumes a Complete Rule Universe Snapshot to determine which discovered rules apply to the declared context.
 
 Policy Decision consumes applicable rules and other independently governed inputs. It retains ownership of final provider-neutral outcomes. Discovery does not produce those outcomes.
 
@@ -191,9 +200,11 @@ The proposed architecture prohibits these ownership cycles:
 
 - a Federation Root cannot establish its own governance authority;
 - a Rule Source Registry cannot make its entries authoritative by registration alone;
+- a source, registry, resolver, manifest, Complete Rule Universe Snapshot, or Incomplete Discovery Result cannot create its own information-use eligibility;
+- Governance Authority cannot substitute for or silently supply a missing Universal Eligibility Gate result;
 - a discovered rule cannot add itself or another source to the active boundary without an already eligible relationship;
 - a Discovery Manifest cannot prove its own completeness;
-- a Rule Universe Snapshot cannot repair invalid source identity or provenance; and
+- a Complete Rule Universe Snapshot cannot repair invalid source identity or provenance; and
 - a downstream applicability or Policy Decision result cannot retroactively validate incomplete discovery.
 
 Root-establishment authority belongs to independently applicable governance and remains a Category B deferral. This proposal does not assign that authority.
@@ -216,10 +227,11 @@ At architecture level, the boundary includes:
 - target and requested scope;
 - purpose;
 - evaluation time;
+- the exact Universal Eligibility Gate results governing source authorization, confidentiality, purpose, provider use where applicable, and other required information use;
 - applicable platform and Product Binding baselines;
 - Federation Root or root-set revision;
 - inheritance, overlay, external-incorporation, legacy, and cross-repository relationships;
-- source-authorization and confidentiality constraints; and
+- separately resolved Governance Authority inputs governing authority, ownership, approval, precedence, and canonical responsibility; and
 - exact source identities and revisions resolved through those relationships.
 
 The future contracts may define how these categories are represented. This ADP defines no fields or wire format.
@@ -245,11 +257,21 @@ Registration or reference:
 - does not establish rule applicability; and
 - does not create a new authority tier.
 
+### 8.4.1 Source-Route Closure Relevance
+
+Source-route closure relevance is determined for the fixed Decision Context through independently governed evidence, not by registry placement, resolver preference, retrieval success, or a descriptive label.
+
+- A **closure-relevant source route** is any registered, declared, nested, cross-repository, external, inherited, or otherwise governed route capable of adding, removing, narrowing, replacing, or changing source membership for the fixed Decision Context.
+- A **conditionally closure-relevant source route** is a route whose membership effect depends on an independently governed condition. The condition and its evidence must be resolved for the fixed Decision Context; while they remain unresolved, the route is closure-relevant and discovery remains incomplete.
+- A **route proven non-membership-changing** is excluded from closure only when independently governed, attributable, scope-bound, temporally coherent, and revision-bound evidence demonstrates that it cannot change the Rule Corpus for the fixed Decision Context.
+
+Labels such as `optional`, `advisory`, `supplemental`, or `informational` do not by themselves remove a route from closure relevance. A registry, resolver, declaration, manifest, or source cannot self-declare a route irrelevant without the required independent evidence.
+
 ### 8.5 Source Identity and Provenance
 
 Every participating source must be attributable to a stable canonical identity and exact revision under existing Canonical Artifact governance or an independently eligible external-source relationship.
 
-Provenance connects the source, declaration, resolver activity, owning scope, revision evidence, temporal basis, and operation-bound discovery record. Provenance is evidence; it does not grant authority.
+Provenance connects the source, declaration, resolver activity, owning scope, eligibility results, authority inputs, revision evidence, temporal basis, and operation-bound discovery record. Provenance is evidence; it does not grant eligibility or authority.
 
 ### 8.6 Revision and Temporal Binding
 
@@ -261,8 +283,10 @@ Source or boundary changes create a new prospective evidence state. They do not 
 
 Closure is demonstrated only when:
 
+- every required Universal Eligibility Gate result is valid for the information and evidence path that depends on it;
 - the eligible root or root set is resolved;
-- every mandatory source route has a resolved outcome;
+- every closure-relevant route, including every conditionally closure-relevant route, has a resolved membership outcome;
+- every excluded route has independently governed evidence proving that it cannot change source membership for the fixed context;
 - every participating source has valid identity, revision, scope, and provenance evidence;
 - inheritance, incorporation, legacy, and cross-repository relationships are resolved;
 - duplicate identities and competing revisions are either normalized or explicitly unresolved;
@@ -274,13 +298,13 @@ Closure is bounded to the declared context. It is not a claim of global legal, r
 
 ### 8.8 Deterministic Composition
 
-Given the same declared context, eligible boundary revision, exact source revisions, temporal evidence, and governed relationships, the architecture must produce the same source-membership result and the same discovery-closure classification.
+Given the same declared context, Universal Eligibility Gate results, Governance Authority inputs, eligible boundary revision, exact source revisions, temporal evidence, and governed relationships, the architecture must produce the same source-membership result and the same discovery-closure classification.
 
 Provider-specific traversal, storage, or evaluation mechanisms may differ. They cannot change the architecture’s membership, closure, provenance, or failure semantics.
 
 ### 8.9 Fail-Closed Behavior
 
-When mandatory identity, authority, source, relationship, revision, temporal, confidentiality, or provenance evidence is missing, invalid, unavailable, conflicting, stale, or unverifiable, the architecture records explicit incomplete discovery.
+When mandatory eligibility, identity, authority, source, route-relevance, relationship, revision, temporal, confidentiality, purpose, provider, or provenance evidence is missing, invalid, unavailable, conflicting, stale, or unverifiable, the architecture records explicit incomplete discovery.
 
 Incomplete discovery cannot be represented as a complete Applicable Rule Universe and cannot be repaired through inference, model confidence, search success, prior outcomes, elapsed time, or downstream evaluation.
 
@@ -293,21 +317,22 @@ These components are conceptual architecture responsibilities. They are not impl
 | Federation Root | Establish the governed starting boundary or participate in a composed root set for the declared context. | Does not create its own authority or approve source contents. |
 | Rule Source Registry | Identify governed source declarations or references within a bounded ownership scope. | Registration does not create authority, applicability, approval, or canonical ownership. |
 | Rule Source Descriptor | Express the architecture-level identity, ownership, scope, revision, temporal, relationship, and provenance categories needed to resolve a source. | Does not define a contract shape or field format in this ADP. |
-| Source Resolver | Resolve a declared source to eligible canonical evidence for the fixed context. | Does not decide governance authority, applicability, conflict precedence, or policy outcomes. |
+| Source Resolver | Resolve a declared source to canonical evidence admitted by the required Universal Eligibility Gate results for the fixed context. | Does not decide information-use eligibility, governance authority, route relevance by itself, applicability, conflict precedence, or policy outcomes. |
 | Rule Corpus | Represent the rule-containing content resolved from an eligible source. | Content remains owned by its canonical source and domain governance. |
-| Discovery Boundary | Bind the declared context to eligible roots, relationships, scope, time, and source constraints. | Cannot be narrowed because a mandatory source is inconvenient or unavailable. |
-| Discovery Manifest | Record the source routes attempted, resolved sources, exact revisions, exclusions, and unresolved conditions for one discovery activity. | Records processing evidence but cannot prove its own completeness. |
-| Rule Universe Snapshot | Preserve the bounded source corpus and closure state for downstream applicability evaluation. | Does not decide which rules apply or produce Policy Decision outcomes. |
-| Closure Evidence | Support the claim that every mandatory route in the bounded domain was accounted for. | Does not create authority, approval, or legal completeness. |
-| Provenance Record | Preserve attributable lineage among roots, declarations, source evidence, resolution activities, and the snapshot. | Evidence remains non-authorizing. |
+| Discovery Boundary | Bind the declared context to eligibility results, authority inputs, eligible roots, route-relevance evidence, relationships, scope, time, and source constraints. | Cannot be narrowed because a closure-relevant source is inconvenient, repeatedly unavailable, or descriptively labeled optional. |
+| Discovery Manifest | Record the source routes considered, route-relevance determinations, resolved sources, exact revisions, exclusions, eligibility results, and unresolved conditions for one discovery attempt. | Records processing evidence but cannot prove its own completeness. |
+| Complete Rule Universe Snapshot | Preserve the bounded Rule Corpus, manifest, closure evidence, provenance, and exact revisions only after complete and valid closure is demonstrated. | Is the only discovery artifact eligible to proceed downstream as a complete-universe input; it does not decide which rules apply or produce Policy Decision outcomes. |
+| Incomplete Discovery Result | Preserve the resolved corpus if any, unresolved routes, failures, provenance gathered, eligibility evidence, revision and temporal bindings, closure status, and reasons completeness was not established. | Is immutable diagnostic, audit, remediation, review, and reassessment evidence; it cannot be represented or consumed as a complete Rule Universe Snapshot. |
+| Closure Evidence | Support the claim that every closure-relevant route and membership-changing condition in the bounded domain was accounted for. | Does not create authority, approval, or legal completeness. |
+| Provenance Record | Preserve attributable lineage among roots, declarations, source evidence, resolution activities, the Complete Rule Universe Snapshot, or the Incomplete Discovery Result. | Evidence remains non-authorizing. |
 | Temporal Binding | Relate boundary, source, lifecycle, and operation evidence to the relevant evaluation and effective times. | Does not redefine lifecycle or supersession semantics. |
-| Discovery Failure Record | Preserve missing, unavailable, invalid, conflicting, stale, or unverifiable discovery conditions. | Cannot be treated as a successful or permissive completeness result. |
+| Discovery Failure Evidence | Preserve individual missing, unavailable, invalid, conflicting, stale, adversarial, or unverifiable discovery conditions within an Incomplete Discovery Result. | Cannot be treated as a successful or permissive completeness result. |
 
 ## 10. Source-of-Sources Model
 
 ### 10.1 Root Establishment
 
-Roots are established and revised only through independently applicable governance. The discovery architecture consumes externally established authority, approval, lifecycle, scope, revision, and temporal evidence.
+Roots are established and revised only through independently applicable governance. The discovery architecture consumes separately established Universal Eligibility Gate results and Governance Authority, approval, lifecycle, scope, revision, and temporal evidence without redefining those inputs.
 
 This ADP does not define:
 
@@ -318,7 +343,7 @@ This ADP does not define:
 
 ### 10.2 Source Registration and Reference
 
-A valid root identifies governed source declarations or bounded subordinate catalogs. A declaration may reference a canonical rule source, a locally owned source catalog, an inherited source set, an external-incorporation relationship, or another bounded source route already eligible under the root.
+A valid root identifies governed source declarations or bounded subordinate catalogs. A declaration may reference a canonical rule source, a locally owned source catalog, an inherited source set, an external-incorporation relationship, or another bounded source route already eligible under the root. Presence in the root establishes a governed route to evaluate; it does not by itself establish information-use eligibility, authority, applicability, or non-membership-changing status.
 
 Reference membership is explicit and revision-bound. File proximity, repository naming, code imports, hyperlinks, search ranking, conversational mention, or model memory does not create membership.
 
@@ -333,7 +358,10 @@ Every nested relationship must preserve:
 - exact revision;
 - scope;
 - temporal eligibility;
-- confidentiality constraints;
+- source authorization;
+- confidentiality eligibility and constraints;
+- purpose eligibility;
+- provider eligibility where applicable;
 - bounded traversal; and
 - visible failure evidence.
 
@@ -351,7 +379,7 @@ If candidate references cannot be reconciled to one canonical identity or compat
 
 ### 10.6 Unavailable Mandatory Sources
 
-An unavailable mandatory source remains part of the bounded discovery domain. Unavailability cannot be interpreted as absence, irrelevance, or permission to omit the route.
+An unavailable closure-relevant source remains part of the bounded discovery domain. Unavailability cannot be interpreted as absence, irrelevance, non-membership-changing status, or permission to omit the route.
 
 Unless independently applicable governance supplies an eligible and verifiable alternative evidence path, the closure result is incomplete.
 
@@ -365,18 +393,19 @@ An unknown source is not automatically accepted, ignored, or made authoritative.
 
 ## 11. Rule Universe Lifecycle
 
-The lifecycle below describes conceptual architecture behavior. It is not an implementation workflow, orchestration design, state-machine schema, or prescribed execution sequence.
+The lifecycle below describes conceptual architecture behavior. It is not an implementation workflow, orchestration design, state-machine schema, or prescribed execution sequence. Every discovery attempt produces immutable discovery evidence, but only demonstrated closure produces a Complete Rule Universe Snapshot.
 
-1. **Establish discovery context:** bind the exact Governed Operation or decision context, target, scope, purpose, time, and governing baselines.
-2. **Resolve Federation Root:** obtain the exact eligible root or root-set revision from independently applicable governance.
-3. **Enumerate registered sources:** identify every governed source route required by the fixed boundary.
+1. **Establish eligible discovery context:** bind the exact Governed Operation or decision context, target, scope, purpose, time, governing baselines, and required Universal Eligibility Gate results. Information that has not passed the applicable gate cannot be used as source content, authority evidence, Rule Corpus input, or downstream decision input. The attributable eligibility result or failure may be retained only as protected evidence under the independently applicable eligibility and confidentiality controls.
+2. **Resolve Federation Root:** obtain the exact root or root-set revision using separately valid eligibility and Governance Authority inputs.
+3. **Enumerate and classify source routes:** identify every governed source route reachable from the fixed boundary and resolve whether it is closure-relevant, conditionally closure-relevant, or independently proven non-membership-changing.
 4. **Resolve source revisions:** obtain exact canonical or independently eligible external source revisions.
-5. **Validate source identity:** confirm identity, scope, lineage, temporal state, provenance, and confidentiality eligibility.
+5. **Validate source identity and eligibility:** confirm identity, scope, lineage, temporal state, provenance, source authorization, confidentiality, purpose, provider eligibility where applicable, and any other required information-use eligibility without redefining those upstream semantics.
 6. **Collect candidate rule artifacts:** assemble the rule-containing corpus without deciding rule applicability.
 7. **Produce Discovery Manifest:** record routes, results, revisions, exclusions, duplicates, conflicts, and failures.
-8. **Verify closure:** determine whether every mandatory route and membership-changing condition is resolved.
-9. **Produce immutable Rule Universe Snapshot:** bind the corpus, boundary, manifest, closure evidence, provenance, and failure state.
-10. **Provide snapshot downstream:** make a complete snapshot eligible for Governance Applicability, or expose explicit incompleteness without a complete-universe claim.
+8. **Verify closure:** determine whether every closure-relevant route and membership-changing condition is resolved and every exclusion has valid independent evidence.
+9. **Produce a Complete Rule Universe Snapshot on success:** bind the complete corpus, boundary, manifest, closure evidence, provenance, exact revisions, and temporal basis.
+10. **Produce an Incomplete Discovery Result on failure or uncertainty:** bind the resolved corpus if any, unresolved routes, failures, provenance gathered, revisions, temporal basis, and reasons closure was not established.
+11. **Apply the downstream boundary:** provide only a Complete Rule Universe Snapshot as a complete-universe input to Governance Applicability. An Incomplete Discovery Result is restricted to eligible diagnostics, audit, remediation, review, and later reassessment.
 
 ```mermaid
 flowchart TB
@@ -385,13 +414,15 @@ flowchart TB
     SR["Source Resolution"]
     DM["Discovery Manifest"]
     CV["Closure Verification"]
-    RUS["Rule Universe Snapshot"]
+    CRUS["Complete Rule Universe Snapshot"]
+    IDR["Incomplete Discovery Result"]
 
     FR --> RSR
     RSR --> SR
     SR --> DM
     DM --> CV
-    CV --> RUS
+    CV -- "Complete" --> CRUS
+    CV -- "Incomplete or unresolved" --> IDR
 ```
 
 ## 12. Closure and Completeness Model
@@ -401,7 +432,7 @@ flowchart TB
 For the proposed architecture, a discovery universe is:
 
 - **bounded** when its permitted source routes are fixed by the declared context and eligible root revision;
-- **closed for the declared context** when every mandatory route in that bounded domain has a resolved membership outcome;
+- **closed for the declared context** when every closure-relevant and conditionally closure-relevant route has a resolved membership outcome and every excluded route is proven non-membership-changing through independently governed evidence;
 - **attributable** when root, declaration, source, resolution, and evidence responsibilities can be traced to eligible identities;
 - **temporally bound** when evaluation and relevant source effective times are explicit and coherent;
 - **revision bound** when roots, declarations, source contents, and relationships are fixed to exact revisions;
@@ -414,12 +445,13 @@ The exact assurance model for independent verification remains deferred.
 
 | Condition | Architecture meaning | Downstream consequence |
 | --- | --- | --- |
-| Complete and valid | Every mandatory route and membership-changing condition in the bounded domain is resolved with valid evidence. | A complete Rule Universe Snapshot may be provided to Governance Applicability. |
-| Incomplete | At least one mandatory route, identity, revision, relationship, temporal state, scope, or required evidence remains unresolved. | No complete-universe claim may be provided downstream. |
+| Complete and valid | Every closure-relevant route and membership-changing condition in the bounded domain is resolved with valid evidence, and every excluded route is proven non-membership-changing. | A Complete Rule Universe Snapshot may be provided to Governance Applicability. |
+| Incomplete | At least one required eligibility result, closure-relevant route, conditional route, exclusion, identity, revision, relationship, temporal state, scope, or required evidence remains unresolved. | Produce an immutable Incomplete Discovery Result; no complete snapshot or complete-universe claim may be provided downstream. |
 | Conflicting source declarations | Declarations disagree about source identity, membership, scope, revision, ownership, or relationship. | Preserve the conflict; closure remains incomplete when membership could change. |
-| Unavailable mandatory source | A required source cannot be resolved through an eligible evidence path. | Preserve the route and failure; do not omit it or claim completeness. |
+| Unavailable closure-relevant source, including a mandatory source | A required source cannot be resolved through an eligible evidence path. | Preserve the route and failure; do not omit it or claim completeness. |
 | Invalid source identity | Canonical identity or lineage is invalid, ambiguous, or conflicts with another claim. | Do not include the source as resolved; record failure and prevent closure where mandatory. |
 | Unverifiable provenance | Source origin, resolution activity, revision evidence, or attributable lineage cannot be verified. | Treat the source route as unresolved where provenance is mandatory. |
+| Proven non-membership-changing route | Independently governed, attributable, scope-bound, temporally coherent, and revision-bound evidence demonstrates that the route cannot change the corpus for the fixed context. | Preserve the route and exclusion evidence without treating a descriptive label or resolver assertion as proof. |
 
 These are proposed architecture conditions. They do not define contract enums, lifecycle states, database values, or Policy Decision outcomes.
 
@@ -427,7 +459,7 @@ These are proposed architecture conditions. They do not define contract enums, l
 
 ### 13.1 Proposed Invariant
 
-No downstream Governance Applicability or Policy Decision activity may claim that it consumed a complete Applicable Rule Universe when mandatory discovery closure has not been demonstrated for the exact decision context and snapshot.
+No downstream Governance Applicability or Policy Decision activity may claim that it consumed a complete Applicable Rule Universe when discovery closure has not been demonstrated for every closure-relevant route, required eligibility result, and membership-changing condition for the exact decision context.
 
 Fail-closed discovery means:
 
@@ -435,20 +467,21 @@ Fail-closed discovery means:
 - no silent source omission;
 - no substitution of partial discovery for complete discovery;
 - no inference that an inaccessible source contains no applicable rule;
+- no inference that repeated or prolonged failure makes a route optional or non-membership-changing;
 - no automatic acceptance of unknown or unregistered sources;
 - no use of search success, model confidence, prior decision success, or elapsed time as closure evidence; and
 - no downstream repair of an invalid discovery boundary.
 
-This ADP does not define the final Policy Decision response to incomplete discovery. It requires only that incomplete discovery remain explicit and cannot be represented as a complete universe.
+This ADP does not define the final Policy Decision response to incomplete discovery. It requires that an incomplete attempt produce an immutable Incomplete Discovery Result, remain explicit, and never be represented as a Complete Rule Universe Snapshot. An Incomplete Discovery Result may support eligible diagnostics, audit, remediation, review, and later reassessment only; those uses remain subject to independently applicable eligibility and confidentiality controls.
 
 ### 13.2 Failure Boundary
 
 ```mermaid
 flowchart TB
-    ME["Mandatory Discovery Evidence"]
+    ME["Required Discovery Evidence"]
     CV{"Closure Demonstrated?"}
-    CS["Complete Bounded<br/>Rule Universe Snapshot"]
-    IA["Incomplete Discovery<br/>and Failure Evidence"]
+    CS["Complete Rule Universe Snapshot"]
+    IA["Incomplete Discovery Result<br/>Immutable Failure and Partial Evidence"]
     GA["Governance Applicability"]
     STOP["No Complete-Universe Claim<br/>Eligible Downstream"]
 
@@ -464,13 +497,14 @@ flowchart TB
 
 | Architecture domain | Responsibility | Must not own through this proposal |
 | --- | --- | --- |
-| Governance Authority | Determine authority eligibility, ownership, precedence, approval, delegation, and non-delegable boundaries where assigned by independently applicable governance. | Discovery completeness, rule applicability, or Policy Decision outcomes merely because it establishes a root. |
+| Universal Eligibility Gate | Determine source authorization, confidentiality eligibility, purpose eligibility, provider eligibility where applicable, and other independently established information-use eligibility before information participates in discovery. | Governance authority, source ownership, approval, precedence, canonical responsibility, discovery completeness, or Policy Decision outcomes. |
+| Governance Authority | Determine authority, ownership, precedence, approval, canonical responsibility, delegation, and non-delegable boundaries where assigned by independently applicable governance. | Universal Eligibility Gate semantics, discovery completeness, rule applicability, or Policy Decision outcomes merely because it establishes a root. |
 | Governance Rule Discovery | Determine the eligible discovered rule corpus, operation-bound closure evidence, and explicit incompleteness for the bounded domain. | Underlying authority, rule applicability, normative conflict resolution, or final decision outcomes. |
-| Governance Applicability | Determine which rules in a complete discovered snapshot apply to the exact decision context. | Source-universe completeness, underlying authority creation, or final Policy Decision ownership. |
+| Governance Applicability | Determine which rules in a Complete Rule Universe Snapshot apply to the exact decision context. | Source-universe completeness, underlying authority creation, or final Policy Decision ownership. |
 | Policy Decision | Evaluate applicable rules and other independently governed inputs and produce provider-neutral decision outcomes. | Retroactive validation of incomplete discovery or silent expansion of the source boundary. |
 | Implementation systems | Realize approved architecture and retain evidence through replaceable technology. | Architecture semantics, governance authority, approval, or contract ownership. |
 
-Discovery may record duplicate rules, overlapping scopes, declaration conflicts, and competing revisions. Recording those conditions does not resolve normative precedence.
+Discovery consumes Universal Eligibility Gate and Governance Authority results without redefining either domain. It may record duplicate rules, overlapping scopes, declaration conflicts, and competing revisions. Recording those conditions does not resolve normative precedence.
 
 ## 15. Architectural Invariants
 
@@ -478,19 +512,23 @@ If approved and made effective, the proposed architecture would require the foll
 
 1. **Bounded discovery:** every completeness claim is bound to an exact declared context and eligible Federation Root or root set.
 2. **Attributable sources:** every participating source and source relationship has attributable identity and ownership evidence.
-3. **Immutable revision binding:** roots, declarations, relationships, source contents, and snapshots bind to exact immutable revisions.
+3. **Immutable revision binding:** roots, declarations, relationships, source contents, Complete Rule Universe Snapshots, and Incomplete Discovery Results bind to exact immutable revisions.
 4. **Deterministic composition:** the same eligible inputs produce the same source-membership and closure result.
-5. **Explicit incompleteness:** unresolved mandatory discovery evidence remains visible as incomplete.
-6. **No silent omission:** an inaccessible, confidential, unavailable, stale, or inconvenient mandatory source cannot be dropped from the boundary.
+5. **Explicit incompleteness:** unresolved required discovery evidence remains visible as incomplete.
+6. **No silent omission:** an inaccessible, confidential, unavailable, stale, or inconvenient closure-relevant source cannot be dropped from the boundary.
 7. **No discovery-to-applicability collapse:** discovery cannot decide that a discovered rule applies.
 8. **No discovery-to-Policy-Decision collapse:** discovery cannot produce or reinterpret final Policy Decision outcomes.
-9. **No self-authorizing source:** roots, registries, declarations, manifests, snapshots, and discovered sources cannot create their own governance authority.
+9. **No self-authorizing source:** roots, registries, declarations, manifests, Complete Rule Universe Snapshots, Incomplete Discovery Results, and discovered sources cannot create their own governance authority.
 10. **Historical reproducibility:** retained evidence permits reconstruction of the boundary, sources, revisions, time, failures, and closure claim used for a historical decision.
 11. **Fail-closed closure failure:** incomplete or unverifiable discovery cannot produce a complete-universe claim.
 12. **Independently verifiable evidence:** closure cannot rely solely on the claimant’s unsupported assertion.
 13. **Canonical ownership preservation:** discovery references or derives from canonical sources without silently transferring their ownership.
-14. **Temporal stability:** an open or completed snapshot is not silently mutated by later source or boundary changes.
+14. **Temporal stability:** an open attempt, Complete Rule Universe Snapshot, or Incomplete Discovery Result is not silently mutated by later source or boundary changes.
 15. **Provider neutrality:** no model, database, policy engine, repository host, workflow product, or storage technology owns discovery semantics.
+16. **Universal eligibility separation:** source authorization, confidentiality, purpose, provider, and other required information-use eligibility are independently resolved before dependent information enters discovery; discovery does not own or infer those semantics.
+17. **Closure-relevant route coverage:** every route capable of changing membership remains closure-relevant until independently governed evidence proves otherwise.
+18. **Complete-versus-incomplete artifact separation:** only demonstrated closure produces a Complete Rule Universe Snapshot; every unsuccessful or unresolved attempt produces an immutable Incomplete Discovery Result.
+19. **Single semantic ownership boundary:** future contract decomposition may distribute representation or validation responsibilities but cannot fragment or duplicate canonical Governance Rule Discovery semantics.
 
 These are proposed ADP invariants. They are not effective requirements until the architecture is independently approved and made effective.
 
@@ -516,7 +554,7 @@ The proposed family supports composition across independently governed repositor
 5. Cross-scope inheritance and precedence evidence is preserved but not decided by discovery.
 6. Temporal evidence must be coherent for the declared evaluation.
 7. One incomplete participating boundary makes the combined discovery result incomplete.
-8. No repository’s complete local result can repair another repository’s missing mandatory source.
+8. No repository’s complete local result can repair another repository’s missing closure-relevant source.
 
 This ADP defines no repository layout, synchronization protocol, transaction model, or storage topology.
 
@@ -577,7 +615,7 @@ This ADP proposes the separation between historical evidence and later assessmen
 
 ### 18.5 Decision-Time Snapshot Binding
 
-The Rule Universe Snapshot binds the discovery evidence used for a specific downstream evaluation. Later changes create a new prospective snapshot or independently governed reassessment; they do not silently mutate the decision-time snapshot.
+A Complete Rule Universe Snapshot binds the discovery evidence used for a specific downstream evaluation. An Incomplete Discovery Result binds the unsuccessful attempt and its evidence without becoming a complete-universe input. Later changes create a new prospective snapshot, result, or independently governed reassessment; they do not silently mutate the decision-time evidence.
 
 ## 19. Conflict and Duplication Boundary
 
@@ -677,7 +715,7 @@ The proposal incorporates their useful properties without declaring those patter
 
 - A completeness claim becomes bounded and evidence-based.
 - Rule ownership can remain distributed.
-- Missing mandatory sources remain visible.
+- Missing closure-relevant sources remain visible.
 - Discovery becomes reproducible across providers and evaluators.
 - Restricted source contents need not be centralized.
 - Cross-repository composition can preserve local ownership and exact revisions.
@@ -701,7 +739,7 @@ Future operations would need to:
 
 - maintain eligible root and source relationships;
 - preserve exact source and boundary revisions;
-- retain Discovery Manifests, snapshots, provenance, and failure evidence;
+- retain Discovery Manifests, Complete Rule Universe Snapshots, Incomplete Discovery Results, provenance, and failure evidence;
 - expose stale, unavailable, conflicting, or incomplete source conditions;
 - reevaluate after governed boundary changes when independently required; and
 - prevent partial discovery from being presented as complete.
@@ -710,9 +748,9 @@ These are architecture consequences, not an implementation workflow.
 
 ### 23.4 Governance Consequences
 
-Future governance must identify ownership and authority for roots, declarations, closure evidence, temporal bindings, and migration. Existing authority, approval, lifecycle, Canonical Artifact, Product Binding, confidentiality, and Policy Decision domains retain their current ownership.
+Future governance must identify ownership and authority for roots, declarations, closure evidence, temporal bindings, and migration. Existing eligibility, authority, approval, lifecycle, Canonical Artifact, Product Binding, confidentiality, and Policy Decision domains retain their current ownership.
 
-The proposal creates no authority tier. Registries, manifests, snapshots, provenance, and closure evidence remain subordinate to independently applicable governance.
+The proposal creates no authority tier. Registries, manifests, snapshots, incomplete results, provenance, and closure evidence remain subordinate to independently applicable governance and one coherent Governance Rule Discovery semantic ownership boundary.
 
 ### 23.5 Migration Consequences
 
@@ -732,9 +770,9 @@ It also provides a stable family-level boundary so those later decisions can spe
 | --- | --- | --- |
 | Registries | Membership, ownership, revision, and staleness governance | Preserve federated discovery routes without transferring source authority |
 | Manifests | Per-context recording of traversal, exact revisions, exclusions, and failures | Make discovery activity attributable and reproducible |
-| Provenance | Lineage across roots, declarations, sources, activities, and snapshots | Distinguish evidence from unsupported claims |
-| Snapshots | Immutable binding of the bounded corpus and discovery evidence | Prevent later changes from mutating decision-time inputs |
-| Closure evidence | Demonstration that every mandatory bounded route was accounted for | Distinguish complete discovery from complete processing of an arbitrary list |
+| Provenance | Lineage across roots, declarations, sources, activities, complete snapshots, and incomplete results | Distinguish evidence from unsupported claims |
+| Complete snapshots and incomplete results | Immutable, explicitly classified binding of successful or unsuccessful discovery evidence | Prevent later changes from mutating decision-time inputs and prevent incomplete evidence from being presented as complete |
+| Closure evidence | Demonstration that every closure-relevant bounded route and membership-changing condition was accounted for | Distinguish complete discovery from complete processing of an arbitrary list |
 | Federation governance | Explicit composition across independently governed scopes | Preserve distributed ownership while supporting combined closure |
 
 ## 24. Risks and Mitigations
@@ -742,15 +780,16 @@ It also provides a stable family-level boundary so those later decisions can spe
 | Risk | Architecture consequence | Proposed mitigation boundary |
 | --- | --- | --- |
 | Stale source registry | A newly governed or changed source may be omitted. | Bind exact registry revisions, require freshness evidence where applicable, and treat unresolved staleness as incomplete. |
-| Missing mandatory source | The snapshot could omit a governing rule corpus. | Preserve the route as unresolved and prohibit a complete-universe claim. |
-| Unavailable repository | A participating source cannot be resolved. | Retain mandatory membership, use only independently eligible alternative evidence, and otherwise remain incomplete. |
+| Missing closure-relevant source | A Complete Rule Universe Snapshot could omit a governing Rule Corpus. | Preserve the route as unresolved and prohibit a complete-universe claim. |
+| Unavailable repository | A participating source cannot be resolved. | Retain closure relevance, use only independently eligible alternative evidence, and otherwise remain incomplete. |
+| Intentional, persistent, or adversarial mandatory-source unavailability | Fail-closed discovery can create an availability or denial-of-service consequence for every operation whose bounded universe depends on the source. | Safety takes precedence over an unsupported completeness claim. Preserve the route and repeated failure explicitly; elapsed time, repetition, or administrative override cannot make it optional or bypass closure. A continuity or alternative-evidence path requires independently governed, attributable, revision-bound evidence and must satisfy the same eligibility, provenance, scope, temporal, and closure requirements. Detailed resilience, operational, contract, and implementation mechanisms remain future work unless they would change an architecture invariant. |
 | Forged or ambiguous provenance | Source origin or resolution evidence cannot be trusted. | Require independently verifiable lineage and fail closure where mandatory provenance is invalid. |
 | Source duplication | Rules may be counted twice or divergent copies may compete. | Normalize through canonical identity and lineage; preserve all paths; record unresolved identity conflicts. |
 | Revision drift | Sources may change during evaluation or historical replay. | Fix exact revisions and decision-time snapshots; treat changes prospectively. |
 | Unbounded federation | Recursive discovery may not terminate or may silently expand. | Traverse only governed edges from the fixed boundary; unresolved or unbounded cycles prevent closure. |
 | Accidental legal-completeness claim | CADP-governed closure may be mistaken for complete legal discovery. | State the external-obligation limitation in manifests, snapshots, reviews, and future contracts. |
 | Governance-root ambiguity | The root may self-authorize or have conflicting owners. | Require independently established authority and fail closed until root eligibility is resolved. |
-| Excessive administrative overhead | Source declarations and evidence may become costly or stale. | Keep ownership federated, define proportional future controls, preserve derived projections, and do not weaken mandatory closure invariants. |
+| Excessive administrative overhead | Source declarations and evidence may become costly or stale. | Keep ownership federated, define proportional future controls, preserve derived projections, and do not weaken closure-relevance invariants. |
 
 The mitigations are proposed architecture boundaries. Detailed controls remain for future review and contract design.
 
@@ -761,7 +800,7 @@ This ADP does not approve adoption. Before future adoption could be considered, 
 1. governance ownership must be identified without creating circular authority;
 2. Federation Root or root-set authority must be externally established under applicable governance;
 3. the Category B questions required for adoption must be resolved or validly carried under approved containment;
-4. future contract design must be completed and reviewed;
+4. future contract design must preserve one coherent Governance Rule Discovery semantic ownership boundary and be completed and reviewed;
 5. the validation model must be completed;
 6. migration strategy and legacy treatment must be reviewed;
 7. security, confidentiality, authorization, and external-egress implications must be reviewed;
@@ -780,7 +819,9 @@ If the proposal advances, architecture validation should evaluate conceptual beh
 | Validation area | Architecture question |
 | --- | --- |
 | Representative source topologies | Can one-root, composed-root, central-catalog, and federated-catalog topologies preserve the proposed invariants? |
-| Missing-source scenarios | Does every mandatory missing route remain explicit and prevent a complete-universe claim? |
+| Root migration | Can a prospective change from one root revision or topology to another preserve every historical Complete Rule Universe Snapshot, Incomplete Discovery Result, provenance chain, and decision-time boundary without designing or assuming a migration mechanism? |
+| Missing-source scenarios | Does every missing closure-relevant route remain explicit and prevent a complete-universe claim? |
+| Persistent mandatory-source unavailability | Do intentional, repeated, prolonged, and adversarial source failures remain explicit and incomplete without becoming optional through time, repetition, administrative action, or partial success? |
 | Conflicting declarations | Are membership, identity, scope, revision, and ownership conflicts preserved without silent selection? |
 | Historical replay | Can an eligible reviewer reconstruct the boundary, exact sources, time, failures, and closure basis? |
 | Cross-repository resolution | Do local, shared, product-bound, and external sources compose without transferring ownership or repairing an incomplete participant? |
@@ -794,6 +835,10 @@ This strategy defines no tests, tooling, implementation, pass thresholds, or tes
 
 The proposed architecture is likely to require future bounded contract domains. This ADP does not create, define, approve, or assign final ownership to any contract.
 
+The listed future contracts are candidate decompositions only. They do not independently acquire ownership of Governance Rule Discovery semantics. Closure, provenance, source identity, temporal binding, discovery failure, manifest, Complete Rule Universe Snapshot, and Incomplete Discovery Result semantics remain subordinate to one coherent semantic ownership boundary.
+
+Contract decomposition may distribute representation, evidence, or validation responsibilities without fragmenting canonical semantic ownership. No candidate contract may redefine another contract's canonical semantics or the independently retained semantics of Foundation, Universal Eligibility, Governance Authority, Canonical Artifact, lifecycle, applicability, or Policy Decision. Any future proposal to split, relocate, or duplicate semantic ownership requires explicit governance and independent architecture review.
+
 Potential contract domains include:
 
 | Potential future contract | Candidate subject only |
@@ -801,11 +846,11 @@ Potential contract domains include:
 | Rule Source Registry Contract | Governance boundaries for source membership and registry relationships |
 | Rule Source Descriptor Contract | Architecture categories needed to identify and resolve a source |
 | Discovery Manifest Contract | Operation-bound discovery activity evidence |
-| Rule Universe Snapshot Contract | Immutable binding of discovered corpus and closure state |
+| Complete Rule Universe Snapshot Contract | Immutable binding of the completely discovered corpus and demonstrated closure state |
+| Incomplete Discovery Result Contract | Immutable preservation of partial corpus, unresolved routes, failures, provenance, bindings, and reasons closure was not established |
 | Closure Evidence Contract | Evidence supporting complete or incomplete bounded discovery |
-| Provenance Contract | Attributable lineage across roots, declarations, sources, activities, and snapshots |
+| Provenance Contract | Attributable lineage across roots, declarations, sources, activities, complete snapshots, and incomplete results |
 | Temporal Binding Contract | Relationship among evaluation time, effective intervals, revisions, and reassessment |
-| Discovery Failure Contract | Preservation and handoff of missing, invalid, unavailable, stale, conflicting, or unverifiable discovery conditions |
 
 Contract necessity, consolidation, names, ownership, fields, conformance, compatibility, and lifecycle remain future decisions.
 
@@ -814,8 +859,8 @@ Contract necessity, consolidation, names, ownership, fields, conformance, compat
 The independent Architecture Review should answer:
 
 1. Is the federation boundary sufficiently closed for a declared decision context?
-2. Is source-of-sources bootstrap adequately separated from governance authority?
-3. Are fail-closed semantics sufficient to prevent permissive completeness claims?
+2. Are Universal Eligibility, Governance Authority, and source-of-sources bootstrap independently and coherently separated?
+3. Are fail-closed semantics and Complete-versus-Incomplete artifact boundaries sufficient to prevent permissive completeness claims?
 4. Is Governance Rule Discovery properly separated from Governance Applicability?
 5. Is Governance Rule Discovery properly separated from Policy Decision and final governance authority?
 6. Are external-obligation limitations explicit and non-misleading?
@@ -830,6 +875,25 @@ The independent Architecture Review should answer:
 
 ## 29. Decision Status
 
-**Proposed — Pending Independent Architecture Review**
+**Revised — Pending Independent Verification of Review Corrections**
 
 This Draft Architecture Decision Proposal is not approved, not effective, not normative, not implementation-authorizing, not contract-defining, and not a Design Freeze. It has no architectural or governance effect until an eligible human decision is recorded through the applicable CADP governance process and every independently required lifecycle condition is satisfied.
+
+## 30. Revision History
+
+| Version | Date | Revision purpose | Architecture and governance effect |
+| --- | --- | --- | --- |
+| 0.1.0 | 2026-07-24 | Initial Architecture Decision Proposal for the Governed Bounded-Closed Federation family. | Draft proposal only; no approval, effectiveness, adoption, implementation, contract, authority, or Design Freeze effect. |
+| 0.1.1 | 2026-07-24 | Maintenance revision following the independent Architecture Review outcome `ACCEPT WITH MINOR REVISIONS`. Resolves all five Minor Findings by separating Universal Eligibility from Governance Authority, defining source-route closure relevance, separating Complete Rule Universe Snapshots from Incomplete Discovery Results, recording mandatory-source denial-of-service risk, and preserving one semantic ownership boundary across candidate contract decompositions. Adds the non-blocking prospective root-migration validation scenario. | No architecture-family change, Decision Boundary expansion, Category B reclassification, contract or implementation design, architecture approval, effectiveness, adoption, governance authority, or Design Freeze effect. Pending independent verification of the corrections. |
+
+### 30.1 Maintenance Finding Resolution
+
+| Review finding | Resolution in Version 0.1.1 | Boundary preserved |
+| --- | --- | --- |
+| MINOR-01 — Universal Eligibility Gate | Models Universal Eligibility Gate and Governance Authority as distinct upstream inputs; discovery consumes but does not own, infer, or redefine either result. | Foundation and existing governance retain eligibility and authority ownership. |
+| MINOR-02 — Source-route closure relevance | Defines closure-relevant, conditionally closure-relevant, and independently proven non-membership-changing routes; descriptive labels and self-assertion cannot remove closure relevance. | No contract fields, registry values, or traversal algorithm introduced. |
+| MINOR-03 — Incomplete-discovery artifact model | Separates the Complete Rule Universe Snapshot from the immutable Incomplete Discovery Result throughout components, lifecycle, closure, failure, and downstream semantics. | No schema, storage model, or Policy Decision outcome introduced. |
+| MINOR-04 — Mandatory-source availability risk | Records intentional, persistent, and adversarial source unavailability as an availability and denial-of-service consequence while preserving fail-closed closure and governed alternative evidence. | Resilience mechanism remains future contract, operational, or implementation work. |
+| MINOR-05 — Single semantic ownership boundary | Treats future contracts as candidate decompositions subordinate to one coherent Governance Rule Discovery semantic ownership boundary. | Final packaging, number, location, and contract contents remain undecided. |
+
+The non-blocking root-migration observation is addressed through an architecture validation scenario only. The optional Category B risk-table observation is not applied; the 19 Category B classifications, assumptions, containment, owners, triggers, and historical closure evidence remain unchanged.

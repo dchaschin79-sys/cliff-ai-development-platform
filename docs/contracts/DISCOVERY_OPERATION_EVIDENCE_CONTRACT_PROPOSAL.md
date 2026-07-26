@@ -7,12 +7,12 @@
 | Contract identity | `CADP-CONTRACT-DISCOVERY-OPERATION-EVIDENCE` |
 | Title | Discovery Operation Evidence Contract |
 | Document type | Contract Proposal |
-| Version | 0.2.0 |
-| Previous version | 0.1.0 |
-| Revision classification | Pre-acceptance Major Maintenance Revision |
-| Revision basis | Independent Contract Review — three Major and two Minor Findings |
+| Version | 0.2.1 |
+| Previous version | 0.2.0 |
+| Revision classification | Pre-acceptance Patch Maintenance Revision |
+| Revision basis | Canonical Contract System Consistency Verification — bounded dependency-graph reconciliation |
 | Status | Draft Contract Proposal |
-| Review state | Revised — Pending Independent Verification |
+| Review state | Graph reconciled — Pending bounded Independent Verification |
 | Date | 2026-07-25 |
 | Architecture domain | Governance Rule Discovery |
 | Contract domain | Discovery Operation Evidence |
@@ -42,15 +42,15 @@ Normative keywords describe the semantics this contract would require only if th
 | [Governance Rule Discovery Architecture Decision Proposal](../architecture/GOVERNANCE_RULE_DISCOVERY_ARCHITECTURE_DECISION_PROPOSAL.md) | Version 0.1.1; Git object `5fc17613f5ef78fb5f546f17bdeded75465da9c0` | Accepted Governed Bounded-Closed Federation architecture, operation-bound discovery evidence, Decision Boundary, separation of concerns, and Category B containment |
 | [Governance Rule Discovery Architecture Acceptance Record](../architecture/GOVERNANCE_RULE_DISCOVERY_ARCHITECTURE_ACCEPTANCE_RECORD.md) | Record `CADP-AAR-GRD-0001`, Version 1.0.0; Git object `19995bca6768b1de01c3db2055bc618404dbc9ec` | Architecture Acceptance and authorization for Contract Design and contract review only |
 | [CADP Contract Governance Framework](../governance/CONTRACT_GOVERNANCE_FRAMEWORK.md) | Version 0.3.0 Draft; Git object `7d6ced000bb6135fe3ff6a4c3331fa9f6a458e74`; commit `24feb4baa0d89a91a157ab2746c9d4e175fa6c9d` | Task-applied contract ownership, lifecycle, review, Verification, human Acceptance, Publication, Effectiveness, change, and traceability methodology |
-| [Governance Rule Discovery Contract Decomposition Plan](GOVERNANCE_RULE_DISCOVERY_CONTRACT_DECOMPOSITION_PLAN.md) | Version 0.1.0; Git object `c8051bd57697abeb5fd15e021cdc9678ebf1cd6a`; commit `adbf836df64783bf7c642f870fcff31219bad2e4` | Discovery Operation Evidence primary responsibility, Source Resolver and Discovery Manifest consolidation, dependency direction, exclusions, review order, and Category B impact |
-| [Rule Source Catalog Contract Proposal](RULE_SOURCE_CATALOG_CONTRACT_PROPOSAL.md) | Version 0.2.0 Draft; Git object `f1c80b2d51b4e5e01eec14e30ff1a63cd0cf3f20`; commit `1e1e34ac7f7b53ea452536b3d303985df7bf286d` | Exact verified upstream semantic candidate for catalog, source, identity, revision, reference, declaration, participation, scope, eligibility-reference, lifecycle-reference, and metadata-ownership meanings |
-| [Rule Source Catalog Contract Acceptance Record](RULE_SOURCE_CATALOG_CONTRACT_ACCEPTANCE_RECORD.md) | Version 0.1.0; status `Pending Human Attestation`; Git object `744cff635ead171fe2694761330ad2e08a2a7377`; commit `d6bcc635ec9d6cc241c66ec0a62ba6435ab7b6a9` | Evidence that the Rule Source Catalog Proposal Version 0.2.0 is `VERIFIED` but remains Draft and has not received human Contract Acceptance |
-| [Federation Boundary Contract Proposal](FEDERATION_BOUNDARY_CONTRACT_PROPOSAL.md) | Version 0.2.0 Draft; Git object `f9dff838f7ecbea1e9eea4e31fece117203799c1`; commit `f6d8b79f301531df7156659bbd4304c2f57a1a43` | Exact verified upstream semantic candidate for Federation Identity, Federation Boundary Revision, Federation Boundary Scope, root or root-set basis, Federation Membership, composition relationships, Decision Context binding, and ownership preservation |
-| [Federation Boundary Contract Acceptance Record](FEDERATION_BOUNDARY_CONTRACT_ACCEPTANCE_RECORD.md) | Version 0.1.0; status `Pending Human Attestation`; Git object `83e95f3883b1907ff929688fbc88496204ebd1e7`; commit `bb42644353ae6a90991dc3f8dc062fecd2f39739` | Evidence that the Federation Boundary Proposal Version 0.2.0 is `VERIFIED` but remains Draft and has not received human Contract Acceptance |
+| [Governance Rule Discovery Contract Decomposition Plan](GOVERNANCE_RULE_DISCOVERY_CONTRACT_DECOMPOSITION_PLAN.md) | Version 0.2.0; Git object `c4c1fb6c459d72227b0f3342d6af388ba954a5cd`; commit `f26e52f63a9118991f8620cbe733bb6b80722664` | Discovery Operation Evidence primary responsibility, Source Resolver and Discovery Manifest consolidation, seven-contract dependency graph, exclusions, review order, and Category B impact |
+| [Rule Source Catalog Contract Proposal](RULE_SOURCE_CATALOG_CONTRACT_PROPOSAL.md) | Version 0.2.1 Draft; Git object `d879876ee5ba9641b2b0d64eb1af7a92568e315c` | Exact upstream semantic candidate reconciled to the Contract Decomposition Plan Version 0.2.0 graph for catalog, source, identity, revision, reference, declaration, participation, scope, eligibility-reference, lifecycle-reference, and metadata-ownership meanings |
+| [Rule Source Catalog Contract Acceptance Record](RULE_SOURCE_CATALOG_CONTRACT_ACCEPTANCE_RECORD.md) | Version 0.1.0; status `Pending Human Attestation`; Git object `744cff635ead171fe2694761330ad2e08a2a7377`; commit `d6bcc635ec9d6cc241c66ec0a62ba6435ab7b6a9` | Historical evidence for verified Rule Source Catalog Proposal Version 0.2.0 only; it does not verify or accept Version 0.2.1 |
+| [Federation Boundary Contract Proposal](FEDERATION_BOUNDARY_CONTRACT_PROPOSAL.md) | Version 0.2.1 Draft; Git object `24459db26a4440c3ef8b21f0ce1e407b2a8ee648` | Exact upstream semantic candidate reconciled to the Contract Decomposition Plan Version 0.2.0 graph for Federation Identity, Federation Boundary Revision, Federation Boundary Scope, root or root-set basis, Federation Membership, composition relationships, Decision Context binding, and ownership preservation |
+| [Federation Boundary Contract Acceptance Record](FEDERATION_BOUNDARY_CONTRACT_ACCEPTANCE_RECORD.md) | Version 0.1.0; status `Pending Human Attestation`; Git object `83e95f3883b1907ff929688fbc88496204ebd1e7`; commit `bb42644353ae6a90991dc3f8dc062fecd2f39739` | Historical evidence for verified Federation Boundary Proposal Version 0.2.0 only; it does not verify or accept Version 0.2.1 |
 
 No other source is used to define this proposal.
 
-The Rule Source Catalog and Federation Boundary proposals are exact verified Draft dependencies. Their Acceptance Records remain `Pending Human Attestation`; neither proposal is Accepted, Published, or Effective. This proposal consumes their exact Version 0.2.0 meanings only as fixed upstream design dependencies for Draft authoring. It does not accept them, make them Effective, repair missing human attestation, or acquire their semantic ownership.
+The Rule Source Catalog and Federation Boundary proposals remain Draft dependencies. Their graph-reconciled Version 0.2.1 revisions require bounded independent Verification. Their existing Acceptance Records remain `Pending Human Attestation` and bind only the predecessor Version 0.2.0 revisions; neither current proposal is Accepted, Published, or Effective. This proposal consumes their exact Version 0.2.1 meanings only as fixed upstream design dependencies for bounded graph reconciliation. It does not verify or accept them, make them Effective, repair missing human attestation, or acquire their semantic ownership.
 
 If either upstream proposal changes, fails to receive required human Acceptance, or acquires conditions affecting this contract boundary, this proposal must be reevaluated under the applicable contract lifecycle before its own human Acceptance. Downstream acceptance cannot establish or repair missing upstream acceptance.
 
@@ -283,7 +283,7 @@ Missing, ambiguous, conflicting, or unverifiable Activity Actor Attribution or E
 | Purpose | Provide one operation-level semantic aggregate of the evidence asserted for a Discovery Operation at an exact revision. |
 | Canonical definition | A Discovery Operation Manifest is the operation-owned aggregate that relates one Discovery Operation Identity and Evidence Revision to its exact Operation Context Binding, both role qualifications within Operation Attribution, Presented Source Routes, Source Route Treatment Evidence, Source Resolution Activity Evidence, Operation Observations, and exact references to the externally owned determinations and evidence used by the operation. |
 | Semantically required invariants | A manifest MUST identify one Discovery Operation Identity, one exact Evidence Revision, one exact Operation Context Binding, one Activity Actor Attribution, and one Evidence Asserter Attribution. It MUST preserve every evidence category in Section 9.1 or an explicit `Indeterminate` state for a required category that is missing, conflicting, or unverifiable. Every included assertion MUST be attributable to that revision and context. A manifest MUST NOT assert or imply that its Presented Source Route set is the full Federation Boundary, that its Attempted Source Route Set is complete, that discovery closure was demonstrated, or that a Rule Universe result is complete or incomplete. |
-| Relationships | The manifest aggregates operation evidence without acquiring ownership of any referenced upstream or downstream meaning. It may be consumed by Closure and Provenance Evidence, Rule Universe Result, Discovery Validation, audit, and review domains. |
+| Relationships | The manifest aggregates operation evidence without acquiring ownership of any referenced upstream or downstream meaning. It may be consumed by Discovery Evidence Provenance, Discovery Closure Evidence, Rule Universe Result, Discovery Validation, audit, and review domains. |
 | Ownership boundary | This contract owns the operation-level aggregate meaning. Closure-supporting evidence, discovery lineage, temporal coherence, complete or incomplete result meaning, and conformance results remain downstream-owned. |
 | Explicit non-goals | This concept does not define a file, manifest format, field set, log, collection, event stream, database table, message, index, report, API payload, or storage object. |
 
@@ -419,7 +419,7 @@ Operation Observations preserve unavailable, restricted, duplicate, conflicting,
 | Canonical definition | Attempted Source Route Set is the operation-owned set of exact Presented Source Route references for which the same Evidence Revision records `Attempted` Source Route Treatment Evidence. |
 | Semantically required invariants | Every member MUST have exact route identity and revision references, the same Operation Context Binding, and attributable `Attempted` evidence. Routes with `Not Attempted` or `Indeterminate` treatment MUST NOT be included. Equivalent route labels, locations, or returned content MUST NOT be treated as identity equivalence without upstream evidence. |
 | Relationships | The set is derived semantically from the treatment evidence within the one canonical Discovery Operation Manifest meaning fixed by the same Evidence Revision. The manifest has no independent revision identity. |
-| Ownership boundary | This contract owns the attempt-evidence aggregation only. Federation Boundary owns membership; Closure and Provenance Evidence owns closure-supporting interpretation; Rule Universe Result owns complete-versus-incomplete result meaning. |
+| Ownership boundary | This contract owns the attempt-evidence aggregation only. Federation Boundary owns membership; Discovery Evidence Provenance owns attributable lineage and temporal coherence; Discovery Closure Evidence owns closure-supporting evidence interpretation; Rule Universe Result owns complete-versus-incomplete result meaning. |
 | Explicit non-goals | This concept does not represent the full boundary, closure-relevant route set, successfully resolved route set, Rule Corpus, Complete Rule Universe Snapshot, or Incomplete Discovery Result. |
 
 The Attempted Source Route Set cannot prove that every required route was attempted. Its cardinality, apparent coverage, repeated use, provider confidence, or similarity to an earlier set cannot establish closure or completeness.
@@ -483,7 +483,8 @@ Corrections or supplemental evidence create a new attributable Evidence Revision
 | Source Resolution Activity Evidence | records activity and exactly one operation-level disposition concerning | Presented Source Route | This contract owns activity evidence and the operation-level assertion; source identity, canonical resolution, and result semantics remain external |
 | Attempted Source Route Set | aggregates | Routes with `Attempted` evidence | This contract owns attempt aggregation, not completeness |
 | Operation Observation | records an observed condition concerning | Operation, route, treatment, or activity | This contract owns the observation assertion, not canonical condition or outcome meaning |
-| Closure and Provenance Evidence | consumes | Discovery Operation Evidence | Downstream contract cannot redefine operation evidence |
+| Discovery Evidence Provenance | consumes | Discovery Operation Evidence | Provenance contract cannot redefine operation evidence |
+| Discovery Closure Evidence | consumes | Discovery Operation Evidence | Closure-evidence contract cannot redefine operation evidence |
 | Rule Universe Result | consumes through governed dependencies | Operation and closure-supporting evidence | Result contract owns complete-versus-incomplete result meaning |
 | Discovery Validation | evaluates conformance of | Discovery Operation Evidence | Validation contract owns validation outcome |
 
@@ -530,11 +531,11 @@ If later Accepted, Published, and made Effective, this contract would require:
 | Accepted Governance Rule Discovery architecture | Operation-bound evidence, fixed discovery boundary, exact revisions, attribution, reproducibility, incomplete-evidence visibility, and separation from closure, applicability, and Policy Decision | Architecture family and Decision Boundary remain unchanged |
 | Architecture Acceptance Record | Authorization for Contract Design and review within the accepted architecture | Does not approve this contract or authorize implementation |
 | Contract Governance Framework Version 0.3.0 | Contract identity, lifecycle, review, Verification, human Acceptance, Publication, Effectiveness, change, and traceability methodology | Framework remains unchanged and outside this contract |
-| Contract Decomposition Plan | Discovery Operation Evidence responsibility, Source Resolver and Discovery Manifest consolidation, dependency direction, exclusions, review order, and affected Category B items | Plan remains a fixed planning source and is not redefined |
-| Rule Source Catalog Proposal Version 0.2.0 | Catalog, source, identity, revision, declaration, reference, participation, scope, eligibility-reference, lifecycle-reference, and metadata-ownership meanings | Verified Draft remains pending human attestation and retains every source-catalog meaning |
-| Rule Source Catalog Acceptance Record | Exact verified upstream revision and status `Pending Human Attestation` | Record creates no Acceptance; this proposal cannot infer or supply it |
-| Federation Boundary Proposal Version 0.2.0 | Federation identity, revision, scope, root or root-set basis, membership, composition, Decision Context binding, and ownership preservation | Verified Draft remains pending human attestation and retains every federation meaning |
-| Federation Boundary Acceptance Record | Exact verified upstream revision and status `Pending Human Attestation` | Record creates no Acceptance; this proposal cannot infer or supply it |
+| Contract Decomposition Plan Version 0.2.0 | Discovery Operation Evidence responsibility, Source Resolver and Discovery Manifest consolidation, seven-contract dependency direction, exclusions, review order, and affected Category B items | Plan remains a fixed planning source and is not redefined |
+| Rule Source Catalog Proposal Version 0.2.1 | Catalog, source, identity, revision, declaration, reference, participation, scope, eligibility-reference, lifecycle-reference, and metadata-ownership meanings | Graph-reconciled Draft retains every source-catalog meaning and requires bounded Verification |
+| Rule Source Catalog Acceptance Record | Historical evidence for verified Proposal Version 0.2.0 and status `Pending Human Attestation` | Record creates no Acceptance and does not verify or accept Version 0.2.1 |
+| Federation Boundary Proposal Version 0.2.1 | Federation identity, revision, scope, root or root-set basis, membership, composition, Decision Context binding, and ownership preservation | Graph-reconciled Draft retains every federation meaning and requires bounded Verification |
+| Federation Boundary Acceptance Record | Historical evidence for verified Proposal Version 0.2.0 and status `Pending Human Attestation` | Record creates no Acceptance and does not verify or accept Version 0.2.1 |
 | Decision Context | Governed Operation or decision subject, target and requested scope, purpose, evaluation time, applicable baselines, and required eligibility and authority references | Decision Context identity, facts, construction, lifecycle, and validation remain externally owned |
 | Universal Eligibility and confidentiality governance | Source authorization, confidentiality, purpose, provider, and other information-use eligibility evidence | This contract preserves exact references and creates no eligibility or disclosure semantics |
 | Governance Authority and lifecycle | Authority, ownership, approval, delegation, effective interval, supersession, and other externally governed evidence | This contract preserves exact references and creates no authority or lifecycle semantics |
@@ -546,10 +547,11 @@ Every consumed meaning is referenced at an exact immutable revision where requir
 
 The planned downstream consumers are:
 
-1. **Closure and Provenance Evidence Contract candidate** — consumes the exact operation identity, context and boundary binding, attribution, manifest, route-treatment evidence, activity evidence, and observations when defining closure-supporting evidence, discovery lineage, and discovery-specific temporal coherence.
-2. **Rule Universe Result Contract candidate** — consumes operation evidence only through the governed dependency boundary needed to own complete-versus-incomplete discovery-result meaning; it cannot reinterpret the operation evidence.
-3. **Discovery Validation Contract candidate** — evaluates conformance of operation evidence and its relationships without acquiring operation-evidence ownership.
-4. **Audit and review consumers** — reconstruct what one operation asserted it attempted, under which exact boundary and context, without treating reconstruction as Acceptance, closure, provenance sufficiency, validation, or implementation authority.
+1. **Discovery Evidence Provenance Contract candidate** — consumes the exact operation identity, context and boundary binding, attribution, manifest, route-treatment evidence, activity evidence, and observations when defining discovery lineage and discovery-specific temporal coherence.
+2. **Discovery Closure Evidence Contract candidate** — consumes the exact operation identity, context and boundary binding, attribution, manifest, route-treatment evidence, activity evidence, and observations when composing closure-supporting evidence without acquiring operation-evidence ownership.
+3. **Rule Universe Result Contract candidate** — consumes operation evidence only through the governed dependency boundary needed to own complete-versus-incomplete discovery-result meaning; it cannot reinterpret the operation evidence.
+4. **Discovery Validation Contract candidate** — evaluates conformance of operation evidence and its relationships without acquiring operation-evidence ownership.
+5. **Audit and review consumers** — reconstruct what one operation asserted it attempted, under which exact boundary and context, without treating reconstruction as Acceptance, closure, provenance sufficiency, validation, or implementation authority.
 
 No downstream consumer may:
 
@@ -580,7 +582,8 @@ This section defines semantic dependency direction only. It does not define soft
 | Discovery Operation identity and evidence revision | Does not own | Does not own | Owns | References |
 | Presented route and attempt evidence | Does not own | Does not own | Owns operation-level evidence | Consumes |
 | Source-resolution activity evidence | Does not own | Does not own | Owns operation-level evidence | Consumes |
-| Closure-supporting evidence and discovery lineage | Does not own | Does not own | Does not own | Closure and Provenance Evidence owns |
+| Discovery evidence lineage and temporal coherence | Does not own | Does not own | Does not own | Discovery Evidence Provenance owns |
+| Closure-supporting evidence | Does not own | Does not own | Does not own | Discovery Closure Evidence owns |
 | Complete-versus-incomplete result meaning | Does not own | Does not own | Does not own | Rule Universe Result owns |
 | Conformance result | Does not own | Does not own | Does not own | Discovery Validation owns |
 | Rule applicability and Policy Decision | Does not own | Does not own | Does not own | Governance Applicability and Policy Decision retain ownership |
@@ -638,7 +641,7 @@ The Contract Decomposition Plan maps four accepted Category B items to Discovery
 
 No Category B classification, assumption, containment boundary, future owner, or reopening trigger is changed by this proposal.
 
-The Category B items affecting Rule Source Catalog, Federation Boundary, Closure and Provenance Evidence, Rule Universe Result, or Discovery Validation are not imported merely because this contract consumes or supplies evidence to those domains.
+The Category B items affecting Rule Source Catalog, Federation Boundary, Discovery Evidence Provenance, Discovery Closure Evidence, Rule Universe Result, or Discovery Validation are not imported merely because this contract consumes or supplies evidence to those domains.
 
 Category B ownership remains with the future governance forums identified by the accepted Architecture Decision Proposal. This contract records impact and containment only; it does not become the owner of a deferred question.
 
@@ -813,24 +816,19 @@ This proposal defines no implementation, runtime, API, schema, storage, algorith
 ### 23.2 Contract Dependency Traceability
 
 ```text
-Foundation and Existing Governance
-    ↓
-Accepted Governance Rule Discovery Architecture
-    ↓
-Rule Source Catalog Proposal v0.2.0 — verified Draft
-    ↓
-Federation Boundary Proposal v0.2.0 — verified Draft
-    ↓
-Discovery Operation Evidence Proposal v0.2.0 — this revised Draft
-    ↓
-Closure and Provenance Evidence
-    ↓
-Rule Universe Result
-    ↓
-Discovery Validation
+Direct upstream contract edges:
+Rule Source Catalog Proposal v0.2.1 ────────┐
+                                            ├──> Discovery Operation Evidence Proposal v0.2.1
+Federation Boundary Proposal v0.2.1 ───────┘
+
+Direct downstream contract edges:
+Discovery Operation Evidence Proposal v0.2.1 ──> Discovery Evidence Provenance
+Discovery Operation Evidence Proposal v0.2.1 ──> Discovery Closure Evidence
+Discovery Operation Evidence Proposal v0.2.1 ──> Rule Universe Result
+Discovery Operation Evidence Proposal v0.2.1 ──> Discovery Validation
 ```
 
-This is semantic dependency direction, not implementation flow, runtime sequence, acceptance inheritance, or authority delegation. A downstream contract cannot repair an upstream Draft, missing Acceptance, invalid revision, or semantic ambiguity.
+These are the exact direct edges for this contract in the Contract Decomposition Plan Version 0.2.0. They express semantic dependency direction, not implementation flow, runtime sequence, acceptance inheritance, or authority delegation. A downstream contract cannot repair an upstream Draft, missing Acceptance, invalid revision, or semantic ambiguity.
 
 ### 23.3 Required Future Traceability
 
@@ -866,14 +864,15 @@ Any later revision, review, Acceptance Record, Published Contract, or Effectiven
 | Implementation independence | Preserved |
 | Category B preserved unresolved | Satisfied — four mapped items |
 | Category C excluded | Satisfied — GRD-16 and GRD-21 remain outside |
-| Independent Review findings | Resolved in this revision — MAJ-01, MAJ-02, MAJ-03, MIN-01, and MIN-02; pending independent Verification |
+| Independent Review findings | Resolved and independently verified for Version 0.2.0 — MAJ-01, MAJ-02, MAJ-03, MIN-01, and MIN-02 |
+| Graph reconciliation | Version 0.2.1 aligns the exact Decomposition Plan binding and direct upstream and downstream declarations; pending bounded independent Verification |
 | Foundation changed | No |
 | Accepted architecture changed | No |
 | Decision Boundary changed | No |
 | Contract Governance Framework changed | No |
 | Contract Decomposition Plan changed | No |
-| Rule Source Catalog Proposal changed | No |
-| Federation Boundary Proposal changed | No |
+| Rule Source Catalog Proposal changed | Graph-reconciled Version 0.2.1 consumed; semantic ownership unchanged |
+| Federation Boundary Proposal changed | Graph-reconciled Version 0.2.1 consumed; semantic ownership unchanged |
 | Acceptance created | No |
 | Publication created | No |
 | Effectiveness created | No |
@@ -883,32 +882,36 @@ Any later revision, review, Acceptance Record, Published Contract, or Effectiven
 
 | Lifecycle evidence | Current state |
 | --- | --- |
-| Proposal | Draft Contract Proposal Version 0.2.0 |
+| Proposal | Draft Contract Proposal Version 0.2.1 |
 | Internal review | Not created |
 | Independent Review | Completed — `REQUIRES MAJOR REVISION`; three Major and two Minor Findings |
-| Maintenance Revision | Completed — bounded revision to Version 0.2.0 |
-| Verification | Not created — required for this exact Version 0.2.0 revision |
-| Acceptance Record | Not created |
+| Semantic Maintenance Revision | Version 0.2.0 completed and independently verified |
+| Graph Reconciliation Revision | Version 0.2.1 created to align exact dependency declarations with Contract Decomposition Plan Version 0.2.0 |
+| Verification | Required for the bounded graph reconciliation in exact Version 0.2.1 |
+| Acceptance Record | Existing Version 0.1.0 record binds Proposal Version 0.2.0 only and does not apply to Version 0.2.1 |
 | Acceptance | Not created |
 | Publication | Not created |
 | Effectiveness | Not created |
 | Supersession | None |
 | Archival | No |
 
-The next permitted governance action is Contract Review Resolution Verification of this exact Version 0.2.0 Draft revision against MAJ-01, MAJ-02, MAJ-03, MIN-01, and MIN-02.
+The next permitted governance action is bounded independent Verification of this exact Version 0.2.1 Draft revision against the Contract Decomposition Plan Version 0.2.0 dependency graph and the no-semantic-regression constraints of this reconciliation.
 
 Verification must verify:
 
 - one primary responsibility and deterministic ownership;
-- exact binding to the externally owned Decision Context and verified Federation Boundary revision;
+- exact binding to the externally owned Decision Context and graph-reconciled Federation Boundary revision;
 - separation from Rule Source Catalog and Federation Boundary semantics;
 - separation of attempt evidence from closure, provenance sufficiency, result, and validation;
 - deterministic `Attempted`, `Not Attempted`, and `Indeterminate` evidence meanings;
 - manifest and Attempted Source Route Set non-completeness;
+- exact direct upstream edges from Rule Source Catalog and Federation Boundary;
+- exact direct downstream edges to Discovery Evidence Provenance, Discovery Closure Evidence, Rule Universe Result, and Discovery Validation;
+- absence of any obsolete combined downstream contract reference;
 - preservation of GRD-05, GRD-06, GRD-11, and GRD-15;
 - fail-closed evidence semantics, immutable history, provider neutrality, and implementation independence;
 - continued exclusion of Category C; and
-- no Foundation, architecture, Framework, decomposition, upstream contract, lifecycle, or implementation change.
+- no Foundation, architecture, Framework, decomposition, semantic ownership, lifecycle-state, or implementation change.
 
 Verification does not create Acceptance, Publication, Effectiveness, implementation authority, adoption, or Design Freeze.
 
@@ -916,7 +919,7 @@ Verification does not create Acceptance, Publication, Effectiveness, implementat
 
 None identified.
 
-The fixed Contract Governance Framework Version 0.3.0 and Contract Decomposition Plan were sufficient to establish this Draft Proposal’s lifecycle position, ownership boundary, dependency direction, upstream Draft handling, downstream separation, and review path. This statement does not approve, amend, reinterpret, or validate the methodology.
+The fixed Contract Governance Framework Version 0.3.0 and Contract Decomposition Plan Version 0.2.0 were sufficient to establish this Draft Proposal’s lifecycle position, ownership boundary, dependency direction, upstream Draft handling, downstream separation, and review path. This statement does not approve, amend, reinterpret, or validate the methodology.
 
 ## 27. Revision History
 
@@ -924,6 +927,7 @@ The fixed Contract Governance Framework Version 0.3.0 and Contract Decomposition
 | --- | --- | --- |
 | 0.1.0 | Initial Draft Contract Proposal | Establishes the Discovery Operation Evidence semantic candidate under the accepted Governance Rule Discovery architecture and fixed Contract Governance Framework Version 0.3.0. Consolidates the Source Resolver and Discovery Manifest candidates into one operation-evidence owner while preserving upstream source and federation ownership, downstream closure/provenance/result/validation ownership, four Category B deferrals, Category C exclusion, and the accepted Decision Boundary. |
 | 0.2.0 | Pre-acceptance Major Maintenance Revision | Resolves the completed Independent Review findings by defining a mandatory role-qualified attribution core, closed Presented Source Route qualifying bases, minimum Attempt evidence and treatment consistency, explicit resolution-activity dispositions, a mandatory manifest evidence boundary, and one Evidence Revision axis for manifest meaning. Preserves the primary responsibility, ownership boundaries, Architecture, Framework, decomposition, Decision Boundary, four Category B deferrals, provider neutrality, and implementation independence. |
+| 0.2.1 | Pre-acceptance Patch Maintenance Revision | Reconciles the proposal’s exact Contract Decomposition Plan binding and direct dependency declarations with Version 0.2.0 of the plan. Records Rule Source Catalog and Federation Boundary as direct upstream contracts and Discovery Evidence Provenance, Discovery Closure Evidence, Rule Universe Result, and Discovery Validation as direct downstream contracts. No semantic ownership, primary responsibility, Decision Boundary, fail-closed behavior, Category B mapping, provider-neutrality, or implementation-independence meaning changes. |
 
 ### 27.1 Independent Review Resolution Map
 

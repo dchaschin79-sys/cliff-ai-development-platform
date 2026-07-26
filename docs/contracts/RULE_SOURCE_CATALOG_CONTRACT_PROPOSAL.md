@@ -7,12 +7,12 @@
 | Contract identity | `CADP-CONTRACT-RULE-SOURCE-CATALOG` |
 | Title | Rule Source Catalog Contract |
 | Document type | Contract Proposal |
-| Version | 0.2.0 |
-| Previous version | 0.1.0 |
-| Revision classification | Pre-acceptance Major Maintenance Revision |
-| Revision basis | Independent Contract Review — three Major and three Minor Findings |
+| Version | 0.2.1 |
+| Previous version | 0.2.0 |
+| Revision classification | Pre-acceptance Patch Maintenance Revision |
+| Revision basis | Canonical Contract System Consistency Verification — bounded dependency-graph reconciliation |
 | Status | Draft Contract Proposal |
-| Review state | Revised — Pending Independent Verification |
+| Review state | Graph reconciled — Pending bounded Independent Verification |
 | Date | 2026-07-24 |
 | Architecture domain | Governance Rule Discovery |
 | Contract domain | Rule Source Catalog |
@@ -38,7 +38,7 @@ It is not accepted, not Effective, not implementation-authorizing, and not a Des
 | [Governance Rule Discovery Architecture Decision Proposal](../architecture/GOVERNANCE_RULE_DISCOVERY_ARCHITECTURE_DECISION_PROPOSAL.md) | Version 0.1.1; Git object `5fc17613f5ef78fb5f546f17bdeded75465da9c0` | Accepted source-catalog architecture and separation of concerns |
 | [Governance Rule Discovery Architecture Acceptance Record](../architecture/GOVERNANCE_RULE_DISCOVERY_ARCHITECTURE_ACCEPTANCE_RECORD.md) | Record `CADP-AAR-GRD-0001`, Version 1.0.0; Git object `19995bca6768b1de01c3db2055bc618404dbc9ec` | Authorization for architecture-based contract design and contract review |
 | [CADP Contract Governance Framework](../governance/CONTRACT_GOVERNANCE_FRAMEWORK.md) | Version 0.1.0 Draft; Git object `ff975ac805b03d7e86aa47d4870b47497a31b7a2` | Contract ownership, lifecycle, review, versioning, change, and traceability methodology |
-| [Governance Rule Discovery Contract Decomposition Plan](GOVERNANCE_RULE_DISCOVERY_CONTRACT_DECOMPOSITION_PLAN.md) | Version 0.1.0; Git object `c8051bd57697abeb5fd15e021cdc9678ebf1cd6a` | Rule Source Catalog responsibility, exclusions, dependencies, review order, and Category B impact |
+| [Governance Rule Discovery Contract Decomposition Plan](GOVERNANCE_RULE_DISCOVERY_CONTRACT_DECOMPOSITION_PLAN.md) | Version 0.2.0; Git object `c4c1fb6c459d72227b0f3342d6af388ba954a5cd`; commit `f26e52f63a9118991f8620cbe733bb6b80722664` | Rule Source Catalog responsibility, seven-contract decomposition, direct dependency graph, exclusions, review order, and Category B impact |
 
 No other source is used to define this proposal. If a later authoritative revision conflicts with this Draft, the conflict must be resolved through contract governance rather than inferred or silently merged.
 
@@ -396,7 +396,7 @@ If later Accepted and made Effective, the Rule Source Catalog Contract would req
 21. **Canonical conflict visibility:** conflicting or unresolved canonical logical identity or exact revision remains explicit and cannot be repaired by a catalog-local assertion.
 22. **Historical immutability:** a later catalog, source, descriptor, category, classification, ownership, participation, eligibility-reference, or lifecycle-reference change does not rewrite an earlier revision.
 23. **Provider neutrality:** no model, registry product, database, repository host, storage system, schema language, or implementation owns Rule Source Catalog semantics.
-24. **No downstream semantic capture:** Federation Boundary, Discovery Operation Evidence, Closure and Provenance Evidence, Rule Universe Result, Discovery Validation, Governance Applicability, and Policy Decision consumers cannot redefine Rule Source Catalog meanings.
+24. **No downstream semantic capture:** Federation Boundary, Discovery Operation Evidence, Discovery Evidence Provenance, Discovery Closure Evidence, Rule Universe Result, Discovery Validation, Governance Applicability, and Policy Decision consumers cannot redefine Rule Source Catalog meanings.
 25. **No self-authorization:** a Rule Source, Source Descriptor, catalog, category, classification, declaration, or participation assertion cannot establish its own authority, eligibility, acceptance, effectiveness, or applicability.
 
 These invariants define meaning, not validation algorithms or implementation requirements.
@@ -425,8 +425,11 @@ The direct planned downstream contract consumers are:
 
 1. **Federation Boundary Contract candidate** — consumes Rule Source, Source Identity, Source Descriptor, Source Participation, ownership, and reference meanings without redefining them.
 2. **Discovery Operation Evidence Contract candidate** — consumes exact source and catalog-declaration meanings when recording discovery activity without acquiring source-catalog ownership.
+3. **Discovery Evidence Provenance Contract candidate** — consumes exact source, catalog, identity, revision, declaration, participation, ownership, eligibility-reference, and lifecycle-reference meanings when preserving discovery evidence lineage without acquiring source-catalog ownership.
+4. **Discovery Closure Evidence Contract candidate** — consumes exact source, catalog, identity, revision, declaration, participation, relationship, ownership, eligibility-reference, and lifecycle-reference meanings when composing closure-supporting evidence without redefining source-catalog semantics.
+5. **Discovery Validation Contract candidate** — consumes exact Rule Source Catalog meanings when evaluating cross-contract conformance without acquiring source-catalog ownership.
 
-Later indirect consumers may include Closure and Provenance Evidence, Rule Universe Result, Discovery Validation, Governance Applicability, Policy Decision, audit, and historical reconstruction. An indirect consumer receives Rule Source Catalog meaning through accepted dependency relationships and may not redefine it.
+Later indirect consumers may include Rule Universe Result, Governance Applicability, Policy Decision, audit, and historical reconstruction. An indirect consumer receives Rule Source Catalog meaning through accepted dependency relationships and may not redefine it.
 
 This section defines semantic dependency direction only. It does not define software dependencies, services, APIs, calls, packages, deployment, or runtime sequencing.
 
@@ -447,7 +450,7 @@ The following accepted Category B items affect this contract proposal. They rema
 
 No Category B classification, assumption, containment boundary, future owner, or reopening trigger is changed by this proposal.
 
-Questions assigned to Federation Boundary, Discovery Operation Evidence, Closure and Provenance Evidence, Rule Universe Result, or Discovery Validation remain with those future contract candidates and are not imported into this contract.
+Questions assigned to Federation Boundary, Discovery Operation Evidence, Discovery Evidence Provenance, Discovery Closure Evidence, Rule Universe Result, or Discovery Validation remain with those contract candidates and are not imported into this contract.
 
 ## 22. Explicit Non-Goals
 
@@ -507,6 +510,7 @@ This contract proposal does not define:
 | --- | --- | --- |
 | 0.1.0 | Initial Draft Contract Proposal | Established the initial Rule Source Catalog semantic candidate under the Contract Governance Framework. |
 | 0.2.0 | Pre-acceptance Major Maintenance Revision | Resolves three Major and three Minor findings from the independent Contract Review. This revision does not change the accepted architecture, Decision Boundary, contract decomposition, Category B classifications, contract identity, semantic owner, Draft status, or non-normative effect. |
+| 0.2.1 | Pre-acceptance Patch Maintenance Revision | Reconciles the proposal’s Contract Decomposition Plan binding and direct downstream dependency declarations with Version 0.2.0 of the plan. Replaces the former combined downstream label with the separate Discovery Evidence Provenance and Discovery Closure Evidence contracts and records Discovery Validation as a direct consumer. No semantic ownership, primary responsibility, Decision Boundary, fail-closed behavior, Category B mapping, provider-neutrality, or implementation-independence meaning changes. |
 
 ### 23.2 Review Resolution Mapping
 
@@ -529,13 +533,16 @@ This proposal is at the `Proposal` stage of the Contract Governance lifecycle.
 | --- | --- |
 | Contract status | Draft Contract Proposal |
 | Independent Review | Completed — `REQUIRES MAJOR REVISION` |
-| Maintenance Revision | Version 0.2.0 created to address the bounded review findings |
-| Verification | Not performed for Version 0.2.0 |
+| Semantic Maintenance Revision | Version 0.2.0 completed and independently verified |
+| Graph Reconciliation Revision | Version 0.2.1 created to align exact dependency declarations with Contract Decomposition Plan Version 0.2.0 |
+| Verification | Required for the bounded graph reconciliation in exact Version 0.2.1 |
+| Acceptance Record | Existing Version 0.1.0 record binds Proposal Version 0.2.0 only and does not apply to Version 0.2.1 |
 | Acceptance | Not created |
+| Publication | Not created |
 | Effectiveness | Not created |
 | Supersession | None |
 | Archival | No |
 
-The next permitted governance action is independent verification of this exact Draft revision against the six recorded review findings and the Contract Governance Framework.
+The next permitted governance action is bounded independent Verification of this exact Version 0.2.1 Draft revision against the Contract Decomposition Plan Version 0.2.0 dependency graph and the no-semantic-regression constraints of this reconciliation.
 
-Verification may confirm resolution, identify a regression, request another bounded maintenance revision, or determine that architecture or decomposition work must resume. Verification does not make this proposal Accepted or Effective.
+Verification may confirm exact graph conformance, identify a regression, request another bounded maintenance revision, or determine that architecture or decomposition work must resume. Verification does not make this proposal Accepted, Published, or Effective.

@@ -7,12 +7,12 @@
 | Contract identity | `CADP-CONTRACT-FEDERATION-BOUNDARY` |
 | Title | Federation Boundary Contract |
 | Document type | Contract Proposal |
-| Version | 0.2.0 |
-| Previous version | 0.1.0 |
-| Revision classification | Pre-acceptance Major Maintenance Revision |
-| Revision basis | Independent Contract Review — three Major and one Minor Findings |
+| Version | 0.2.2 |
+| Previous version | 0.2.1 |
+| Revision classification | Pre-acceptance Patch Maintenance Revision |
+| Revision basis | Canonical Contract System Consistency Verification — targeted dependency-version alignment |
 | Status | Draft Contract Proposal |
-| Review state | Revised — Pending Independent Verification |
+| Review state | Dependency versions aligned — Pending repeat bounded Independent Verification |
 | Date | 2026-07-25 |
 | Architecture domain | Governance Rule Discovery |
 | Contract domain | Federation Boundary |
@@ -42,13 +42,13 @@ Normative keywords describe the semantics this contract would require only if th
 | [Governance Rule Discovery Architecture Decision Proposal](../architecture/GOVERNANCE_RULE_DISCOVERY_ARCHITECTURE_DECISION_PROPOSAL.md) | Version 0.1.1; Git object `5fc17613f5ef78fb5f546f17bdeded75465da9c0` | Accepted Governed Bounded-Closed Federation architecture, Decision Boundary, separation of concerns, and Category B containment |
 | [Governance Rule Discovery Architecture Acceptance Record](../architecture/GOVERNANCE_RULE_DISCOVERY_ARCHITECTURE_ACCEPTANCE_RECORD.md) | Record `CADP-AAR-GRD-0001`, Version 1.0.0; Git object `19995bca6768b1de01c3db2055bc618404dbc9ec` | Architecture Acceptance and authorization for Contract Design and contract review only |
 | [CADP Contract Governance Framework](../governance/CONTRACT_GOVERNANCE_FRAMEWORK.md) | Version 0.3.0 Draft; Git object `7d6ced000bb6135fe3ff6a4c3331fa9f6a458e74`; commit `24feb4baa0d89a91a157ab2746c9d4e175fa6c9d` | Task-applied contract ownership, lifecycle, review, versioning, Acceptance, Publication, Effectiveness, change, and traceability methodology |
-| [Governance Rule Discovery Contract Decomposition Plan](GOVERNANCE_RULE_DISCOVERY_CONTRACT_DECOMPOSITION_PLAN.md) | Version 0.1.0; Git object `c8051bd57697abeb5fd15e021cdc9678ebf1cd6a` | Federation Boundary primary responsibility, dependency direction, exclusions, review order, and Category B impact |
-| [Rule Source Catalog Contract Proposal](RULE_SOURCE_CATALOG_CONTRACT_PROPOSAL.md) | Version 0.2.0 Draft; Git object `f1c80b2d51b4e5e01eec14e30ff1a63cd0cf3f20`; commit `1e1e34ac7f7b53ea452536b3d303985df7bf286d` | Exact verified upstream semantic candidate for catalog, source, identity, declaration, participation, scope, and ownership-reference meanings |
-| [Rule Source Catalog Contract Acceptance Record](RULE_SOURCE_CATALOG_CONTRACT_ACCEPTANCE_RECORD.md) | Version 0.1.0; status `Pending Human Attestation`; Git object `744cff635ead171fe2694761330ad2e08a2a7377` | Evidence that the upstream proposal is `VERIFIED` but remains Draft and has not received human Contract Acceptance |
+| [Governance Rule Discovery Contract Decomposition Plan](GOVERNANCE_RULE_DISCOVERY_CONTRACT_DECOMPOSITION_PLAN.md) | Version 0.2.0; Git object `c4c1fb6c459d72227b0f3342d6af388ba954a5cd`; commit `f26e52f63a9118991f8620cbe733bb6b80722664` | Federation Boundary primary responsibility, seven-contract decomposition, direct dependency graph, exclusions, review order, and Category B impact |
+| [Rule Source Catalog Contract Proposal](RULE_SOURCE_CATALOG_CONTRACT_PROPOSAL.md) | Version 0.2.1 Draft; Git object `d879876ee5ba9641b2b0d64eb1af7a92568e315c` | Exact upstream semantic candidate reconciled to the Contract Decomposition Plan Version 0.2.0 graph for catalog, source, identity, declaration, participation, scope, and ownership-reference meanings |
+| [Rule Source Catalog Contract Acceptance Record](RULE_SOURCE_CATALOG_CONTRACT_ACCEPTANCE_RECORD.md) | Version 0.1.0; status `Pending Human Attestation`; Git object `744cff635ead171fe2694761330ad2e08a2a7377` | Historical evidence for verified Proposal Version 0.2.0 only; it does not verify or accept the graph-reconciled Proposal Version 0.2.1 |
 
 No other source is used to define this proposal.
 
-The Rule Source Catalog Contract Proposal is a verified Draft, not an Accepted or Effective Contract. This Federation Boundary proposal consumes its exact Version 0.2.0 meanings only as a fixed upstream design dependency for Draft authoring. It does not make those meanings Accepted, Published, or Effective. Independent Review may evaluate this exact Draft dependency because the recorded upstream findings are verified as resolved. If the upstream revision changes, is not accepted, or acquires conditions affecting this boundary, this proposal must be reevaluated under contract governance before Verification or human Acceptance.
+The Rule Source Catalog Contract Proposal remains a Draft, not an Accepted or Effective Contract. This Federation Boundary proposal consumes its exact Version 0.2.1 meanings only as a fixed upstream design dependency for bounded graph reconciliation. The prior Verification and pending Acceptance Record remain bound to Rule Source Catalog Proposal Version 0.2.0 and do not apply to Version 0.2.1. This proposal does not make either revision Accepted, Published, or Effective. The graph-reconciled upstream revision requires bounded independent Verification before a later human Acceptance evaluation may rely on it.
 
 ## 3. Purpose
 
@@ -283,7 +283,7 @@ Every Federation Root, Federation Member, Federation Membership assertion, and B
 - cannot infer eligibility from membership, root status, composition, technical access, catalog participation, or prior use; and
 - cannot silently omit a valid boundary relationship merely because its details are restricted.
 
-Where the required upstream eligibility or disclosure evidence is missing, conflicting, stale, unauthorized, ineligible, or unverifiable, boundary use fails closed for the affected context. Any non-disclosing evidence path and its sufficiency remain owned by the downstream Closure and Provenance Evidence and Discovery Validation domains identified by the approved decomposition.
+Where the required upstream eligibility or disclosure evidence is missing, conflicting, stale, unauthorized, ineligible, or unverifiable, boundary use fails closed for the affected context. Discovery Evidence Provenance retains downstream ownership of attributable non-disclosing lineage; Discovery Closure Evidence retains downstream ownership of closure-supporting evidence and bounded sufficiency relationships; and Discovery Validation retains downstream ownership of conformance evaluation.
 
 This contract defines no visibility concept, visibility value, confidentiality classification, access control, disclosure rule, redaction, encryption, non-disclosing evidence format, retrieval behavior, or provider behavior.
 
@@ -370,9 +370,9 @@ These invariants define meaning, not validation algorithms or implementation req
 | Accepted Governance Rule Discovery architecture | Governed Bounded-Closed Federation, fixed boundary, root or root-set model, deterministic composition, cross-repository principles, and separation from closure and applicability | Architecture family and Decision Boundary remain unchanged |
 | Architecture Acceptance Record | Authorization for Contract Design and review within the accepted architecture | Does not approve this contract or authorize implementation |
 | Contract Governance Framework v0.3.0 | Contract identity, lifecycle, review, Verification, human Acceptance, Publication, Effectiveness, change, and traceability methodology | Framework remains unchanged and outside this contract |
-| Contract Decomposition Plan | Federation Boundary responsibility, dependency direction, candidate consolidation, exclusions, and Category B impact | Plan remains a planning source and is not redefined |
-| Rule Source Catalog Proposal v0.2.0 | Catalog Identity, Catalog Revision, Catalog Scope, Rule Source, Source Identity, Source Reference, Source Declaration, Source Participation, eligibility references, lifecycle references, and source-metadata ownership | Upstream proposal remains Draft and owns all source-catalog meanings if later Accepted and Effective |
-| Rule Source Catalog Acceptance Record | Verified upstream revision and current `Pending Human Attestation` status | Record creates no Acceptance; this proposal cannot infer or supply it |
+| Contract Decomposition Plan Version 0.2.0 | Federation Boundary responsibility, dependency direction, candidate consolidation, exclusions, and Category B impact | Plan remains a planning source and is not redefined |
+| Rule Source Catalog Proposal Version 0.2.1 | Catalog Identity, Catalog Revision, Catalog Scope, Rule Source, Source Identity, Source Reference, Source Declaration, Source Participation, eligibility references, lifecycle references, and source-metadata ownership | Graph-reconciled upstream proposal remains Draft and owns all source-catalog meanings if later Accepted and Effective |
+| Rule Source Catalog Acceptance Record | Historical evidence for verified Rule Source Catalog Proposal Version 0.2.0 and current `Pending Human Attestation` status | Record creates no Acceptance and does not verify or accept Rule Source Catalog Proposal Version 0.2.1 |
 | Decision Context | Exact immutable binding for the Governed Operation or decision subject, target and requested scope, purpose, evaluation time, and applicable baselines required by the accepted architecture | Decision Context identity, fields, values, construction, ownership, validation, and lifecycle remain externally owned |
 | Universal Eligibility and confidentiality governance | Source authorization, confidentiality, purpose, provider, disclosure, and other information-use eligibility evidence | Federation Boundary preserves exact references only and creates no eligibility or disclosure semantics |
 
@@ -383,12 +383,13 @@ The proposal consumes upstream meanings by exact reference. It does not copy the
 The direct planned downstream consumers are:
 
 1. **Discovery Operation Evidence Contract candidate** — consumes the exact Federation Identity, Federation Boundary Revision, Federation Boundary Scope, Federation Membership, and composition relationships when recording one discovery attempt without redefining the boundary.
-2. **Closure and Provenance Evidence Contract candidate** — consumes the fixed boundary, its retained ownership, and its upstream eligibility references when assessing closure-supporting evidence and discovery lineage without acquiring boundary ownership.
+2. **Discovery Evidence Provenance Contract candidate** — consumes the fixed boundary, its retained ownership, and its upstream eligibility references when preserving discovery lineage and discovery-specific temporal coherence without acquiring boundary ownership.
+3. **Discovery Closure Evidence Contract candidate** — consumes the fixed boundary, its retained ownership, and its upstream eligibility references when composing closure-supporting evidence without acquiring boundary ownership.
+4. **Discovery Validation Contract candidate** — consumes the exact Federation Boundary meanings when evaluating cross-contract conformance without acquiring or revising boundary ownership.
 
 Later indirect consumers may include:
 
 - Rule Universe Result Contract candidate;
-- Discovery Validation Contract candidate;
 - Governance Applicability;
 - Policy Decision;
 - audit and historical reconstruction; and
@@ -439,7 +440,7 @@ The following accepted Category B items affect this proposal. They remain unreso
 
 No Category B classification, assumption, containment boundary, future owner, or reopening trigger is changed by this proposal.
 
-Category B items assigned to Closure and Provenance Evidence, Discovery Operation Evidence, Rule Universe Result, or Discovery Validation are not imported merely because those contracts will consume Federation Boundary semantics.
+Category B items assigned to Discovery Evidence Provenance, Discovery Closure Evidence, Discovery Operation Evidence, Rule Universe Result, or Discovery Validation are not imported merely because those contracts consume Federation Boundary semantics.
 
 ## 20. Decision Boundary
 
@@ -568,9 +569,9 @@ This proposal binds:
 2. Governance Rule Discovery Architecture Decision Proposal Version 0.1.1;
 3. Architecture Acceptance Record `CADP-AAR-GRD-0001`, Version 1.0.0;
 4. Contract Governance Framework Version 0.3.0;
-5. Governance Rule Discovery Contract Decomposition Plan Version 0.1.0;
-6. Rule Source Catalog Contract Proposal Version 0.2.0;
-7. Rule Source Catalog Contract Acceptance Record Version 0.1.0 in `Pending Human Attestation` status; and
+5. Governance Rule Discovery Contract Decomposition Plan Version 0.2.0;
+6. Rule Source Catalog Contract Proposal Version 0.2.1;
+7. Rule Source Catalog Contract Acceptance Record Version 0.1.0 in `Pending Human Attestation` status, bound only to Rule Source Catalog Proposal Version 0.2.0; and
 8. the exact Git objects listed in Section 2.
 
 The proposal has no predecessor, superseded contract, superseding contract, Acceptance evidence, Published Contract, Effectiveness evidence, transition evidence, or archival evidence.
@@ -589,7 +590,7 @@ The proposal does not float to later source revisions. Any authoritative-input c
 | Boundary Visibility ownership | None — confidentiality and information-use eligibility are consumed upstream semantics |
 | Composition relationship types | Externally governed and never inferred by this contract |
 | Upstream governance explicit | Satisfied |
-| Downstream consumers explicit | Satisfied |
+| Downstream consumers explicit | Satisfied — Discovery Operation Evidence, Discovery Evidence Provenance, Discovery Closure Evidence, and Discovery Validation are direct consumers under the Version 0.2.0 decomposition graph |
 | Rule Source Catalog overlap | None identified; Sections 9 and 18 record deterministic ownership separation |
 | Category B items preserved unresolved | Satisfied — 11 mapped items |
 | Decision Boundary preserved | Satisfied |
@@ -604,7 +605,9 @@ The proposal does not float to later source revisions. Any authoritative-input c
 | Contract Acceptance created | No |
 | Publication or Effectiveness created | No |
 | Design Freeze record created | No |
-| Independent Review findings addressed | Four — three Major and one Minor; pending independent Verification |
+| Independent Review findings addressed | Four — three Major and one Minor; independently verified for Version 0.2.0 |
+| Graph reconciliation | Version 0.2.1 aligns the exact Decomposition Plan binding and direct downstream declarations; pending bounded independent Verification |
+| Dependency-version alignment | Version 0.2.2 aligns the current Rule Source Catalog Proposal dependency reference across Sections 2, 16, and 23; pending repeat bounded independent Verification |
 | Regression identified | None |
 
 ## 25. Contract Lifecycle and Next Governance Action
@@ -615,23 +618,25 @@ This proposal is at the `Proposal` stage of the Contract Governance lifecycle.
 | --- | --- |
 | Contract status | Draft Contract Proposal |
 | Independent Review | Completed — `REQUIRES MAJOR REVISION`; three Major and one Minor Findings |
-| Maintenance Revision | Version 0.2.0 created to address all four findings |
-| Verification | Not performed |
-| Acceptance Record | Not created |
+| Semantic Maintenance Revision | Version 0.2.0 completed and independently verified |
+| Graph Reconciliation Revision | Version 0.2.1 created to align exact dependency declarations with Contract Decomposition Plan Version 0.2.0 |
+| Dependency-Version Alignment Revision | Version 0.2.2 created to normalize the Rule Source Catalog Proposal dependency reference without changing topology or semantics |
+| Verification | Required for the graph-reconciled and version-aligned exact Version 0.2.2 |
+| Acceptance Record | Existing Version 0.1.0 record binds Proposal Version 0.2.0 only and does not apply to Version 0.2.2 |
 | Acceptance | Not created |
 | Publication | Not created |
 | Effectiveness | Not created |
 | Supersession | None |
 | Archival | No |
 
-The next permitted governance action is independent Verification of this exact Version 0.2.0 Draft revision against the four recorded review findings.
+The next permitted governance action is repeat bounded independent Verification of this exact Version 0.2.2 Draft revision against the Contract Decomposition Plan Version 0.2.0 dependency graph, the Rule Source Catalog Proposal Version 0.2.1 binding, and the no-semantic-regression constraints of this reconciliation.
 
 Verification must determine whether:
 
-- Federation Member eligibility is closed, deterministic, and traceable to the accepted architecture;
-- every Federation Boundary consumes one exact immutable externally owned Decision Context binding;
-- Boundary Visibility ownership has been removed and upstream confidentiality semantics remain externally owned;
-- composition relationship types remain externally governed and are never inferred;
+- the exact Decomposition Plan Version 0.2.0 binding is present;
+- Discovery Operation Evidence, Discovery Evidence Provenance, Discovery Closure Evidence, and Discovery Validation are declared as direct consumers;
+- no obsolete combined downstream contract reference remains;
+- the previously verified Federation Member, Decision Context, confidentiality, and composition semantics remain unchanged;
 - Category B classifications, assumptions, containment boundaries, and triggers remain unchanged; and
 - no semantic regression, governance change, architecture change, or implementation detail was introduced.
 
@@ -645,6 +650,8 @@ Verification does not modify this proposal, create Acceptance, publish an Effect
 | --- | --- | --- |
 | 0.1.0 | Initial Draft Contract Proposal | Establishes the Federation Boundary semantic candidate under the accepted Governance Rule Discovery architecture and Contract Governance Framework Version 0.3.0. It preserves the Rule Source Catalog boundary, all affected Category B deferrals, and the accepted Decision Boundary. |
 | 0.2.0 | Pre-acceptance Major Maintenance Revision | Resolves three Major and one Minor Findings from the Independent Contract Review. The primary responsibility, accepted architecture, Decision Boundary, Contract Decomposition, governance methodology, upstream ownership, and all Category B deferrals remain unchanged. |
+| 0.2.1 | Pre-acceptance Patch Maintenance Revision | Reconciles the proposal’s exact Contract Decomposition Plan binding and direct downstream declarations with Version 0.2.0 of the plan. Separates Discovery Evidence Provenance and Discovery Closure Evidence dependencies, records Discovery Validation as a direct consumer, and binds the graph-reconciled Rule Source Catalog Proposal Version 0.2.1. No semantic ownership, primary responsibility, Decision Boundary, fail-closed behavior, Category B mapping, provider-neutrality, or implementation-independence meaning changes. |
+| 0.2.2 | Pre-acceptance Patch Maintenance Revision | Aligns the current Rule Source Catalog Proposal dependency reference in Sections 2, 16, and 23 to Version 0.2.1. Dependency topology, semantic ownership, primary responsibility, Decision Boundary, fail-closed behavior, Category B mapping, provider neutrality, and implementation independence remain unchanged. |
 
 ### 26.2 Review Resolution Mapping
 
@@ -657,4 +664,4 @@ Verification does not modify this proposal, create Acceptance, publish an Effect
 
 These resolution statements record the bounded maintenance revision. They are not independent Verification, contract Acceptance, Publication, Effectiveness, implementation authorization, or Design Freeze.
 
-This revised Draft records no Verification, human Acceptance, Publication, Effectiveness, adoption, implementation authorization, or Design Freeze.
+This graph-reconciled and version-aligned Version 0.2.2 Draft has not completed repeat bounded independent Verification. The prior Verification and pending Acceptance Record remain bound to Version 0.2.0 and do not create Verification, human Acceptance, Publication, Effectiveness, adoption, implementation authorization, or Design Freeze for Version 0.2.2.

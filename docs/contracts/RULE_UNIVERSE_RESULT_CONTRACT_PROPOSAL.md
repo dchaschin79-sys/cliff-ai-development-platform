@@ -7,23 +7,23 @@
 | Contract identity | `CADP-CONTRACT-RULE-UNIVERSE-RESULT` |
 | Title | Rule Universe Result Contract |
 | Document type | Contract Proposal |
-| Version | 0.1.0 |
+| Version | 0.2.0 |
 | Status | Draft Contract Proposal |
-| Review state | Initial Draft — Pending Independent Review |
+| Review state | Bounded Maintenance Revision — Pending Contract Review Resolution Verification |
 | Date | 2026-07-25 |
 | Architecture domain | Governance Rule Discovery |
 | Contract domain | Rule Universe Result |
-| Primary responsibility | Canonical semantics of one complete-versus-incomplete Rule Universe Result for one exact completed discovery attempt |
+| Primary responsibility | Canonical semantics of one complete-versus-incomplete Rule Universe Result for one exact externally governed result-production point |
 | Proposed canonical semantic owner | This contract |
 | Repository | `dchaschin79-sys/cliff-ai-development-platform` |
-| Source baseline | `c6e215333f2d621e834f27f98da1c0a3ae053452` |
+| Source baseline | `a01a162682581c90049d719bf96344ad3f020f6f` |
 | Methodology constraint | Contract Governance Framework Version 0.3.0 and Contract Decomposition Plan Version 0.2.0 are fixed and are not revised or extended |
 | Acceptance | Not created |
 | Publication | Not created |
 | Effectiveness | Not created |
 | Normative effect | None |
 | Implementation authority | None |
-| Supersedes | None — initial proposal |
+| Supersedes | Version 0.1.0 Draft Contract Proposal for continued review only |
 | Superseded by | None known |
 
 This document is the sixth Draft Contract Proposal developed under the CADP Contract Governance Framework Version 0.3.0 and the Governance Rule Discovery Contract Decomposition Plan Version 0.2.0.
@@ -55,9 +55,13 @@ If an upstream proposal changes, fails applicable governance, or acquires a cond
 
 ## 3. Purpose
 
-The Rule Universe Result Contract establishes the canonical provider-neutral semantics of the result produced from one exact completed discovery attempt.
+The Rule Universe Result Contract establishes the canonical provider-neutral semantics of the result required at one exact externally governed result-production point for one discovery attempt.
 
-For this contract, a completed discovery attempt means that the exact result-producing Discovery Operation Evidence, Discovery Evidence Provenance, and Discovery Closure Evidence revisions have been fixed for classification. It does not mean that discovery closure succeeded, that the result is complete, that Validation passed, that any rule applies, or that a Policy Decision may proceed.
+The externally governed result-production point is the point at which external governance requires one discovery attempt to be represented by one Rule Universe Result. This contract consumes the exact reference to that point. It does not define when the point is reached, define or infer Discovery Operation completion, or treat the point as evidence that discovery finished, succeeded, failed, reached closure, produced a complete universe, passed Validation, established applicability, or authorized a Policy Decision.
+
+At the result-production point, result creation is bound to one exact Result-Production Evidence Package. That package is the immutable composition binding to the exact Discovery Operation Identity and Evidence Revision, Discovery Evidence Provenance revision, Discovery Closure Evidence revision, Decision Context identity, Federation Boundary revision, and externally owned temporal, eligibility, authority, confidentiality, integrity, and limitation references required to interpret the result. The package is subordinate to Rule Universe Result Composition. It does not copy upstream meanings into this contract, establish the sufficiency or eligibility of its contents, or create a new primary responsibility.
+
+Every discovery attempt that reaches an externally governed result-production point MUST produce one Rule Universe Result with exactly one primary classification. Missing, ambiguous, contradictory, conflicting, or otherwise non-deterministic evidence within the exact package cannot suppress result creation or leave the result unclassified; it produces an Incomplete Result with Unresolved, Inconsistent, or both qualifiers as applicable under Sections 10 and 14.
 
 This contract exists so that:
 
@@ -78,7 +82,7 @@ This contract owns Rule Universe Result semantics only.
 
 The single primary responsibility of this contract is:
 
-> Define the canonical semantics of one complete-versus-incomplete Rule Universe Result for one exact completed discovery attempt.
+> Define the canonical semantics of one complete-versus-incomplete Rule Universe Result for one exact externally governed result-production point.
 
 Complete and incomplete results are not separate primary responsibilities. They are the two mutually exclusive classifications within one coherent result domain. An Unresolved Result and an Inconsistent Result are fail-closed condition-qualified forms of an Incomplete Result, not separate result systems or additional primary responsibilities.
 
@@ -120,7 +124,7 @@ The contract owns the result-domain relationship to exact upstream evidence and 
 | Semantic aspect | Definition |
 | --- | --- |
 | Purpose | Establish one exact, attributable, immutable, context-bound, and deterministically classified discovery result. |
-| Canonical definition | A Rule Universe Result is the immutable semantic result that binds one exact completed discovery attempt to its exact upstream operation, provenance, closure-evidence, boundary, source, corpus-reference, temporal, and limitation evidence and classifies the result as either Complete or Incomplete without determining applicability, Policy Decision outcomes, Validation, or implementation authority. |
+| Canonical definition | A Rule Universe Result is the immutable semantic result that binds one exact externally governed result-production point for one discovery attempt to one exact Result-Production Evidence Package and classifies the result as either Complete or Incomplete without determining operation completion, applicability, Policy Decision outcomes, Validation, or implementation authority. |
 | Semantically required invariants | A Rule Universe Result MUST have one Result Identity bound to one exact immutable result revision, one Result Composition containing exact context and evidence references, one Result Classification, one Result Status, explicit condition qualifiers, and sufficient historical references for reconstruction. It MUST preserve every resolved corpus reference and every incomplete, unresolved, inconsistent, restricted, or otherwise result-material condition. |
 | Relationships | The result consumes exact Discovery Operation Evidence, Discovery Evidence Provenance, and Discovery Closure Evidence and preserves indirect bindings to Rule Source Catalog and Federation Boundary meanings through those exact dependencies. |
 | Ownership boundary | This contract owns only the result meaning and its complete-versus-incomplete classification. Every referenced source, boundary, operation, provenance, closure-evidence, rule, context, authority, eligibility, lifecycle, and downstream meaning retains its existing owner. |
@@ -134,9 +138,9 @@ A Rule Universe Result is not self-validating and not self-authorizing. A result
 
 | Semantic aspect | Definition |
 | --- | --- |
-| Purpose | Distinguish one logical result for one exact completed discovery attempt from every other result and from its representations. |
-| Canonical definition | Rule Universe Result Identity is the stable logical identity of the result bound to one exact Discovery Operation Identity, result-producing Operation Evidence Revision, Decision Context identity, and Federation Boundary revision. |
-| Semantically required invariants | One exact completed discovery attempt eligible for result production MUST have exactly one canonical Rule Universe Result Identity for the same contract, context, boundary, and result-producing evidence binding. Equivalent labels, corpus content, classifications, repositories, or representations MUST NOT establish identity equivalence. A different discovery attempt, Decision Context, boundary revision, or result-producing operation revision requires a distinct result identity. |
+| Purpose | Distinguish the one logical result required at one exact externally governed result-production point from every other result and from its representations. |
+| Canonical definition | Rule Universe Result Identity is the stable logical identity of the result bound to one exact externally governed result-production point, one Discovery Operation Identity, one exact Result-Production Evidence Package, one Decision Context identity, and one Federation Boundary revision. |
+| Semantically required invariants | Every exact externally governed result-production point occurrence for one discovery attempt MUST have exactly one canonical Rule Universe Result Identity and one initial exact Result Revision bound to one exact Result-Production Evidence Package. No undefined eligibility predicate may suppress that result. Equivalent labels, corpus content, classifications, repositories, or representations MUST NOT establish identity equivalence. A different discovery attempt or result-production point occurrence requires a distinct Result Identity. A corrected or superseding package for the same occurrence requires an explicit new Result Revision or corrective successor that preserves immutable lineage. |
 | Relationships | Result Identity is the subject of Result Revision and the stable result reference used by downstream consumers and historical evidence. |
 | Ownership boundary | This contract owns logical result identity only. Discovery Operation Evidence retains operation identity; Foundation and Canonical Artifact governance retain general canonical identity and source-of-truth integrity. |
 | Explicit non-goals | This concept does not define identifier syntax, hashes, keys, namespaces, repository paths, object stores, databases, or identity-resolution algorithms. |
@@ -185,21 +189,27 @@ One Result Revision cannot combine evidence from incompatible contexts, boundary
 A Rule Universe Result Composition must preserve, as applicable:
 
 1. Result Identity and exact Result Revision;
-2. exact context references within Result Composition;
-3. exact Discovery Operation Identity and result-producing Evidence Revision;
-4. exact Discovery Evidence Provenance revision and unresolved required-lineage conditions;
-5. exact Discovery Closure Evidence revision, requirement boundary, evidence interpretation, conditions, and reconstruction basis;
-6. exact indirect Rule Source Catalog and Federation Boundary references carried by the direct upstream evidence;
-7. every exact corpus reference within Result Composition;
-8. Result Classification;
-9. Result Completeness meaning and evidence references;
-10. Result Consistency meaning and evidence references;
-11. Result Status and every condition qualifier;
-12. incomplete-result reasons and result-material failure or limitation evidence;
-13. confidentiality and non-disclosing limitations without inferring protected content;
-14. temporal and revision evidence;
-15. all applicable unresolved Category B limitations; and
-16. sufficient exact references for historical reconstruction.
+2. the exact externally governed result-production point reference and one exact Result-Production Evidence Package binding;
+3. exact context references within Result Composition;
+4. exact Discovery Operation Identity and Evidence Revision carried by the Result-Production Evidence Package;
+5. exact Discovery Evidence Provenance revision and unresolved required-lineage conditions;
+6. exact Discovery Closure Evidence revision, requirement boundary, evidence interpretation, conditions, and reconstruction basis;
+7. exact indirect Rule Source Catalog and Federation Boundary references carried by the direct upstream evidence;
+8. every exact corpus reference within Result Composition;
+9. Result Classification;
+10. Result Completeness meaning and evidence references;
+11. Result Consistency meaning and evidence references;
+12. Result Status and every condition qualifier;
+13. an exact Result-Classification Attribution reference identifying the governed actor, service, or mechanism that asserted the Result Classification and Result Status;
+14. incomplete-result reasons and result-material failure or limitation evidence;
+15. confidentiality and non-disclosing limitations without inferring protected content;
+16. temporal and revision evidence;
+17. all applicable unresolved Category B limitations; and
+18. sufficient exact references for historical reconstruction.
+
+Result-Classification Attribution records only who or what asserted the Classification and Status for the exact Result Revision. It does not establish authority, Human Acceptance, Discovery Validation, applicability, evidence-provenance ownership, correctness, or implementation authorization. The attributed actor, service, or mechanism does not acquire Rule Universe Result ownership by making the assertion.
+
+The absence or ambiguity of a required Result-Classification Attribution reference MUST remain explicit and produces an Incomplete Result qualified Unresolved. Contradictory or conflicting attribution evidence that cannot coherently identify the assertion source produces an Incomplete Result qualified Inconsistent, and also Unresolved when the independently applicable unresolved condition exists. No identity, authority, or attribution may be fabricated to complete the composition.
 
 Presence of all categories does not establish that a result is Complete, Validated, applicable, Accepted, Published, Effective, or implementation-authorizing. Classification follows the exact semantics in this contract.
 
@@ -220,12 +230,14 @@ An Incomplete Result may preserve a resolved corpus subset. Inclusion in that su
 
 ### 10.1 Binary Classification Boundary
 
-Every valid Rule Universe Result Revision has exactly one primary Result Classification:
+Every externally governed result-production point produces one Rule Universe Result and one initial exact Result Revision. Every Rule Universe Result Revision has exactly one primary Result Classification:
 
 1. **Complete**; or
 2. **Incomplete**.
 
-These classifications are mutually exclusive and collectively exhaustive for a valid result. A result cannot be simultaneously Complete and Incomplete. Absence, ambiguity, or conflict in the classification itself makes the candidate result unverifiable and ineligible for downstream complete-universe use.
+These classifications are mutually exclusive and collectively exhaustive for every result. A result cannot be simultaneously Complete and Incomplete and cannot remain outside both classifications.
+
+Absent, ambiguous, contradictory, conflicting, or otherwise non-deterministic classification evidence MUST NOT leave a candidate result unclassified. The primary classification MUST be Incomplete. The result MUST be qualified Unresolved when required classification evidence is absent, ambiguous, unverifiable, or lacks one exact supported resolution; it MUST be qualified Inconsistent when exact classification evidence contains contradictory or conflicting claims that cannot coherently coexist; and it MUST carry both qualifiers when independently applicable conditions support both. Exact supported evidence that conclusively demonstrates failure of a completeness condition may produce an Incomplete Result without either qualifier.
 
 `Unresolved` and `Inconsistent` are condition qualifiers within the Incomplete classification. They do not create a third or fourth primary result classification and do not weaken the accepted complete-versus-incomplete architecture boundary.
 
@@ -244,7 +256,7 @@ These classifications are mutually exclusive and collectively exhaustive for a v
 
 | Semantic aspect | Definition |
 | --- | --- |
-| Purpose | Preserve the exact result of a completed discovery attempt for which complete and valid closure was not demonstrated. |
+| Purpose | Preserve the exact result required at an externally governed result-production point for which complete and valid closure was not demonstrated. |
 | Canonical definition | An Incomplete Result is a Rule Universe Result classified Incomplete when at least one required result input, binding, closure property, completeness condition, or consistency condition is not satisfied, remains unresolved, is inconsistent, or cannot be verified for the fixed context. |
 | Semantically required invariants | An Incomplete Result MUST preserve the resolved corpus if any, exact upstream evidence, unresolved routes and conditions, inconsistencies, failures, limitations, temporal and revision bindings, and reasons completeness was not established. It MUST NOT be represented, labeled, converted, or consumed as a Complete Result. |
 | Relationships | An Incomplete Result corresponds to the accepted architecture’s Incomplete Discovery Result meaning and may support only independently eligible diagnostics, audit, remediation, review, reassessment, historical reconstruction, and Discovery Validation. |
@@ -263,7 +275,7 @@ An Incomplete Result may be:
 | Semantic aspect | Definition |
 | --- | --- |
 | Purpose | Preserve that a result-material question required for Complete classification has no exact supported resolution. |
-| Canonical definition | An Unresolved Result Condition is an attributable, revision-bound, context-bound qualifier applied to an Incomplete Result when a required result input, route, identity, relationship, evidence condition, criterion applicability, temporal state, scope, provenance relationship, closure condition, or other completeness-relevant matter cannot be resolved from the exact eligible evidence. |
+| Canonical definition | An Unresolved Result Condition is an attributable, revision-bound, context-bound qualifier applied to an Incomplete Result when a required result input, route, identity, relationship, evidence condition, criterion applicability, temporal state, scope, provenance relationship, closure condition, classification basis, attribution reference, or other completeness-relevant matter cannot be resolved from the exact bound evidence. |
 | Semantically required invariants | The condition MUST identify the affected result, exact upstream evidence, unresolved subject, context, attribution, temporal basis, and reason resolution is unavailable or indeterminate. It MUST NOT infer absence, irrelevance, non-membership-changing status, consistency, or a favorable downstream outcome. |
 | Relationships | The qualifier participates in Result Status, Completeness, Consistency where relevant, Deterministic Interpretation, and Reconstruction. |
 | Ownership boundary | This contract owns only the result-domain consequence that the result is Incomplete and qualified Unresolved. The underlying unresolved source, operation, provenance, closure-evidence, eligibility, authority, or other meaning remains with its owner. |
@@ -274,7 +286,7 @@ An Incomplete Result may be:
 | Semantic aspect | Definition |
 | --- | --- |
 | Purpose | Preserve that exact result-material evidence or bindings contain an unresolved incompatibility. |
-| Canonical definition | An Inconsistent Result Condition is an attributable, revision-bound, context-bound qualifier applied to an Incomplete Result when two or more exact required result inputs, identities, revisions, relationships, corpus bindings, classifications, or evidence claims cannot coherently coexist under the fixed context and no eligible upstream resolution establishes one consistent interpretation. |
+| Canonical definition | An Inconsistent Result Condition is an attributable, revision-bound, context-bound qualifier applied to an Incomplete Result when two or more exact required result inputs, identities, revisions, relationships, corpus bindings, classifications, attribution claims, or evidence claims cannot coherently coexist under the fixed context and no exact upstream resolution establishes one consistent interpretation. |
 | Semantically required invariants | The condition MUST identify every conflicting claim or binding, its exact owner and revision, the affected result meaning, context, attribution, temporal basis, and why the incompatibility is result-material. It MUST preserve every claim without selecting normative precedence, repairing identity, discarding evidence, or choosing a convenient interpretation. |
 | Relationships | The qualifier participates in Result Status, Completeness, Consistency, Deterministic Interpretation, and Reconstruction. |
 | Ownership boundary | This contract owns only the result-domain consequence that the result is Incomplete and qualified Inconsistent. Source conflict evidence, identity reconciliation, closure-evidence conditions, normative precedence, and conformance remain externally owned. |
@@ -318,7 +330,7 @@ Unknown conflict materiality cannot be treated as non-material. It remains Unres
 | --- | --- |
 | Purpose | Express the exact result-domain condition without collapsing governance lifecycle, Validation, or downstream decision state into one label. |
 | Canonical definition | Result Status is the deterministic composition of one primary Result Classification and the presence or absence of Unresolved and Inconsistent Result Conditions for one exact Result Revision. |
-| Semantically required invariants | Status MUST identify exactly one primary classification and every applicable condition qualifier. Complete permits no Unresolved or Inconsistent qualifier. Incomplete MUST preserve every applicable qualifier and reason. Status MUST NOT encode Draft, Accepted, Published, Effective, Adopted, Superseded, Validated, applicable, deployed, or implementation state. |
+| Semantically required invariants | Status MUST identify exactly one primary classification and every applicable condition qualifier. Status cannot be absent, ambiguous, or outside the allowed combinations. Complete permits no Unresolved or Inconsistent qualifier. Incomplete MUST preserve every applicable qualifier and reason. Status MUST NOT encode Draft, Accepted, Published, Effective, Adopted, Superseded, Validated, applicable, deployed, or implementation state. |
 | Relationships | Status summarizes Classification, Completeness, and Consistency while preserving their independent evidence and participates in downstream routing and Reconstruction. |
 | Ownership boundary | This contract owns only result-domain status. Contract lifecycle, source lifecycle, approval, Validation, applicability, Policy Decision, implementation, deployment, and operational status remain externally owned. |
 | Explicit non-goals | This concept does not define a registry value, enum, status field, state machine, workflow, API, database column, UI label, or transition engine. |
@@ -346,7 +358,7 @@ Any other combination is invalid. In particular, a Complete Result cannot carry 
 | Ownership boundary | This contract owns deterministic result interpretation only. It does not define upstream evidence interpretation, conflict precedence, Validation, applicability, Policy Decision, or implementation algorithms. |
 | Explicit non-goals | This concept does not select an evaluation engine, algorithm, data model, workflow, query, service, model, prompt, programming language, or provider. |
 
-If exact evidence cannot support one deterministic interpretation, the result is Incomplete and qualified Unresolved, Inconsistent, or both as supported by the preserved evidence. It cannot default to Complete.
+If exact evidence cannot support one deterministic interpretation, the result MUST be classified Incomplete and qualified Unresolved, Inconsistent, or both as supported by the preserved evidence. No absent, ambiguous, contradictory, conflicting, or otherwise non-deterministic classification evidence may leave a result unclassified or suppress the result required at the externally governed result-production point. The result cannot default to Complete.
 
 ## 15. Historical Reconstruction and Preservation of Result Composition
 
@@ -355,7 +367,7 @@ If exact evidence cannot support one deterministic interpretation, the result is
 | Semantic aspect | Definition |
 | --- | --- |
 | Purpose | Preserve within Result Composition the exact references needed to reconstruct what one Result Revision meant and why it had its recorded classification and status. |
-| Canonical definition | The historical-reconstruction portion of Rule Universe Result Composition preserves references to the exact context, boundary, operation, provenance, closure evidence, source and corpus evidence, temporal basis, classification evidence, consistency evidence, condition qualifiers, limitations, and governing contract revisions used for one Result Revision. |
+| Canonical definition | The historical-reconstruction portion of Rule Universe Result Composition preserves references to the exact externally governed result-production point, Result-Production Evidence Package, context, boundary, operation, provenance, closure evidence, source and corpus evidence, temporal basis, Result-Classification Attribution, classification evidence, consistency evidence, condition qualifiers, limitations, and governing contract revisions used for one Result Revision. |
 | Semantically required invariants | Reconstruction MUST identify exact immutable references and preserve every missing, conflicting, restricted, incomplete, unresolved, inconsistent, or unverifiable condition material to the result. It MUST NOT fabricate inaccessible evidence, infer historical state from current state, or treat reproducibility as Validation or Acceptance. |
 | Relationships | The basis supports eligible audit, review, reassessment, Discovery Validation, Governance Applicability lineage for Complete Results, and historical reconstruction. |
 | Ownership boundary | Historical-reconstruction references are part of Rule Universe Result composition and create no independent semantic owner. Each referenced subject and evidence meaning retains its canonical owner. |
@@ -366,7 +378,8 @@ If exact evidence cannot support one deterministic interpretation, the result is
 Historical preservation requires:
 
 - immutable Result Identity and Revision evidence;
-- exact context, boundary, operation, provenance, closure-evidence, corpus, temporal, and governing-contract bindings;
+- exact result-production point, Result-Production Evidence Package, context, boundary, operation, provenance, closure-evidence, corpus, temporal, and governing-contract bindings;
+- the exact Result-Classification Attribution reference;
 - the original Classification, Completeness, Consistency, Status, condition qualifiers, and limitations;
 - every resolved and unresolved result-material condition;
 - every applicable Category B limitation;
@@ -381,10 +394,10 @@ If this proposal is later Accepted, Published, and made Effective, the following
 
 1. **One semantic owner:** this contract is the only owner of Rule Universe Result semantics.
 2. **One primary responsibility:** complete and incomplete result meanings remain one coherent result domain.
-3. **One result identity per exact completed attempt binding:** equivalent exact bindings cannot create competing canonical result identities.
+3. **One result per governed production point:** every exact externally governed result-production point occurrence produces exactly one canonical Result Identity and one initial exact Result Revision.
 4. **Immutable revision:** one Result Revision is not silently mutated.
-5. **Exact context binding:** every result is bound to one exact Decision Context and upstream evidence state.
-6. **Binary primary classification:** every valid result is exactly Complete or Incomplete.
+5. **Exact production and context binding:** every result is bound to one exact externally governed result-production point, one exact Result-Production Evidence Package, one Decision Context, and one upstream evidence state without redefining Discovery Operation completion.
+6. **Total binary primary classification:** every result is exactly Complete or Incomplete and no candidate may remain unclassified.
 7. **Mutual exclusion:** one result cannot be both Complete and Incomplete.
 8. **Qualifier subordination:** Unresolved and Inconsistent are qualifiers of Incomplete, not independent primary classifications.
 9. **Qualifier coexistence:** independently supported Unresolved and Inconsistent conditions may coexist.
@@ -401,7 +414,7 @@ If this proposal is later Accepted, Published, and made Effective, the following
 20. **Direct dependency preservation:** Discovery Operation Evidence, Discovery Evidence Provenance, and Discovery Closure Evidence remain the direct contract dependencies.
 21. **Indirect ownership preservation:** Rule Source Catalog and Federation Boundary meanings remain upstream through the direct evidence dependencies.
 22. **Historical immutability:** later evidence or results do not rewrite earlier result meaning.
-23. **Fail-closed ambiguity:** missing, conflicting, stale, restricted, ambiguous, unauthorized, ineligible, or unverifiable required evidence cannot produce Complete.
+23. **Fail-closed ambiguity:** missing, contradictory, conflicting, stale, restricted, ambiguous, unauthorized, ineligible, or unverifiable required evidence cannot produce Complete or leave a result unclassified; the result is Incomplete with Unresolved, Inconsistent, or both qualifiers as applicable.
 24. **Restricted-source non-omission:** inability to disclose or access protected evidence cannot be treated as source absence.
 25. **Decision Boundary preservation:** no Category B item is resolved or reclassified.
 26. **Provider neutrality:** no provider or model owns result semantics.
@@ -409,6 +422,7 @@ If this proposal is later Accepted, Published, and made Effective, the following
 28. **Lifecycle orthogonality:** result status does not encode contract or operational lifecycle.
 29. **No authority creation:** a result creates no approval, Acceptance, Publication, Effectiveness, adoption, Product Binding, Design Freeze, release authority, or deployment authority.
 30. **Determinism:** equivalent exact eligible inputs produce the same result interpretation.
+31. **Classification attribution:** every Result Composition preserves an exact Result-Classification Attribution reference without converting attribution into authority, Human Acceptance, Validation, applicability, provenance ownership, correctness, or implementation authorization.
 
 ## 17. Consumed Semantics and Upstream Dependencies
 
@@ -584,8 +598,10 @@ Category B items assigned to Rule Source Catalog, Federation Boundary, Discovery
 This proposal includes only:
 
 - Rule Universe Result identity and exact immutable result revision;
+- the result-domain binding to one exact externally governed result-production point and one exact Result-Production Evidence Package without defining Discovery Operation completion;
 - exact result-to-context and upstream-evidence binding;
 - Rule Universe Result Composition;
+- Result-Classification Attribution as a subordinate composition reference without authority, Acceptance, Validation, applicability, provenance-ownership, correctness, or implementation-authorization meaning;
 - corpus references within Result Composition without source-content or applicability ownership;
 - binary Complete or Incomplete Result Classification;
 - Complete Result semantics;
@@ -618,6 +634,7 @@ This proposal excludes:
 - Discovery Operation Evidence semantics;
 - Discovery Evidence Provenance semantics;
 - Discovery Closure Evidence semantics;
+- ownership of the externally governed result-production point, its triggering criteria, or Discovery Operation completion;
 - Decision Context, Universal Eligibility, confidentiality, purpose eligibility, provider eligibility, Governance Authority, delegation, lifecycle, or approval semantics;
 - source traversal, source resolution, evidence acquisition, closure-evidence production, failure detection, retry, remediation, escalation, or operational response;
 - Discovery Validation or conformance;
@@ -659,26 +676,29 @@ This proposal does not:
 
 Fail-closed Rule Universe Result semantics require:
 
-1. no Complete classification without exact evidence demonstrating every required complete-result condition;
-2. no silent omission of a source, route, corpus reference, evidence condition, limitation, conflict, or unresolved matter;
-3. no inference that unavailable, restricted, stale, conflicting, unauthorized, ineligible, ambiguous, or unverifiable evidence is absent or harmless;
-4. no substitution of a resolved corpus subset for a complete result;
-5. no self-asserted completeness;
-6. no conversion of Incomplete, Unresolved, or Inconsistent results to Complete by labeling, formatting, copying, summarization, indexing, caching, storage, Publication, Validation, downstream success, model confidence, prior outcomes, retries, or elapsed time;
-7. no repair of upstream evidence through result composition;
-8. no suppression of an Unresolved or Inconsistent qualifier;
-9. no default to Complete when result interpretation is ambiguous;
-10. no complete-universe use of an Incomplete Result;
-11. no mutation of historical result evidence by later discovery or reassessment; and
-12. no downstream applicability or Policy Decision inference from an Incomplete Result.
+1. no omission of the Rule Universe Result required at an externally governed result-production point;
+2. no Result Revision without exactly one primary Complete or Incomplete classification;
+3. no Complete classification without exact evidence demonstrating every required complete-result condition;
+4. no silent omission of a source, route, corpus reference, evidence condition, attribution reference, limitation, conflict, or unresolved matter;
+5. no inference that unavailable, restricted, stale, contradictory, conflicting, unauthorized, ineligible, ambiguous, or unverifiable evidence is absent or harmless;
+6. no substitution of a resolved corpus subset for a complete result;
+7. no self-asserted completeness;
+8. no conversion of Incomplete, Unresolved, or Inconsistent results to Complete by labeling, formatting, copying, summarization, indexing, caching, storage, Publication, Validation, downstream success, model confidence, prior outcomes, retries, or elapsed time;
+9. no repair of upstream evidence through result composition;
+10. no suppression of an Unresolved or Inconsistent qualifier;
+11. no default to Complete or unclassified state when result interpretation is ambiguous, contradictory, conflicting, absent, or otherwise non-deterministic;
+12. no complete-universe use of an Incomplete Result;
+13. no mutation of historical result evidence by later discovery or reassessment; and
+14. no downstream applicability or Policy Decision inference from an Incomplete Result.
 
 ### 23.1 Complete Result
 
 A Complete Result is permitted only when:
 
 - the context references within Result Composition are exact and coherent;
+- the exact externally governed result-production point and one exact Result-Production Evidence Package are bound;
 - every required direct upstream revision is exact and eligible for the result;
-- the completed discovery attempt is bound to one exact result-producing Operation Evidence Revision;
+- the package binds one exact Discovery Operation Identity and Evidence Revision without asserting Discovery Operation completion;
 - provenance and temporal continuity required for the result are supported;
 - the exact Closure Evidence Revision supports every required result-completeness condition;
 - every corpus reference within Result Composition is exact and coherent;
@@ -694,6 +714,7 @@ An Incomplete Result must:
 
 - preserve the resolved corpus if any without a completeness claim;
 - preserve all exact upstream evidence and limitations available to the result;
+- preserve the exact result-production point, Result-Production Evidence Package, and Result-Classification Attribution reference;
 - preserve every reason Complete classification was unavailable;
 - preserve Unresolved and Inconsistent qualifiers independently;
 - remain immutable and attributable;
@@ -742,6 +763,7 @@ This proposal selects no implementation.
 | Proposal responsibility | Architecture or decomposition basis | Preserved boundary |
 | --- | --- | --- |
 | One complete-versus-incomplete result owner | ADP Sections 9, 11, 12, 13, 15, and 27; Decomposition Plan Sections 5.7, 5.11, 6, and 7 | Complete and incomplete meanings remain one coherent domain |
+| Total result creation and classification | ADP Sections 11–15; Decomposition Plan Sections 5.7, 6, and 7 | Every externally governed result-production point produces one result with exactly one Complete or Incomplete classification; this contract does not define Discovery Operation completion |
 | Complete Result | ADP Sections 8.7–8.9, 9, 11–13, and 15 | Only demonstrated closure permits complete-universe use |
 | Incomplete Result | ADP Sections 8.9, 9, 11–13, and 15 | Failure and partial evidence remain immutable and non-permissive |
 | Result identity, revision, and historical binding | Foundation Sections 2.1, 2.4, and 2.6; ADP Sections 15 and 18 | No historical result is silently mutated |
@@ -774,7 +796,8 @@ Any later revision, review, Acceptance Record, Published Contract, or Effectiven
 - exact immutable source revision;
 - Foundation, architecture, Architecture Acceptance Record, Contract Governance Framework, and Contract Decomposition Plan bindings;
 - exact upstream contract revisions and dependency direction;
-- Result Identity and exact revision binding, Composition and its context, corpus, limitation, and historical references, Classification, Completeness, Consistency, Status, qualifiers, determinism, and semantic invariants;
+- the exact externally governed result-production point and one exact Result-Production Evidence Package;
+- Result Identity and exact revision binding, Composition and its context, corpus, limitation, Result-Classification Attribution, and historical references, Classification, Completeness, Consistency, Status, qualifiers, determinism, and semantic invariants;
 - every ownership boundary and explicit exclusion;
 - all seven mapped Category B items and Category C exclusion;
 - Decision Boundary;
@@ -786,9 +809,11 @@ Any later revision, review, Acceptance Record, Published Contract, or Effectiven
 
 | Quality criterion | Proposal result |
 | --- | --- |
-| Exactly one repository file created | Satisfied — this Contract Proposal only |
+| Exactly one repository file modified | Satisfied — this Contract Proposal only |
 | Status exactly `Draft Contract Proposal` | Satisfied |
-| Version exactly 0.1.0 | Satisfied |
+| Version exactly 0.2.0 | Satisfied |
+| MAJ-01 | Resolved — result creation is bound to one exact externally governed result-production point and evidence package; every event produces one result with one total fail-closed classification; no local Discovery Operation completion or undefined result-production eligibility remains |
+| MIN-01 | Resolved — Required Result Composition includes an exact Result-Classification Attribution reference with explicit separation from authority, Human Acceptance, Validation, applicability, provenance ownership, correctness, and implementation authorization |
 | Exactly one primary responsibility | Satisfied — Rule Universe Result only |
 | Complete and incomplete ownership unified | Satisfied |
 | Unresolved and Inconsistent subordinate to Incomplete | Satisfied |
@@ -804,6 +829,10 @@ Any later revision, review, Acceptance Record, Published Contract, or Effectiven
 | Policy Decision ownership | Excluded |
 | Complete-universe use restricted to Complete Result | Satisfied |
 | Incomplete, Unresolved, and Inconsistent fail closed | Satisfied |
+| Every governed result-production point produces one result | Satisfied |
+| Every result has exactly one primary classification | Satisfied |
+| Local Discovery Operation completion semantics | None |
+| Result-Classification Attribution | Required as a subordinate composition reference |
 | Direct dependency graph preserved | Satisfied |
 | Provider neutrality | Preserved |
 | Implementation independence | Preserved |
@@ -826,9 +855,9 @@ Any later revision, review, Acceptance Record, Published Contract, or Effectiven
 
 | Lifecycle evidence | Current state |
 | --- | --- |
-| Proposal | Draft Contract Proposal Version 0.1.0 |
-| Independent Review | Not created |
-| Maintenance Revision | Not created |
+| Proposal | Draft Contract Proposal Version 0.2.0 |
+| Independent Review | Completed against Version 0.1.0 — final verdict `REQUIRES MAJOR REVISION`; MAJ-01 and MIN-01 recorded |
+| Maintenance Revision | Completed — bounded Version 0.2.0 revision resolves MAJ-01 and MIN-01 only |
 | Verification | Not created |
 | Acceptance Record | Not created |
 | Acceptance | Not created |
@@ -837,10 +866,17 @@ Any later revision, review, Acceptance Record, Published Contract, or Effectiven
 | Supersession | None |
 | Archival | No |
 
-The next permitted governance action is Independent Contract Review of this exact Version 0.1.0 Draft revision.
+The next permitted governance action is Contract Review Resolution Verification of this exact Version 0.2.0 Draft revision.
 
-Independent Review should verify:
+Contract Review Resolution Verification should verify:
 
+- complete resolution of MAJ-01 and MIN-01;
+- one result and one exact initial Result Revision for every externally governed result-production point;
+- exactly one mutually exclusive and collectively exhaustive Complete or Incomplete classification for every result;
+- fail-closed Incomplete classification with Unresolved, Inconsistent, or both qualifiers for absent, ambiguous, contradictory, conflicting, or otherwise non-deterministic classification evidence;
+- removal of every local Discovery Operation completion definition and undefined result-production eligibility predicate;
+- exact binding to one externally governed result-production point and one Result-Production Evidence Package without acquiring upstream ownership;
+- exact Result-Classification Attribution and its separation from authority, Human Acceptance, Validation, applicability, evidence-provenance ownership, correctness, and implementation authorization;
 - exactly one primary responsibility and deterministic ownership;
 - preservation of the accepted complete-versus-incomplete result boundary;
 - correct subordination and coexistence semantics for Unresolved and Inconsistent conditions;
@@ -853,7 +889,7 @@ Independent Review should verify:
 - provider neutrality and implementation independence; and
 - no Foundation, architecture, Framework, decomposition, upstream contract, lifecycle, or implementation change.
 
-Independent Review does not create Acceptance, Publication, Effectiveness, implementation authority, adoption, deployment authority, or Design Freeze.
+Contract Review Resolution Verification does not create Acceptance, Publication, Effectiveness, implementation authority, adoption, deployment authority, or Design Freeze.
 
 ## 28. Methodology Validation Observations
 
@@ -866,3 +902,4 @@ The Contract Governance Framework Version 0.3.0 and Contract Decomposition Plan 
 | Version | Classification | Summary |
 | --- | --- | --- |
 | 0.1.0 | Initial Draft Contract Proposal | Establishes the Rule Universe Result semantic candidate under the accepted Governance Rule Discovery architecture, Contract Governance Framework Version 0.3.0, and Contract Decomposition Plan Version 0.2.0. Defines one complete-versus-incomplete result domain with the eight owned responsibilities of identity, composition, classification, completeness, consistency, status, determinism, and semantic invariants; defines Complete and Incomplete classifications and Unresolved and Inconsistent qualifiers; and preserves fail-closed semantics, direct dependency direction, seven Category B deferrals, provider neutrality, implementation independence, and explicit separation from Discovery Validation, Governance Applicability, Policy Decision, implementation, Publication, and deployment. |
+| 0.2.0 | Bounded Maintenance Revision | Resolves Independent Review MAJ-01 by removing local Discovery Operation completion and undefined result-production eligibility, binding each externally governed result-production point to one exact Result-Production Evidence Package, requiring one result and one total Complete-or-Incomplete classification per point, and making absent, ambiguous, contradictory, conflicting, or otherwise non-deterministic classification evidence fail closed as Incomplete with applicable qualifiers. Resolves MIN-01 by adding exact Result-Classification Attribution to Required Result Composition while separating attribution from authority, Human Acceptance, Validation, applicability, evidence-provenance ownership, correctness, and implementation authorization. Preserves the single result responsibility, dependency direction, qualifier model, Closure Evidence separation, governance boundaries, provider neutrality, implementation independence, seven Category B deferrals, and the accepted Decision Boundary. |

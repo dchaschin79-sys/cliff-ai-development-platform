@@ -7,23 +7,23 @@
 | Contract identity | `CADP-CONTRACT-DISCOVERY-VALIDATION` |
 | Title | Discovery Validation Contract |
 | Document type | Contract Proposal |
-| Version | 0.1.0 |
+| Version | 0.2.0 |
 | Status | Draft Contract Proposal |
-| Review state | Initial Draft — Pending Independent Review |
+| Review state | Bounded Maintenance Revision — Pending Contract Review Resolution Verification |
 | Date | 2026-07-25 |
 | Architecture domain | Governance Rule Discovery |
 | Contract domain | Discovery Validation |
 | Primary responsibility | Canonical semantics of independent conformance evaluation for one exact Governance Rule Discovery artifact set |
 | Proposed canonical semantic owner | This contract |
 | Repository | `dchaschin79-sys/cliff-ai-development-platform` |
-| Source baseline | `357d7d127f4a9e4b500e194723d2ed7172a7158d` |
+| Source baseline | `e8112d0ccca556ca3b076d504e931ba57e330836` |
 | Methodology constraint | Contract Governance Framework Version 0.3.0 and Contract Decomposition Plan Version 0.2.0 are fixed and are not revised or extended |
 | Acceptance | Not created |
 | Publication | Not created |
 | Effectiveness | Not created |
 | Normative effect | None |
 | Implementation authority | None |
-| Supersedes | None — initial proposal |
+| Supersedes | Version 0.1.0 Draft Contract Proposal for continued review only |
 | Superseded by | None known |
 
 This document is the seventh and final Draft Contract Proposal in the Governance Rule Discovery Contract Decomposition Plan Version 0.2.0.
@@ -132,7 +132,7 @@ Discovery Validation owns only the result and evidence of evaluating conformance
 | Ownership boundary | This contract owns validation-result and conformance-evidence meaning only. Every artifact, criterion source, authority source, eligibility source, lifecycle state, downstream decision, and implementation retains its existing owner. |
 | Explicit non-goals | Discovery Validation does not perform Discovery, create or modify discovery evidence, modify a Rule Universe Result, determine applicability, perform a Policy Decision, or authorize implementation, Publication, deployment, or any other action. |
 
-Discovery Validation is not self-authorizing and not self-validating. A validator, validation author, AI system, artifact owner, repository owner, implementation, or downstream consumer cannot establish conformance merely by labeling a Validation successful.
+Discovery Validation is not self-authorizing. In this proposal, self-validation means only that an artifact's own unsupported assertion of conformance cannot establish Successful Validation. A validator, validation author, AI system, artifact owner, repository owner, implementation, or downstream consumer cannot establish conformance merely by labeling a Validation successful. These limits establish no validator eligibility, organizational independence, separation-of-duty requirement, or assurance model.
 
 ## 6. Discovery Validation Identity and Revision
 
@@ -141,8 +141,8 @@ Discovery Validation is not self-authorizing and not self-validating. A validato
 | Semantic aspect | Definition |
 | --- | --- |
 | Purpose | Distinguish one logical conformance evaluation from every other evaluation and from its representations. |
-| Canonical definition | Discovery Validation Identity is the stable logical identity of one validation evaluation bound to one exact Validation Scope, target artifact-set identity, governing-contract revision set, and evaluation context. |
-| Semantically required invariants | One exact validation evaluation MUST have one canonical Validation Identity. Equivalent labels, findings, outcomes, artifact contents, repositories, providers, or representations MUST NOT establish identity equivalence. A different target artifact set, scope, governing-contract set, or evaluation context requires a distinct Validation Identity. |
+| Canonical definition | Discovery Validation Identity is the stable logical identity of one validation evaluation bound to one exact Validation Scope, target artifact-set identity, governing-contract revision set, evaluation context, applicable CADP version, and applicable Product Binding identity and version or an explicit governed Not Applicable basis. |
+| Semantically required invariants | One exact validation evaluation MUST have one canonical Validation Identity. Equivalent labels, findings, outcomes, artifact contents, repositories, providers, or representations MUST NOT establish identity equivalence. A different target artifact set, scope, governing-contract set, evaluation context, applicable CADP version, or applicable Product Binding identity or version requires a distinct Validation Identity. An explicit governed Not Applicable basis MUST be preserved where Foundation requirements establish that no Product Binding is required. |
 | Relationships | Validation Identity is the subject of Validation Revision and the stable reference used by findings, status, downstream evidence, and historical reconstruction. |
 | Ownership boundary | This contract owns logical Discovery Validation identity only. Foundation and Canonical Artifact governance retain general canonical-identity, integrity, and source-of-truth meanings. |
 | Explicit non-goals | This concept does not define identifier syntax, hashes, keys, namespaces, repository paths, storage locations, registries, databases, or identity-resolution algorithms. |
@@ -165,10 +165,10 @@ A later Validation does not overwrite an earlier outcome. A changed artifact rev
 | Semantic aspect | Definition |
 | --- | --- |
 | Purpose | Bound exactly what one Discovery Validation evaluates and what it does not evaluate. |
-| Canonical definition | Validation Scope is the immutable validation-owned relationship among one Validation Identity and Revision, the exact target artifact set, exact governing-contract revisions, exact semantic criteria, cross-contract relationships, evaluation context, included and excluded validation concerns, and applicable limitations. |
-| Semantically required invariants | Scope MUST identify every target artifact identity and revision, every governing-contract identity and revision, each included semantic criterion, required cross-contract relationship, evaluation context, temporal basis, and explicit exclusion. Scope MUST NOT infer criteria from convenience, implementation behavior, validator preference, repository location, or downstream use. Missing, ambiguous, conflicting, unauthorized, ineligible, stale, or unverifiable required scope evidence prevents a Successful Validation. |
+| Canonical definition | Validation Scope is the immutable validation-owned relationship among one Validation Identity and Revision, the exact target artifact set, exact governing-contract revisions, exact semantic criteria, cross-contract relationships, evaluation context, applicable CADP version, applicable Product Binding identity and version or explicit governed Not Applicable basis, included and excluded validation concerns, and applicable limitations. |
+| Semantically required invariants | Scope MUST identify every target artifact identity and revision, every governing-contract identity and revision, each included semantic criterion, required cross-contract relationship, evaluation context, applicable CADP version, applicable Product Binding identity and version or explicit governed Not Applicable basis, temporal basis, and explicit exclusion. Scope MUST NOT infer Product Binding applicability, Product Binding meaning, criteria, or exclusions from convenience, implementation behavior, validator preference, repository location, product identity, or downstream use. Missing, ambiguous, conflicting, unauthorized, ineligible, stale, or unverifiable required scope evidence prevents a Successful Validation. |
 | Relationships | Scope constrains Validation Inputs, Findings, Outcome, Status, deterministic interpretation, and historical reconstruction. |
-| Ownership boundary | This contract owns only the evaluation boundary. Criterion meaning remains with the source contract or separately applicable governance. Scope inclusion does not transfer semantic ownership or create authority. |
+| Ownership boundary | This contract owns only the evaluation boundary. Criterion meaning remains with the source contract or separately applicable governance. Product Binding semantics, lifecycle, governance, applicability, and Not Applicable determinations remain externally owned. Scope inclusion or reference does not transfer semantic ownership or create authority. |
 | Explicit non-goals | Validation Scope does not define Decision Context, source scope, Federation Boundary Scope, Contract Acceptance scope, business scope, legal scope, applicability scope, deployment scope, or access-control scope. |
 
 Scope may be narrower than the full Governance Rule Discovery contract set only when exact governing evidence establishes that the excluded contract, artifact, relationship, or criterion is outside the declared validation purpose. An absent exclusion basis remains Incomplete or Indeterminate as applicable and cannot be treated as successful coverage.
@@ -180,7 +180,7 @@ Scope may be narrower than the full Governance Rule Discovery contract set only 
 | Semantic aspect | Definition |
 | --- | --- |
 | Purpose | Preserve the exact immutable evidence evaluated by one Validation Revision. |
-| Canonical definition | Validation Inputs are the validation-owned bindings to the exact target artifacts, governing-contract revisions, context references, cross-contract relationship evidence, eligibility references, authority references, confidentiality constraints, integrity evidence, and limitations supplied for one Validation Scope. |
+| Canonical definition | Validation Inputs are the validation-owned bindings to the exact target artifacts, governing-contract revisions, context references, applicable CADP version, applicable Product Binding identity and version or explicit governed Not Applicable basis, cross-contract relationship evidence, eligibility references, authority references, confidentiality constraints, integrity evidence, and limitations supplied for one Validation Scope. |
 | Semantically required invariants | Every input binding MUST preserve the upstream owner, exact identity, exact revision, scope, temporal basis, attribution where supplied, and limitations required for interpretation. Missing, ambiguous, conflicting, stale, restricted, unauthorized, ineligible, or unverifiable required input evidence MUST remain explicit. Input presence does not establish conformance. |
 | Relationships | Validation Inputs are evaluated under Validation Scope and contribute to Findings, Outcome, Status, determinism, and reconstruction. |
 | Ownership boundary | This contract owns only the validation relationship to each input. Every input meaning, identity, revision, authority, eligibility, confidentiality, and integrity claim remains externally owned. |
@@ -192,24 +192,28 @@ One Validation Input Set must preserve, as applicable:
 
 1. Validation Identity and exact Validation Revision;
 2. exact Validation Scope and evaluation context;
-3. exact governing-contract identity and revision set;
-4. exact Rule Source Catalog artifact and evidence revisions within scope;
-5. exact Federation Boundary artifact and evidence revisions within scope;
-6. exact Discovery Operation Evidence revisions within scope;
-7. exact Discovery Evidence Provenance revisions and unresolved required-lineage conditions within scope;
-8. exact Discovery Closure Evidence revisions, requirement boundaries, interpretations, conditions, and reconstruction bases within scope;
-9. exact Rule Universe Result Identity and Revision, Composition, Classification, Completeness, Consistency, Status, qualifiers, and reconstruction references within scope;
-10. every required cross-contract identity, revision, context, dependency, ownership, and consistency binding;
-11. every exact criterion reference and revision used for Validation;
-12. a Validation Assertion Attribution reference identifying the governed actor, service, or mechanism asserting the Validation Findings, Outcome, and Status;
-13. applicable eligibility, authority, confidentiality, integrity, and temporal evidence references without locally defining their meanings;
-14. known limitations, missing inputs, conflicts, restricted evidence, and unresolved conditions;
-15. all applicable unresolved Category B limitations; and
-16. sufficient exact references for historical reconstruction.
+3. the exact applicable CADP version;
+4. the exact applicable Product Binding identity and version or an explicit governed Not Applicable basis where Foundation requirements establish that no Product Binding is required;
+5. exact governing-contract identity and revision set;
+6. exact Rule Source Catalog artifact and evidence revisions within scope;
+7. exact Federation Boundary artifact and evidence revisions within scope;
+8. exact Discovery Operation Evidence revisions within scope;
+9. exact Discovery Evidence Provenance revisions and unresolved required-lineage conditions within scope;
+10. exact Discovery Closure Evidence revisions, requirement boundaries, interpretations, conditions, and reconstruction bases within scope;
+11. exact Rule Universe Result Identity and Revision, Composition, Classification, Completeness, Consistency, Status, qualifiers, and reconstruction references within scope;
+12. every required cross-contract identity, revision, context, dependency, ownership, and consistency binding;
+13. every exact criterion reference and revision used for Validation;
+14. a Validation Assertion Attribution reference identifying the governed actor, service, or mechanism asserting the Validation Findings, Outcome, and Status;
+15. applicable eligibility, authority, confidentiality, integrity, and temporal evidence references without locally defining their meanings;
+16. known limitations, missing inputs, conflicts, restricted evidence, and unresolved conditions;
+17. all applicable unresolved Category B limitations; and
+18. sufficient exact references for historical reconstruction.
 
 Validation Assertion Attribution identifies only who or what asserted the validation evidence. It does not establish validator eligibility, independence, authority, assurance, Human Acceptance, correctness, applicability, Policy Decision authority, or implementation authorization.
 
-The absence, ambiguity, or conflict of a required input or attribution reference MUST remain explicit and contributes to an Incomplete or Indeterminate Validation under Sections 11 and 13. No identity, authority, eligibility, evidence, or attribution may be fabricated to complete the input set.
+The applicable CADP version and Product Binding reference are required validation context only. Their inclusion gives Discovery Validation no ownership of Product Binding semantics, lifecycle, governance, applicability, or the externally governed decision that a Product Binding is Not Applicable.
+
+The absence, ambiguity, or conflict of a required input, applicable CADP version, Product Binding reference, governed Not Applicable basis, or attribution reference MUST remain explicit and contributes to an Incomplete or Indeterminate Validation under Sections 11 and 13. No identity, version, Product Binding meaning, Not Applicable basis, authority, eligibility, evidence, or attribution may be fabricated to complete the input set.
 
 ## 9. Validation Findings
 
@@ -330,7 +334,7 @@ Fail-closed Discovery Validation requires:
 2. no omission of a required target, criterion, artifact revision, relationship, input, finding, limitation, or unresolved Category B condition;
 3. no inference that missing, restricted, stale, conflicting, ambiguous, unauthorized, ineligible, or unverifiable evidence is absent, harmless, conforming, or out of scope;
 4. no substitution of partial validation coverage for complete validation;
-5. no self-validated artifact or self-authorized validator;
+5. no Successful outcome based only on an artifact's own unsupported assertion of conformance and no self-authorized validator; this rule establishes no validator eligibility, organizational independence, separation-of-duty requirement, or assurance model;
 6. no conversion of Failed, Incomplete, or Indeterminate Validation to Successful through labeling, formatting, copying, summarization, indexing, caching, storage, Publication, downstream success, model confidence, prior outcomes, retries, or elapsed time;
 7. no repair or mutation of upstream artifacts through validation evidence;
 8. no suppression of a Nonconformance, Incomplete Validation, or Indeterminate Validation Finding;
@@ -349,7 +353,7 @@ Exact supported outcome-determinative nonconformance produces Failed. Otherwise,
 | Semantic aspect | Definition |
 | --- | --- |
 | Purpose | Preserve the exact references required to reconstruct what one Validation Revision evaluated, concluded, and asserted. |
-| Canonical definition | The Validation Reconstruction Basis preserves references to the exact Validation Identity and Revision, Scope, governing-contract set, target artifact set, cross-contract relationships, criteria, inputs, attribution, Findings, Outcome, Status, limitations, Category B conditions, and temporal and integrity evidence used for one validation evaluation. |
+| Canonical definition | The Validation Reconstruction Basis preserves references to the exact Validation Identity and Revision, Scope, applicable CADP version, applicable Product Binding identity and version or explicit governed Not Applicable basis, governing-contract set, target artifact set, cross-contract relationships, criteria, inputs, attribution, Findings, Outcome, Status, limitations, Category B conditions, and temporal and integrity evidence used for one validation evaluation. |
 | Semantically required invariants | Reconstruction MUST identify exact immutable references and distinguish evaluated evidence from missing, restricted, conflicting, incomplete, indeterminate, or unverifiable evidence. It MUST NOT fabricate inaccessible evidence, infer historical state from current state, repair an artifact, or treat reproducibility as Acceptance or authority. |
 | Relationships | The basis supports eligible contract review, governance review, audit, remediation analysis, reassessment, historical reconstruction, and separately governed downstream evidence use. |
 | Ownership boundary | Reconstruction references are part of Discovery Validation and create no independent semantic owner. Each referenced artifact, criterion, authority, eligibility, lifecycle, or decision meaning retains its canonical owner. |
@@ -360,6 +364,7 @@ Exact supported outcome-determinative nonconformance produces Failed. Otherwise,
 Historical preservation requires:
 
 - immutable Validation Identity and Revision evidence;
+- the exact applicable CADP version and applicable Product Binding identity and version or explicit governed Not Applicable basis;
 - exact Scope, governing-contract, target-artifact, criterion, attribution, temporal, integrity, and limitation bindings;
 - the original Findings, Outcome, and Status;
 - every incomplete, indeterminate, conflicting, restricted, or otherwise result-material condition;
@@ -378,7 +383,7 @@ If this proposal is later Accepted, Published, and made Effective, the following
 3. **One Validation Identity:** one exact evaluation has one canonical identity.
 4. **Immutable revision:** one Validation Revision is not silently mutated.
 5. **Exact scope:** every Validation is bound to one explicit Scope.
-6. **Exact inputs:** every Validation preserves exact target, governing-contract, criterion, context, and relationship revisions.
+6. **Exact inputs:** every Validation preserves exact target, governing-contract, criterion, context, relationship, applicable CADP version, and applicable Product Binding identity and version or governed Not Applicable basis.
 7. **One primary outcome:** every Validation Revision is exactly Successful, Failed, Incomplete, or Indeterminate.
 8. **Mutual exclusion:** one Validation Revision cannot have more than one primary Outcome.
 9. **Totality:** no Validation Revision may remain outside all four Outcomes.
@@ -388,7 +393,7 @@ If this proposal is later Accepted, Published, and made Effective, the following
 13. **Indeterminate preservation:** every unresolved ambiguity, contradiction, conflict, or unverifiable interpretation remains explicit.
 14. **Outcome order:** equivalent exact inputs follow the same deterministic outcome-selection order.
 15. **Finding traceability:** every finding binds exact Scope, criterion, artifact, revision, evidence, and attribution.
-16. **Attribution is not authority:** validation attribution establishes no eligibility, independence, assurance, approval, Acceptance, or implementation authority.
+16. **Attribution is not authority or assurance:** validation attribution and the unsupported-self-assertion prohibition establish no validator eligibility, organizational independence, separation-of-duty requirement, assurance model, approval, Acceptance, or implementation authority; GRD-14 remains unresolved.
 17. **No semantic capture:** Validation does not acquire or redefine any evaluated semantic.
 18. **No artifact mutation:** Validation does not modify an upstream artifact or its historical claim.
 19. **No Discovery execution:** Validation does not perform source discovery or evidence production.
@@ -430,6 +435,7 @@ All six direct dependencies match the Contract Decomposition Plan Version 0.2.0.
 | Architecture Acceptance Record | Authorization for Contract Design and review | Does not approve this contract or authorize implementation |
 | Contract Governance Framework Version 0.3.0 | Contract lifecycle, ownership, review, Verification, human Acceptance, Publication, Effectiveness, compatibility, and traceability | Framework remains unchanged and outside this contract |
 | Contract Decomposition Plan Version 0.2.0 | Validation ownership, six dependencies, sequencing, consumers, exclusions, and Category B impact | Decomposition remains unchanged and outside this contract |
+| Applicable CADP and Product Binding governance | Exact applicable CADP version and exact applicable Product Binding identity and version or explicit governed Not Applicable basis | These references are validation context only; Product Binding semantics, lifecycle, governance, applicability, and Not Applicable determinations remain externally owned |
 | Applicable platform validation governance where separately approved | Validator eligibility, independence, assurance, authority, and any required validation-governance criteria | This proposal does not create, select, presume, or satisfy that governance |
 | Universal Eligibility, Governance Authority, confidentiality, lifecycle, Canonical Artifact, integrity, and externally governed time | Eligibility, authority, access, lifecycle, identity, integrity, and temporal meanings supplied through exact references | These meanings remain externally owned and cannot be inferred by Validation |
 
@@ -566,7 +572,7 @@ The Contract Decomposition Plan maps 13 accepted Category B items to Discovery V
 | `GRD-10` — Alias, mirror, translation, and derived-source reconciliation | Validation preserves identity-reconciliation evidence or its absence. | This proposal does not reconcile identities, select a canonical source, or define equivalence. |
 | `GRD-11` — Conflict evidence allocation | Validation Findings preserve exact conflict evidence relevant to conformance. | This proposal does not select normative precedence, repair upstream conflicts, or decide downstream consequences. |
 | `GRD-13` — Minimum evidence for local completeness | Successful Validation requires the exact externally governed criteria applicable to Scope. | This proposal selects no minimum threshold, assurance level, or evidence-sufficiency rule; missing criteria fail closed. |
-| `GRD-14` — Self-issued negative declarations or independent verification | Validation attribution remains distinct from eligibility, independence, and assurance. | This proposal creates no validator model, separation-of-duty rule, reviewer qualification, or independence threshold. |
+| `GRD-14` — Self-issued negative declarations or independent verification | Validation attribution remains distinct from eligibility, independence, and assurance. An artifact's own unsupported assertion cannot by itself establish Successful Validation. | This proposal creates no validator model, organizational independence requirement, separation-of-duty rule, reviewer qualification, assurance model, or independence threshold. |
 | `GRD-17` — Legacy decisions without reconstructable boundaries | Validation cannot fabricate modern artifacts, scopes, provenance, or evidence for legacy decisions. | Missing historical evidence remains Incomplete or Indeterminate; this proposal defines no substitute or retroactive validity rule. |
 | `GRD-18` — Fundamental non-delegable human decisions | Validation may consume exact Authority and Delegation evidence where future criteria require it. | This proposal assigns no non-delegable decision, delegation rule, human authority, or AI decision power. |
 | `GRD-20` — Cross-repository snapshot consistency mechanism | Validation preserves exact cross-repository revision and temporal evidence and records missing or conflicting coherence evidence. | This proposal selects no transaction, clock, lock, commit, snapshot, synchronization, storage, or consistency mechanism. |
@@ -586,6 +592,7 @@ This proposal includes only:
 - Discovery Validation Identity and exact immutable Validation Revision;
 - Validation Scope;
 - exact Validation Inputs and governing-contract revision bindings;
+- exact applicable CADP version and applicable Product Binding identity and version or explicit governed Not Applicable basis as externally owned validation context;
 - subordinate Validation Assertion Attribution references;
 - Validation Findings and their exact criterion, artifact, revision, evidence, scope, and attribution bindings;
 - exactly one Successful, Failed, Incomplete, or Indeterminate primary Validation Outcome;
@@ -682,7 +689,7 @@ This proposal selects no implementation.
 | Proposal responsibility | Architecture or decomposition basis | Preserved boundary |
 | --- | --- | --- |
 | Independent conformance evidence | ADP Sections 15, 25–27; Decomposition Plan Sections 5.13, 6, and 7 | Validation evidence remains separate from every validated semantic |
-| Validation identity, revision, scope, and inputs | Foundation Sections 2.1, 2.4, and 2.6; Decomposition Plan Sections 3, 5.13, and 13 | Exact immutable evaluation boundary without implementation |
+| Validation identity, revision, scope, and inputs | Foundation Sections 2.1, 2.4, 2.6, 4.3, and 7; Decomposition Plan Sections 3, 5.13, and 13 | Exact immutable evaluation boundary, including applicable CADP and Product Binding version context, without acquiring Product Binding ownership or introducing implementation |
 | Successful, Failed, Incomplete, and Indeterminate outcomes | ADP Sections 8.8, 8.9, 13, 15, and 26; Decomposition Plan Sections 5.13 and 13 | Deterministic fail-closed conformance evidence without business decisions |
 | Six direct dependencies | Decomposition Plan Sections 5.13 and 6–10 | Every preceding contract remains upstream and retains ownership |
 | Rule Universe Result separation | ADP Sections 9, 11–15; Decomposition Plan Sections 5.7, 5.11, 6, and 7 | Validation cannot create or change Complete or Incomplete result meaning |
@@ -714,6 +721,7 @@ Any later revision, review, Acceptance Record, Published Contract, or Effectiven
 - Contract Identity and semantic version;
 - exact immutable source revision;
 - Foundation, architecture, Architecture Acceptance Record, Contract Governance Framework, and Contract Decomposition Plan bindings;
+- exact applicable CADP version and applicable Product Binding identity and version or explicit governed Not Applicable basis;
 - exact upstream contract revisions and dependency direction;
 - Validation Identity and exact Revision;
 - Validation Scope;
@@ -733,9 +741,11 @@ Any later revision, review, Acceptance Record, Published Contract, or Effectiven
 
 | Quality criterion | Proposal result |
 | --- | --- |
-| Exactly one repository file created | Satisfied — this Contract Proposal only |
+| Exactly one repository file modified | Satisfied — this Contract Proposal only |
 | Status exactly `Draft Contract Proposal` | Satisfied |
-| Version exactly 0.1.0 | Satisfied |
+| Version exactly 0.2.0 | Satisfied |
+| MIN-01 | Resolved — Validation Identity, Scope, Inputs, reconstruction, invariants, external dependencies, Decision Boundary, and traceability explicitly bind the applicable CADP version and Product Binding identity and version or a governed Not Applicable basis without acquiring Product Binding ownership |
+| MIN-02 | Resolved — self-validation is limited to an artifact's own unsupported assertion being insufficient for Successful Validation; no validator eligibility, organizational independence, separation-of-duty, or assurance model is introduced and GRD-14 remains unresolved |
 | Exactly one primary responsibility | Satisfied — Discovery Validation only |
 | Eight owned semantic concepts | Satisfied |
 | Deterministic semantic owner | Satisfied |
@@ -749,6 +759,7 @@ Any later revision, review, Acceptance Record, Published Contract, or Effectiven
 | Applicability ownership | Excluded |
 | Policy Decision ownership | Excluded |
 | Authority or lifecycle ownership | Excluded |
+| Product Binding semantic, lifecycle, or governance ownership | Excluded — exact identity and version or governed Not Applicable basis is consumed only as required validation context |
 | Successful, Failed, Incomplete, and Indeterminate outcomes | Deterministic and mutually exclusive |
 | Incomplete and Indeterminate Validation fail closed | Satisfied |
 | Upstream artifact mutation | Prohibited |
@@ -774,21 +785,26 @@ Any later revision, review, Acceptance Record, Published Contract, or Effectiven
 
 | Lifecycle evidence | Current state |
 | --- | --- |
-| Proposal | Draft Contract Proposal Version 0.1.0 |
-| Independent Review | Not created |
-| Maintenance Revision | Not created |
+| Proposal | Draft Contract Proposal Version 0.2.0 |
+| Independent Review | Completed against Version 0.1.0 — final verdict `REQUIRES MINOR REVISION`; MIN-01, MIN-02, and OBS-01 recorded |
+| Maintenance Revision | Completed — bounded Version 0.2.0 revision resolves MIN-01 and MIN-02 only and preserves OBS-01 |
 | Verification | Not created |
 | Acceptance Record | Not created |
 | Acceptance | Not created |
 | Publication | Not created |
 | Effectiveness | Not created |
-| Supersession | None |
+| Supersession | Version 0.2.0 replaces Version 0.1.0 for continued Draft review; no Accepted Contract is superseded |
 | Archival | No |
 
-The next permitted governance action is Independent Contract Review of this exact Version 0.1.0 Draft revision.
+The next permitted governance action is Contract Review Resolution Verification of this exact Version 0.2.0 Draft revision.
 
-Independent Review should verify:
+Contract Review Resolution Verification should verify:
 
+- complete resolution of MIN-01 and MIN-02;
+- exact applicable CADP version and applicable Product Binding identity and version or explicit governed Not Applicable basis in Validation Identity, Scope, Inputs, reconstruction, invariants, and traceability;
+- preservation of externally owned Product Binding semantics, lifecycle, governance, applicability, and Not Applicable determinations;
+- limitation of self-validation to the rule that an artifact's own unsupported assertion cannot establish Successful Validation;
+- absence of validator eligibility, organizational independence, separation-of-duty, or assurance requirements and continued deferral of GRD-14;
 - exactly one primary responsibility and deterministic ownership;
 - semantic completeness of Validation Identity, Revision, Scope, Inputs, Findings, Outcome, Status, determinism, and invariants;
 - deterministic and mutually exclusive Successful, Failed, Incomplete, and Indeterminate outcomes;
@@ -800,7 +816,7 @@ Independent Review should verify:
 - provider neutrality and implementation independence; and
 - no Foundation, architecture, Framework, decomposition, upstream contract, lifecycle, or implementation change.
 
-Independent Review does not create Acceptance, Publication, Effectiveness, implementation authority, adoption, deployment authority, Product Binding, or Design Freeze.
+Contract Review Resolution Verification does not create Acceptance, Publication, Effectiveness, implementation authority, adoption, deployment authority, Product Binding, or Design Freeze.
 
 ## 26. Methodology Validation Observations
 
@@ -813,3 +829,4 @@ The Contract Governance Framework Version 0.3.0 and Contract Decomposition Plan 
 | Version | Classification | Summary |
 | --- | --- | --- |
 | 0.1.0 | Initial Draft Contract Proposal | Establishes the Discovery Validation semantic candidate under the accepted Governance Rule Discovery architecture, Contract Governance Framework Version 0.3.0, and Contract Decomposition Plan Version 0.2.0. Defines one independent conformance-evaluation domain with the eight owned responsibilities of identity, scope, inputs, outcome, status, findings, determinism, and semantic invariants; defines Successful, Failed, Incomplete, and Indeterminate Validation; preserves all six upstream semantic owners, the accepted Decision Boundary, 13 Category B deferrals, Category C exclusion, provider neutrality, implementation independence, and explicit separation from Discovery execution, Rule Universe Result ownership, Governance Applicability, Policy Decision, authority, lifecycle, remediation, implementation, Publication, and deployment. |
+| 0.2.0 | Bounded Maintenance Revision | Resolves Independent Review MIN-01 by explicitly binding the applicable CADP version and applicable Product Binding identity and version or an explicit governed Not Applicable basis throughout Validation Identity, Scope, Inputs, reconstruction, invariants, external dependencies, Decision Boundary, and traceability while retaining all Product Binding semantics, lifecycle, governance, applicability, and Not Applicable determinations upstream. Resolves MIN-02 by defining self-validation only as the inability of an artifact's own unsupported assertion to establish Successful Validation, introducing no validator eligibility, organizational independence, separation-of-duty, or assurance model, and preserving GRD-14 unresolved. Preserves the single validation responsibility, eight owned concepts, four deterministic outcomes, six direct dependencies, accepted Decision Boundary, 13 Category B deferrals, Category C exclusion, provider neutrality, implementation independence, and every upstream and downstream ownership boundary. |
